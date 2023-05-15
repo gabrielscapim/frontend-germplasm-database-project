@@ -1,6 +1,8 @@
 // import axios from 'axios';
 // import { useEffect, useState } from 'react';
+import { useContext } from 'react';
 import styles from './GermplasmTable.module.css';
+import { GlobalContext } from '../context/GlobalContext';
 
 function GermplasmTable() {
   // const [apiResults, setApiResults] = useState([]);
@@ -28,6 +30,9 @@ function GermplasmTable() {
   //   .catch((error) => {
   //     console.log(error);
   //   });
+
+  const global = useContext(GlobalContext);
+  console.log(global);
 
   return (
     <div className={ styles['table-wrapper'] }>
