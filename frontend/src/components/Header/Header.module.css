@@ -1,3 +1,7 @@
+.header * {
+    background-color: #c6b9df;
+}
+
 .header {
     font-family: 'Museo Sans Rounded';
     background-color: #c6b9df;

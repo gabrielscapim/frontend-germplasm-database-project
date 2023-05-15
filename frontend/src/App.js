@@ -4,6 +4,7 @@ import AddGermplasmPage from './pages/AddGermplasmPage/AddGemplasmPage';
 import ConsultGermplasmsPage from './pages/ConsultGermplasmsPage/ConsultGermplasmsPage';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
+import './App.css';
 
 const root = createRoot(document.getElementById('root'));
 
