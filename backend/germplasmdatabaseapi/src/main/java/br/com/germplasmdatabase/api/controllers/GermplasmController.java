@@ -1,6 +1,7 @@
 package br.com.germplasmdatabase.api.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ public class GermplasmController {
 	@Autowired
 	private GermplasmRepository germplasmRepository;
 	
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@GetMapping
 	public Iterable<Germplasm> getGermplasms() {
 		return germplasmRepository.findAll();

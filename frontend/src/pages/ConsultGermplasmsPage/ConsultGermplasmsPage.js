@@ -1,9 +1,10 @@
+import GermplasmTable from '../../components/GermplasmTable';
 import styles from './ConsultGermplasmsPage.module.css';
 
 function ConsultGermplasmsPage() {
   return (
     <section className={ styles['page-container'] }>
-      Consult germplasms database page
+      <GermplasmTable />
     </section>
   );
 }
