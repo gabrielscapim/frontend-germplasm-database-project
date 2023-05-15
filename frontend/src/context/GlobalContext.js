@@ -1,17 +1,26 @@
-/* eslint-disable react/jsx-no-constructed-context-values */
 import PropTypes from 'prop-types';
-import { createContext } from 'react';
+import { createContext, useEffect, useMemo, useState } from 'react';
+import fetchApi from '../services/fetchApi';
 
 export const GlobalContext = createContext();
 
 export function GlobalStorage({ children }) {
-  const test = 'teste';
+  const [apiResults, setApiResults] = useState([]);
+  const [attributes, setAttributes] = useState([]);
+
+  useEffect(() => {
+    fetchApi()
+      .then((results) => {
+        setApiResults(results);
+        setAttributes(Object.keys(results[0]));
+      });
+  }, []);
+
+  const setValue = useMemo(() => ({ apiResults, attributes }));
 
   return (
     <GlobalContext.Provider
-      value={ {
-        test,
-      } }
+      value={ setValue }
     >
       { children }
     </GlobalContext.Provider>
