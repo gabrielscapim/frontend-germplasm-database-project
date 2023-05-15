@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import styles from './Header.module.css';
 
 function Header() {

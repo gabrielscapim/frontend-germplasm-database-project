@@ -2,9 +2,7 @@ import styles from './AddGermplasmPage.module.css';
 
 function AddGermplasmPage() {
   return (
-    <section className={ styles['page-container'] }>
-      Add Germplasm page
-    </section>
+    <section className={ styles['page-container'] } />
   );
 }
 
