@@ -58,4 +58,10 @@
     .header-title-options nav {
         margin-top: 12px;
     }
+    .header {
+        flex-direction: column;
+    }
+    .user-container {
+        margin-top: 12px;
+    }
 }
