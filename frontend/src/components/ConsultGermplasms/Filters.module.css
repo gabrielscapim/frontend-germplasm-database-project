@@ -4,6 +4,10 @@
     width: 95%;
 }
 
+.filters-container h6 {
+    margin-bottom: 12px;
+}
+
 .filters-container-first-line {
     padding: 0px 0px 12px 0px;
     margin: 12px 12px 12px 1%;
@@ -19,6 +23,12 @@
 
 .filters-radios-container {
     display: flex;
+}
+
+.delete-filter-container {
+    display: flex;
+    margin-bottom: 8px;
+    align-items: flex-start;
 }
 
 @media all and (max-width: 768px) {

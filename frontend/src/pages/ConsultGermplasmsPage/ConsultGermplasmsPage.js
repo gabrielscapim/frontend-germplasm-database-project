@@ -11,9 +11,8 @@ function ConsultGermplasmsPage() {
   const [filters, setFilters] = useState({
     germplasmNameFilter: '',
     numericFilterColumn: '',
-    numericFilterOperator: 'maior que',
-    numericFilterValue: 0,
-    sortFilterApplied: false,
+    numericFilterOperator: 'menor que',
+    numericFilterValue: '',
     sortFilterColumn: '',
     sortFilterOperator: 'Ascendente',
   });
@@ -56,32 +55,30 @@ function ConsultGermplasmsPage() {
     });
   }
 
-  if (filters.sortFilterApplied === true) {
-    const { sortFilterColumn, sortFilterOperator } = filters;
+  const { sortFilterColumn, sortFilterOperator } = filters;
 
-    const unknownValues = filteredGermplasms
-      .filter((germplasm) => germplasm[sortFilterColumn] === '');
+  const unknownValues = filteredGermplasms
+    .filter((germplasm) => germplasm[sortFilterColumn] === '');
 
-    let notUnknownValues = filteredGermplasms
-      .filter((germplasm) => germplasm[sortFilterColumn] !== 'unknown');
+  let notUnknownValues = filteredGermplasms
+    .filter((germplasm) => germplasm[sortFilterColumn] !== 'unknown');
 
-    switch (sortFilterOperator) {
-    case 'Ascendente':
-      notUnknownValues = notUnknownValues.sort((a, b) => (
-        Number(a[sortFilterColumn]) - Number(b[sortFilterColumn])));
-      filteredGermplasms = [...notUnknownValues, ...unknownValues];
-      break;
+  switch (sortFilterOperator) {
+  case 'Ascendente':
+    notUnknownValues = notUnknownValues.sort((a, b) => (
+      Number(a[sortFilterColumn]) - Number(b[sortFilterColumn])));
+    filteredGermplasms = [...notUnknownValues, ...unknownValues];
+    break;
 
-    case 'Descendente':
-      notUnknownValues = notUnknownValues.sort((a, b) => (
-        Number(b[sortFilterColumn]) - Number(a[sortFilterColumn])));
-      filteredGermplasms = [...notUnknownValues, ...unknownValues];
-      console.log(filteredGermplasms);
-      break;
+  case 'Descendente':
+    notUnknownValues = notUnknownValues.sort((a, b) => (
+      Number(b[sortFilterColumn]) - Number(a[sortFilterColumn])));
+    filteredGermplasms = [...notUnknownValues, ...unknownValues];
+    console.log(filteredGermplasms);
+    break;
 
-    default:
-      break;
-    }
+  default:
+    break;
   }
 
   const handleChangeFilters = ({ target }) => {
@@ -101,16 +98,12 @@ function ConsultGermplasmsPage() {
         numericFilterOperator,
         numericFilterValue,
       }]);
-    }
-  };
 
-  const sortFilterSubmit = () => {
-    const { sortFilterColumn } = filters;
-
-    if (sortFilterColumn !== '') {
       setFilters((prevState) => ({
         ...prevState,
-        sortFilterApplied: true,
+        numericFilterColumn: '',
+        numericFilterOperator: 'maior que',
+        numericFilterValue: '',
       }));
     }
   };
@@ -124,7 +117,6 @@ function ConsultGermplasmsPage() {
         handleChangeFilters={ handleChangeFilters }
         numericFilterSubmit={ numericFilterSubmit }
         numericFiltersSelected={ numericFiltersSelected }
-        sortFilterSubmit={ sortFilterSubmit }
       />
       <GermplasmTable
         germplasms={ filteredGermplasms }

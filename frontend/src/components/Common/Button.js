@@ -15,7 +15,6 @@ function Button({
       disabled={ disabled }
       className="btn btn-primary"
       style={ {
-        border: '1px solid #684f92',
         fontFamily: 'Museo Sans Rounded',
         fontSize: '14px',
         ...componentStyles,

@@ -6,6 +6,7 @@ import Select from '../Common/Select';
 import Button from '../Common/Button';
 import Datalist from '../Common/Datalist';
 import { GlobalContext } from '../../context/GlobalContext';
+import { verifyNumericInput } from '../../helpers/verifyInputs';
 
 function Filters(
   { numericFiltersAvaible,
@@ -14,7 +15,6 @@ function Filters(
     filters,
     numericFilterSubmit,
     numericFiltersSelected,
-    sortFilterSubmit,
   },
 ) {
   const ROW_CLASS = 'filters-row';
@@ -36,6 +36,9 @@ function Filters(
     sortFilterOperator,
   } = filters;
 
+  const verifyNumericFilterColumn = numericFiltersAvaible.includes(numericFilterColumn);
+  const verifySortFilterColumn = attributes.includes(sortFilterColumn);
+
   return (
     <div className={ styles['filters-container'] }>
       <div className={ styles[ROW_CLASS] }>
@@ -49,6 +52,35 @@ function Filters(
           value={ germplasmNameFilter }
         />
       </div>
+      <div className={ styles[ROW_CLASS] }>
+        <Datalist
+          id="column-order"
+          label="Coluna a ser ordenada"
+          options={ attributes.filter((attr) => attr !== 'nome') }
+          name="sortFilterColumn"
+          placeholder="Digite a coluna a ser ordenada"
+          handleChange={ handleChangeFilters }
+          value={ sortFilterColumn }
+        />
+        <Select
+          id="column-sort-input-asc"
+          label="Operador"
+          options={ [
+            'Ascendente',
+            'Descendente',
+          ] }
+          name="sortFilterOperator"
+          handleChange={ handleChangeFilters }
+          inputValue={ sortFilterOperator }
+        />
+      </div>
+      { !verifySortFilterColumn
+          && sortFilterColumn !== ''
+          && (
+            <p style={ { fontSize: '12px', color: '#dc3545' } }>
+              Digite uma coluna existente
+            </p>
+          )}
       <div className={ styles[ROW_CLASS] }>
         <Datalist
           id="column-filter"
@@ -69,7 +101,7 @@ function Filters(
           ] }
           name="numericFilterOperator"
           handleChange={ handleChangeFilters }
-          value={ numericFilterOperator }
+          inputValue={ numericFilterOperator }
         />
         <Input
           id="value-filter"
@@ -79,51 +111,36 @@ function Filters(
           labelClassName="general-input-label"
           inputClassName="value-input"
           handleChange={ handleChangeFilters }
-          value={ numericFilterValue }
+          inputValue={ numericFilterValue }
         />
         <Button
           id="button-filter"
           label="Filtrar"
           type="button"
-          disabled={ false }
+          disabled={ !verifyNumericFilterColumn
+            || !verifyNumericInput(numericFilterValue) }
           componentStyles={ purpleButtonStyles }
           onClick={ numericFilterSubmit }
         />
       </div>
-      <div className={ styles[ROW_CLASS] }>
-        <Datalist
-          id="column-order"
-          label="Coluna a ser ordenada"
-          options={ attributes }
-          name="sortFilterColumn"
-          placeholder="Digite a coluna a ser ordenada"
-          handleChange={ handleChangeFilters }
-          value={ sortFilterColumn }
-        />
-        <Select
-          id="column-sort-input-asc"
-          label="Operador"
-          options={ [
-            'Ascendente',
-            'Descendente',
-          ] }
-          name="sortFilterOperator"
-          handleChange={ handleChangeFilters }
-          value={ sortFilterOperator }
-        />
-        <Button
-          id="column-sort-button"
-          label="Ordenar"
-          type="button"
-          disabled={ false }
-          componentStyles={ purpleButtonStyles }
-          onClick={ sortFilterSubmit }
-        />
-      </div>
+      { !verifyNumericFilterColumn
+          && numericFilterColumn !== ''
+          && (
+            <p style={ { fontSize: '12px', color: '#dc3545' } }>
+              Digite uma coluna existente
+            </p>
+          )}
+      { !verifyNumericInput(numericFilterValue)
+          && numericFilterValue !== ''
+          && (
+            <p style={ { fontSize: '12px', color: '#dc3545' } }>
+              Digite um valor acima de 0
+            </p>
+          )}
       <div className={ styles[ROW_CLASS] }>
         <Button
           id="button-filter"
-          label="Remover filtros"
+          label="Remover todos os filtros"
           type="button"
           disabled={ false }
           componentStyles={ {
@@ -135,16 +152,32 @@ function Filters(
           } }
         />
       </div>
+      { numericFiltersSelected.length > 0 && (
+        <h6>Filtros aplicados:</h6>
+      )}
       { numericFiltersSelected.map((filter) => (
-        <p
+        <div
           key={ `${filter.numericFilterColumn}-applied` }
+          className={ styles['delete-filter-container'] }
         >
-          {
-            `${filter.numericFilterColumn} 
-             ${filter.numericFilterOperator} 
-             ${filter.numericFilterValue}`
-          }
-        </p>
+          <button
+            style={ {
+              marginRight: '1%',
+              padding: '0px',
+              border: 'none',
+              background: 'none',
+            } }
+          >
+            <i className="bi bi-trash"> </i>
+          </button>
+          <p>
+            {
+              `${filter.numericFilterColumn} 
+              ${filter.numericFilterOperator} 
+              ${filter.numericFilterValue}`
+            }
+          </p>
+        </div>
       )) }
     </div>
   );
@@ -156,7 +189,6 @@ Filters.propTypes = {
   handleChangeFilters: PropTypes.func,
   numericFilterSubmit: PropTypes.func,
   numericFiltersSelected: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
-  sortFilterSubmit: PropTypes.func,
 }.isRequired;
 
 export default Filters;
