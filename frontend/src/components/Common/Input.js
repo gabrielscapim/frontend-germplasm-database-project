@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import styles from './Input.module.css';
 
 function Input({
   id,
@@ -14,8 +15,8 @@ function Input({
     <div
       className={
         type === 'radio'
-          ? 'form-check'
-          : 'form-group'
+          ? `form-check ${styles[id]}`
+          : `form-group ${styles[id]}`
       }
       style={ { ...containerStyles } }
     >
@@ -24,6 +25,7 @@ function Input({
           ? 'form-check-label'
           : '' }
         htmlFor={ id }
+        style={ { marginBottom: '4px' } }
       >
         { label }
       </label>

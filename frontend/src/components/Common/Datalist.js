@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import styles from './Datalist.module.css';
 
 function Datalist({
   id,
@@ -10,7 +11,7 @@ function Datalist({
   containerStyles,
 }) {
   return (
-    <div style={ { ...containerStyles } }>
+    <div style={ { ...containerStyles } } className={ styles[id] }>
       <label
         htmlFor={ id }
         className="form-label"

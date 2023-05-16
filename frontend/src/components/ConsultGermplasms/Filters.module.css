@@ -20,3 +20,12 @@
 .filters-radios-container {
     display: flex;
 }
+
+@media all and (max-width: 768px) {
+    .filters-row {
+        flex-direction: column;
+    }
+    .filters-row * {
+        width: 100%;
+    }
+}

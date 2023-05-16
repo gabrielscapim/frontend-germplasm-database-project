@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styles from './Select.module.css';
 
 function Select({
   id,
@@ -11,9 +12,13 @@ function Select({
   containerStyles,
 }) {
   return (
-    <div className="form-group" style={ { ...containerStyles } }>
+    <div
+      className={ `${styles[id]} form-group` }
+      style={ { ...containerStyles } }
+    >
       <label
         htmlFor={ id }
+        style={ { marginBottom: '4px' } }
       >
         { label }
       </label>
