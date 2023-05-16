@@ -1,12 +1,7 @@
-/* eslint-disable max-len */
-import { useContext } from 'react';
+import PropTypes from 'prop-types';
 import styles from './GermplasmTable.module.css';
-import { GlobalContext } from '../context/GlobalContext';
 
-function GermplasmTable() {
-  const global = useContext(GlobalContext);
-  const { apiResults, attributes } = global;
-
+function GermplasmTable({ apiResults, attributes }) {
   return (
     <div className={ `text-nowrap ${styles['table-wrapper']}` }>
       <table className="table table-striped">
@@ -23,9 +18,6 @@ function GermplasmTable() {
               <tr key={ `row-result-${index}` }>
                 {
                   Object.values(apiResult).map((result) => {
-                    // const column = apiResultIndex === 0
-                    //   ? <th scope="row">{ result }</th>
-                    //   : <td key={ `column-result-${result}` }>{ result }</td>;
                     const column = (
                       <td key={ `column-result-${result}` }>{ result }</td>
                     );
@@ -40,5 +32,10 @@ function GermplasmTable() {
     </div>
   );
 }
+
+GermplasmTable.propTypes = {
+  apiResults: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
+  attributes: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
+}.isRequired;
 
 export default GermplasmTable;
