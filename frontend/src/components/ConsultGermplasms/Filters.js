@@ -38,6 +38,7 @@ function Filters(
     sortFilterOperator,
   } = filters;
 
+  const verifyGermplasmNameFilter = germplasmsNames.includes(germplasmNameFilter);
   const verifyNumericFilterColumn = numericFiltersAvaible.includes(numericFilterColumn);
   const verifySortFilterColumn = attributes.includes(sortFilterColumn);
 
@@ -54,6 +55,13 @@ function Filters(
           value={ germplasmNameFilter }
         />
       </div>
+      { !verifyGermplasmNameFilter
+        && germplasmNameFilter !== ''
+          && (
+            <p style={ { fontSize: '14px', color: '#dc3545' } }>
+              Digite um nome existente
+            </p>
+          )}
       <div className={ styles[ROW_CLASS] }>
         <Datalist
           id="column-order"
@@ -79,8 +87,15 @@ function Filters(
       { !verifySortFilterColumn
           && sortFilterColumn !== ''
           && (
-            <p style={ { fontSize: '12px', color: '#dc3545' } }>
+            <p style={ { fontSize: '14px', color: '#dc3545' } }>
               Digite uma coluna existente
+            </p>
+          )}
+      { verifySortFilterColumn
+          && sortFilterColumn !== ''
+          && (
+            <p style={ { fontSize: '14px' } }>
+              {`Filtro de ordenação aplicado: ${sortFilterColumn} ${sortFilterOperator}`}
             </p>
           )}
       <div className={ styles[ROW_CLASS] }>
@@ -128,14 +143,14 @@ function Filters(
       { !verifyNumericFilterColumn
           && numericFilterColumn !== ''
           && (
-            <p style={ { fontSize: '12px', color: '#dc3545' } }>
+            <p style={ { fontSize: '14px', color: '#dc3545' } }>
               Digite uma coluna existente
             </p>
           )}
       { !verifyNumericInput(numericFilterValue)
           && numericFilterValue !== ''
           && (
-            <p style={ { fontSize: '12px', color: '#dc3545' } }>
+            <p style={ { fontSize: '14px', color: '#dc3545' } }>
               Digite um valor acima de 0
             </p>
           )}
