@@ -1,0 +1,35 @@
+.footer {
+    /* position:absolute; */
+    left:0;
+    bottom:0;
+    right:0;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #0c0c0c;
+    background-color: #faf9f6;
+}
+
+footer a {
+    text-decoration: none;
+}
+
+.signature {
+    font-size: 12px;
+    text-align: center;
+    margin-top: 12px;
+    font-family: 'Museo Sans Rounded';
+    color: #0c0c0c;
+}
+
+.signature:hover {
+    text-decoration: underline;
+}
+
+.version {
+    font-size: 12px;
+    text-align: center;
+    font-family: 'Museo Sans Rounded';
+}

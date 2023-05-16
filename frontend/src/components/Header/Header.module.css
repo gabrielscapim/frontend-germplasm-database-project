@@ -1,0 +1,46 @@
+.header * {
+    background-color: #006400;
+}
+
+.header {
+    font-family: 'Museo Sans Rounded';
+    background-color: #006400;
+    color: #0c0c0c;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    width: 100%;
+    padding: 16px 24px 16px 24px;
+    font-size: 16px;
+    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
+    border-bottom: 1px solid #006400;
+}
+
+.header-title-options {
+    display: flex;
+    align-items: center;
+}
+
+.header h3 {
+    /* topo | direita | inferior | esquerda */
+    font-size: 22px;
+    padding: 0px;
+    margin: 0px 120px 0px 0px;
+    color: #faf9f6;
+}
+
+.nav-option {
+    color: #faf9f6;
+    text-decoration: none;
+    margin: 0px 40px 0px 0px;
+}
+
+.nav-option:hover {
+    text-decoration: underline;
+}
+
+.user-container {
+    font-size: 14px;
+    color: #faf9f6;
+}

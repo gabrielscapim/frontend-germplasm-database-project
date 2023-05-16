@@ -1,10 +1,23 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import AddGermplasmPage from './pages/AddGermplasmPage/AddGemplasmPage';
+import ConsultGermplasmsPage from './pages/ConsultGermplasmsPage/ConsultGermplasmsPage';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
+import './App.css';
+import { GlobalStorage } from './context/GlobalContext';
+
 function App() {
   return (
-    <div>
-      <header>
-        Hello world
-      </header>
-    </div>
+    <BrowserRouter>
+      <GlobalStorage>
+        <Header />
+        <Routes>
+          <Route path="/add-germplasm" Component={ AddGermplasmPage } />
+          <Route path="/consult-germplasms" Component={ ConsultGermplasmsPage } />
+        </Routes>
+        <Footer />
+      </GlobalStorage>
+    </BrowserRouter>
   );
 }
 
