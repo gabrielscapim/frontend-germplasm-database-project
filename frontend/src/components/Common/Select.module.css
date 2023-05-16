@@ -1,0 +1,19 @@
+.comparison-filter {
+    width: 28%;
+    margin-right: 2%;
+}
+
+.column-sort-input-asc {
+    width: 30%;
+}
+
+@media all and (max-width: 768px) {
+    .comparison-filter {
+        width: 100%;
+        margin-right: 0%;
+    }
+    .column-sort-input-asc {
+        width: 100%;
+        margin-bottom: 12px;
+    }
+}

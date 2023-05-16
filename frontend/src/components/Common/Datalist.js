@@ -1,24 +1,35 @@
 import PropTypes from 'prop-types';
+import styles from './Datalist.module.css';
 
-function Datalist({ id, label, options, inputValue, name, placeholder }) {
+function Datalist({
+  id,
+  label,
+  options,
+  name,
+  placeholder,
+  containerStyles,
+  handleChange,
+  value,
+}) {
   return (
-    <div style={ { width: '30%', marginRight: '24px' } }>
+    <div style={ { ...containerStyles } } className={ styles[id] }>
       <label
-        htmlFor={ id }
+        htmlFor={ `datalist-${id}` }
         className="form-label"
-        style={ { marginBottom: '4px' } }
       >
         { label }
       </label>
       <input
+        type="input"
         className="form-control"
-        list="datalistOptions"
-        id={ id }
-        value={ inputValue }
+        list={ id }
         name={ name }
         placeholder={ placeholder }
+        id={ `datalist-${id}` }
+        onChange={ (event) => handleChange(event) }
+        value={ value }
       />
-      <datalist id="datalistOptions">
+      <datalist id={ id }>
         { options.map((option) => (
           <option
             key={ option }
@@ -36,10 +47,11 @@ Datalist.propTypes = {
   id: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
   label: PropTypes.string.isRequired,
-  inputValue: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
-  // handleChange: PropTypes.func.isRequired,
+  containerStyles: PropTypes.objectOf(PropTypes.string).isRequired,
+  handleChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
 };
 
 export default Datalist;

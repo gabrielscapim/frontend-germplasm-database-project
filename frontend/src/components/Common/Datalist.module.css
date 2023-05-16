@@ -1,0 +1,24 @@
+.germplasm-name-filter{
+    width: 100%;
+}
+
+.column-filter {
+    width: 58%;
+    margin-right: 2%;
+}
+
+.column-order {
+    width: 68%;
+    margin-right: 2%;
+}
+
+@media all and (max-width: 768px) {
+    .column-filter {
+        width: 100%;
+        margin-right: 0%;
+    }
+    .column-order {
+        width: 100%;
+        margin-right: 0%;
+    }
+}

@@ -9,32 +9,30 @@ function Input({
   name,
   handleChange,
   placeholder,
-  containerClassName,
-  labelClassName,
-  inputClassName,
-  componentStyles,
+  containerStyles,
 }) {
   return (
     <div
       className={
         type === 'radio'
-          ? `form-check ${styles[containerClassName]}`
-          : `form-group ${styles[containerClassName]}`
+          ? `form-check ${styles[id]}`
+          : `form-group ${styles[id]}`
       }
-      style={ { ...componentStyles } }
+      style={ { ...containerStyles } }
     >
       <label
         className={ type === 'radio'
-          ? `form-check-label ${styles[labelClassName]}`
-          : `${styles[labelClassName]}` }
+          ? 'form-check-label'
+          : '' }
         htmlFor={ id }
+        style={ { marginBottom: '4px' } }
       >
         { label }
       </label>
       <input
         className={ type === 'radio'
-          ? `form-check-input ${styles[inputClassName]}`
-          : `form-control ${styles[inputClassName]}` }
+          ? 'form-check-input'
+          : 'form-control' }
         id={ id }
         type={ type }
         name={ name }
@@ -55,10 +53,7 @@ Input.propTypes = {
   name: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string.isRequired,
-  containerClassName: PropTypes.string.isRequired,
-  labelClassName: PropTypes.string.isRequired,
-  inputClassName: PropTypes.string.isRequired,
-  componentStyles: PropTypes.objectOf(PropTypes.string).isRequired,
+  containerStyles: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 export default Input;

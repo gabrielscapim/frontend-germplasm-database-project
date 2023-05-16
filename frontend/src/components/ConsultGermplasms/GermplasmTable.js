@@ -1,25 +1,29 @@
 import PropTypes from 'prop-types';
 import styles from './GermplasmTable.module.css';
 
-function GermplasmTable({ apiResults, attributes }) {
+function GermplasmTable({ germplasms, attributes }) {
   return (
     <div className={ `text-nowrap ${styles['table-wrapper']}` }>
       <table className="table table-striped">
         <thead>
           <tr>
-            { attributes.map((attribute) => (
-              <th scope="col" key={ `column-${attribute}` }>{ attribute }</th>
+            { attributes.map((attribute, index) => (
+              <th scope="col" key={ `column-${index}` }>{ attribute }</th>
             )) }
           </tr>
         </thead>
         <tbody>
-          { apiResults.map((apiResult, index) => {
+          { germplasms.map((apiResult, index) => {
             return (
               <tr key={ `row-result-${index}` }>
                 {
-                  Object.values(apiResult).map((result) => {
+                  Object.values(apiResult).map((result, apiResultIndex) => {
                     const column = (
-                      <td key={ `column-result-${result}` }>{ result }</td>
+                      <td
+                        key={ `column-result-${result}-${index}-${apiResultIndex}` }
+                      >
+                        { result }
+                      </td>
                     );
                     return column;
                   })
@@ -34,7 +38,7 @@ function GermplasmTable({ apiResults, attributes }) {
 }
 
 GermplasmTable.propTypes = {
-  apiResults: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
+  germplasms: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
   attributes: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
 }.isRequired;
 

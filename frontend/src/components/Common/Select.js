@@ -1,9 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styles from './Select.module.css';
 
-function Select({ id, label, options, inputValue, name, handleChange }) {
+function Select({
+  id,
+  label,
+  options,
+  inputValue,
+  name,
+  handleChange,
+  containerStyles,
+}) {
   return (
-    <div className="form-group" style={ { marginRight: '24px', width: '15%' } }>
+    <div
+      className={ `${styles[id]} form-group` }
+      style={ { ...containerStyles } }
+    >
       <label
         htmlFor={ id }
         style={ { marginBottom: '4px' } }
@@ -38,6 +50,7 @@ Select.propTypes = {
   inputValue: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
+  containerStyles: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 export default Select;
