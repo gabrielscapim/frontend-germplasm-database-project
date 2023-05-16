@@ -7,7 +7,15 @@ import Button from '../Common/Button';
 import Datalist from '../Common/Datalist';
 import { GlobalContext } from '../../context/GlobalContext';
 
-function Filters({ attributes, handleChangeFilters, filters, numericFilterSubmit }) {
+function Filters(
+  { numericFiltersAvaible,
+    attributes,
+    handleChangeFilters,
+    filters,
+    numericFilterSubmit,
+    numericFiltersSelected,
+  },
+) {
   const ROW_CLASS = 'filters-row';
   const purpleButtonStyles = {
     backgroundColor: '#684f92',
@@ -44,7 +52,7 @@ function Filters({ attributes, handleChangeFilters, filters, numericFilterSubmit
         <Datalist
           id="column-filter"
           label="Coluna a ser filtrada"
-          options={ attributes }
+          options={ numericFiltersAvaible }
           name="numericFilterColumn"
           placeholder="Digite a coluna a ser filtrada"
           handleChange={ handleChangeFilters }
@@ -78,6 +86,7 @@ function Filters({ attributes, handleChangeFilters, filters, numericFilterSubmit
           type="button"
           disabled={ false }
           componentStyles={ purpleButtonStyles }
+          onClick={ numericFilterSubmit }
         />
       </div>
       <div className={ styles[ROW_CLASS] }>
@@ -124,14 +133,27 @@ function Filters({ attributes, handleChangeFilters, filters, numericFilterSubmit
           } }
         />
       </div>
+      { numericFiltersSelected.map((filter) => (
+        <p
+          key={ `${filter.numericFilterColumn}-applied` }
+        >
+          {
+            `${filter.numericFilterColumn} 
+             ${filter.numericFilterOperator} 
+             ${filter.numericFilterValue}`
+          }
+        </p>
+      )) }
     </div>
   );
 }
 
 Filters.propTypes = {
+  numericFiltersAvaible: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
   attributes: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
   handleChangeFilters: PropTypes.func,
   numericFilterSubmit: PropTypes.func,
+  numericFiltersSelected: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
 }.isRequired;
 
 export default Filters;

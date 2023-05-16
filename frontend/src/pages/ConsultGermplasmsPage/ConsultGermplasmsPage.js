@@ -17,8 +17,44 @@ function ConsultGermplasmsPage() {
     sortFilterColumn: '',
     sortFilterOperator: 'Ascendente',
   });
+  const [numericFiltersSelected, setNumericFiltersSelected] = useState([]);
 
-  const numericFilters = attributes.filter((attribute) => attribute !== 'nome');
+  let numericFiltersAvaible = attributes.filter((attribute) => attribute !== 'nome');
+
+  numericFiltersAvaible = numericFiltersAvaible.filter((numericFilterAvaible) => (
+    !numericFiltersSelected
+      .map((numericFilterSelected) => numericFilterSelected.numericFilterColumn)
+      .includes(numericFilterAvaible)
+  ));
+
+  let filteredGermplasms = apiResults.filter(({ nome }) => (
+    nome.toLowerCase().includes(filters.germplasmNameFilter.toLowerCase())
+  ));
+
+  // Generic function (loop) to apply multiples filters
+  if (numericFiltersSelected.length !== 0) {
+    numericFiltersSelected.forEach((numericFilterSelected) => {
+      const {
+        numericFilterColumn,
+        numericFilterOperator,
+        numericFilterValue,
+      } = numericFilterSelected;
+
+      filteredGermplasms = filteredGermplasms.filter((germplasm) => {
+        switch (numericFilterOperator) {
+        case 'maior que':
+          return Number(germplasm[numericFilterColumn]) > Number(numericFilterValue);
+        case 'menor que':
+          return Number(germplasm[numericFilterColumn]) < Number(numericFilterValue);
+        case 'igual a':
+          return Number(germplasm[numericFilterColumn]) === Number(numericFilterValue);
+        default:
+          break;
+        }
+        return planet;
+      });
+    });
+  }
 
   const handleChangeFilters = ({ target }) => {
     const { name, value } = target;
@@ -28,25 +64,31 @@ function ConsultGermplasmsPage() {
     }));
   };
 
-  let filteredGermplasms = apiResults.filter(({ nome }) => (
-    nome.toLowerCase().includes(filters.germplasmNameFilter.toLowerCase())
-  ));
-
   const numericFilterSubmit = () => {
+    const { numericFilterColumn, numericFilterOperator, numericFilterValue } = filters;
 
+    if (numericFilterColumn !== '' && numericFilterValue !== '') {
+      setNumericFiltersSelected((prevState) => [...prevState, {
+        numericFilterColumn,
+        numericFilterOperator,
+        numericFilterValue,
+      }]);
+    }
   };
 
   const sortFilterSubmit = () => {
-
+    console.log('clicou');
   };
 
   return (
     <section className={ styles['page-container'] }>
       <Filters
         attributes={ attributes }
+        numericFiltersAvaible={ numericFiltersAvaible }
         filters={ filters }
         handleChangeFilters={ handleChangeFilters }
         numericFilterSubmit={ numericFilterSubmit }
+        numericFiltersSelected={ numericFiltersSelected }
       />
       <GermplasmTable
         germplasms={ filteredGermplasms }
