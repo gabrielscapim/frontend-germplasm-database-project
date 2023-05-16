@@ -7,6 +7,7 @@ function Input({
   inputValue,
   name,
   handleChange,
+  placeholder,
 }) {
   return (
     <div className={ type === 'radio' ? 'form-check' : 'form-group' }>
@@ -23,6 +24,7 @@ function Input({
         name={ name }
         value={ inputValue }
         onChange={ (event) => handleChange(event) }
+        placeholder={ placeholder }
       />
 
     </div>
@@ -36,6 +38,7 @@ Input.propTypes = {
   inputValue: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
+  placeholder: PropTypes.string.isRequired,
 };
 
 export default Input;

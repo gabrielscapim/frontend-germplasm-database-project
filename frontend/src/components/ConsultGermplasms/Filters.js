@@ -3,6 +3,7 @@ import styles from './Filters.module.css';
 import Input from '../Common/Input';
 import Select from '../Common/Select';
 import Button from '../Common/Button';
+import Datalist from '../Common/Datalist';
 
 function Filters({ attributes }) {
   return (
@@ -12,16 +13,17 @@ function Filters({ attributes }) {
         label="Filtrar por nome"
         type="text"
         name="nameFilter"
+        placeholder="Digite o nome de um germoplasma"
       />
-      <Select
+      <Datalist
         id="column-filter"
-        label="Coluna"
+        label="Colsdfdsuna"
         options={ attributes }
         name="columnFilter"
       />
       <Select
         id="comparison-filter"
-        label="operador"
+        label="Operador"
         options={ [
           'maior que',
           'menor que',
@@ -31,9 +33,10 @@ function Filters({ attributes }) {
       />
       <Input
         id="value-filter"
-        label="valor"
+        label="Valor"
         type="number"
         name="valueFilter"
+        placeholder="Digite o valor em que deseja filtrar"
       />
       <Button
         id="button-filter"
@@ -55,9 +58,9 @@ function Filters({ attributes }) {
         inputValue="DESC"
         name="sortState"
       />
-      <Select
-        id="column-sort"
-        label="Ordenar"
+      <Datalist
+        id="column-filter"
+        label="Colsdfdsuna"
         options={ attributes }
         name="columnOrderState"
       />
