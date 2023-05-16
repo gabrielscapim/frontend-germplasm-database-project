@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 
 function Select({ id, label, options, inputValue, name, handleChange }) {
   return (
-    <div className="form-group">
-      <label htmlFor={ id }>
+    <div className="form-group" style={ { marginRight: '24px', width: '15%' } }>
+      <label
+        htmlFor={ id }
+        style={ { marginBottom: '4px' } }
+      >
         { label }
       </label>
 

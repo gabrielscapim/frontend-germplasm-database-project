@@ -6,6 +6,7 @@ function Button({
   onClick,
   type,
   disabled,
+  componentStyles,
 }) {
   return (
     <button
@@ -14,10 +15,10 @@ function Button({
       disabled={ disabled }
       className="btn btn-primary"
       style={ {
-        backgroundColor: '#684f92',
         border: '1px solid #684f92',
         fontFamily: 'Museo Sans Rounded',
         fontSize: '14px',
+        ...componentStyles,
       } }
     >
       { label }
@@ -30,6 +31,7 @@ Button.propTypes = {
   label: PropTypes.string.isRequired,
   type: PropTypes.oneOf(['button', 'submit']).isRequired,
   disabled: PropTypes.bool.isRequired,
+  componentStyles: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 export default Button;

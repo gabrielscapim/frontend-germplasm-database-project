@@ -4,3 +4,28 @@
     margin-bottom: 24px;
     width: 98%;
 }
+
+.filters-container-first-line {
+    padding: 0px 0px 12px 0px;
+    margin: 12px 12px 12px 1%;
+}
+
+.filters-container-second-line {
+    padding: 0px 0px 16px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin: 12px 0px 12px 1%;
+}
+
+.filters-container-third-line {
+    padding: 0px 0px 16px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin: 12px 0px 12px 1%;
+}
+
+.filters-radios-container {
+    margin-right: 2%;
+}

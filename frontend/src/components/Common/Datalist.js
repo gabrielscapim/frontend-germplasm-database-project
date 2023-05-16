@@ -2,10 +2,11 @@ import PropTypes from 'prop-types';
 
 function Datalist({ id, label, options, inputValue, name, placeholder }) {
   return (
-    <div>
+    <div style={ { width: '30%', marginRight: '24px' } }>
       <label
         htmlFor={ id }
         className="form-label"
+        style={ { marginBottom: '4px' } }
       >
         { label }
       </label>
