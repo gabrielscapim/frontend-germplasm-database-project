@@ -7,7 +7,7 @@ import Button from '../Common/Button';
 import Datalist from '../Common/Datalist';
 import { GlobalContext } from '../../context/GlobalContext';
 
-function Filters({ attributes, handleChangeFilters, filters }) {
+function Filters({ attributes, handleChangeFilters, filters, numericFilterSubmit }) {
   const ROW_CLASS = 'filters-row';
   const purpleButtonStyles = {
     backgroundColor: '#684f92',
@@ -18,7 +18,14 @@ function Filters({ attributes, handleChangeFilters, filters }) {
   const global = useContext(GlobalContext);
   const { germplasmsNames } = global;
 
-  const { germplasmName } = filters;
+  const {
+    germplasmNameFilter,
+    numericFilterColumn,
+    numericFilterOperator,
+    numericFilterValue,
+    sortFilterColumn,
+    sortFilterOperator,
+  } = filters;
 
   return (
     <div className={ styles['filters-container'] }>
@@ -30,7 +37,7 @@ function Filters({ attributes, handleChangeFilters, filters }) {
           name="germplasmNameFilter"
           placeholder="Digite o nome de um germoplasma"
           handleChange={ handleChangeFilters }
-          value={ germplasmName }
+          value={ germplasmNameFilter }
         />
       </div>
       <div className={ styles[ROW_CLASS] }>
@@ -38,8 +45,10 @@ function Filters({ attributes, handleChangeFilters, filters }) {
           id="column-filter"
           label="Coluna a ser filtrada"
           options={ attributes }
-          name="columnFilter"
+          name="numericFilterColumn"
           placeholder="Digite a coluna a ser filtrada"
+          handleChange={ handleChangeFilters }
+          value={ numericFilterColumn }
         />
         <Select
           id="comparison-filter"
@@ -49,15 +58,19 @@ function Filters({ attributes, handleChangeFilters, filters }) {
             'menor que',
             'igual a',
           ] }
-          name="comparisonFilter"
+          name="numericFilterOperator"
+          handleChange={ handleChangeFilters }
+          value={ numericFilterOperator }
         />
         <Input
           id="value-filter"
           label="Valor"
           type="number"
-          name="valueFilter"
+          name="numericFilterValue"
           labelClassName="general-input-label"
           inputClassName="value-input"
+          handleChange={ handleChangeFilters }
+          value={ numericFilterValue }
         />
         <Button
           id="button-filter"
@@ -72,8 +85,10 @@ function Filters({ attributes, handleChangeFilters, filters }) {
           id="column-order"
           label="Coluna a ser ordenada"
           options={ attributes }
-          name="columnOrderState"
+          name="sortFilterColumn"
           placeholder="Digite a coluna a ser ordenada"
+          handleChange={ handleChangeFilters }
+          value={ sortFilterColumn }
         />
         <Select
           id="column-sort-input-asc"
@@ -82,7 +97,9 @@ function Filters({ attributes, handleChangeFilters, filters }) {
             'Ascendente',
             'Descendente',
           ] }
-          name="sortState"
+          name="sortFilterOperator"
+          handleChange={ handleChangeFilters }
+          value={ sortFilterOperator }
         />
         <Button
           id="column-sort-button"
@@ -114,6 +131,7 @@ function Filters({ attributes, handleChangeFilters, filters }) {
 Filters.propTypes = {
   attributes: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
   handleChangeFilters: PropTypes.func,
+  numericFilterSubmit: PropTypes.func,
 }.isRequired;
 
 export default Filters;
