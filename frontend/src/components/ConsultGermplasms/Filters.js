@@ -14,6 +14,7 @@ function Filters(
     filters,
     numericFilterSubmit,
     numericFiltersSelected,
+    sortFilterSubmit,
   },
 ) {
   const ROW_CLASS = 'filters-row';
@@ -116,6 +117,7 @@ function Filters(
           type="button"
           disabled={ false }
           componentStyles={ purpleButtonStyles }
+          onClick={ sortFilterSubmit }
         />
       </div>
       <div className={ styles[ROW_CLASS] }>
@@ -154,6 +156,7 @@ Filters.propTypes = {
   handleChangeFilters: PropTypes.func,
   numericFilterSubmit: PropTypes.func,
   numericFiltersSelected: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
+  sortFilterSubmit: PropTypes.func,
 }.isRequired;
 
 export default Filters;

@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable prefer-const */
 import { useContext, useState } from 'react';
 import Filters from '../../components/ConsultGermplasms/Filters';
 import GermplasmTable from '../../components/ConsultGermplasms/GermplasmTable';
@@ -14,6 +13,7 @@ function ConsultGermplasmsPage() {
     numericFilterColumn: '',
     numericFilterOperator: 'maior que',
     numericFilterValue: 0,
+    sortFilterApplied: false,
     sortFilterColumn: '',
     sortFilterOperator: 'Ascendente',
   });
@@ -56,6 +56,34 @@ function ConsultGermplasmsPage() {
     });
   }
 
+  if (filters.sortFilterApplied === true) {
+    const { sortFilterColumn, sortFilterOperator } = filters;
+
+    const unknownValues = filteredGermplasms
+      .filter((germplasm) => germplasm[sortFilterColumn] === '');
+
+    let notUnknownValues = filteredGermplasms
+      .filter((germplasm) => germplasm[sortFilterColumn] !== 'unknown');
+
+    switch (sortFilterOperator) {
+    case 'Ascendente':
+      notUnknownValues = notUnknownValues.sort((a, b) => (
+        Number(a[sortFilterColumn]) - Number(b[sortFilterColumn])));
+      filteredGermplasms = [...notUnknownValues, ...unknownValues];
+      break;
+
+    case 'Descendente':
+      notUnknownValues = notUnknownValues.sort((a, b) => (
+        Number(b[sortFilterColumn]) - Number(a[sortFilterColumn])));
+      filteredGermplasms = [...notUnknownValues, ...unknownValues];
+      console.log(filteredGermplasms);
+      break;
+
+    default:
+      break;
+    }
+  }
+
   const handleChangeFilters = ({ target }) => {
     const { name, value } = target;
     return setFilters((prevState) => ({
@@ -77,7 +105,14 @@ function ConsultGermplasmsPage() {
   };
 
   const sortFilterSubmit = () => {
-    console.log('clicou');
+    const { sortFilterColumn } = filters;
+
+    if (sortFilterColumn !== '') {
+      setFilters((prevState) => ({
+        ...prevState,
+        sortFilterApplied: true,
+      }));
+    }
   };
 
   return (
@@ -89,6 +124,7 @@ function ConsultGermplasmsPage() {
         handleChangeFilters={ handleChangeFilters }
         numericFilterSubmit={ numericFilterSubmit }
         numericFiltersSelected={ numericFiltersSelected }
+        sortFilterSubmit={ sortFilterSubmit }
       />
       <GermplasmTable
         germplasms={ filteredGermplasms }
