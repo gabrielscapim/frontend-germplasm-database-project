@@ -108,6 +108,17 @@ function ConsultGermplasmsPage() {
     }
   };
 
+  const numericFilterDelete = (filterToDelete) => {
+    const newNumericFiltersSelected = numericFiltersSelected.filter((filter) => (
+      filter.numericFilterColumn !== filterToDelete
+    ));
+    setNumericFiltersSelected(newNumericFiltersSelected);
+  };
+
+  const numericFilterDeleteAll = () => {
+    setNumericFiltersSelected([]);
+  };
+
   return (
     <section className={ styles['page-container'] }>
       <Filters
@@ -117,6 +128,8 @@ function ConsultGermplasmsPage() {
         handleChangeFilters={ handleChangeFilters }
         numericFilterSubmit={ numericFilterSubmit }
         numericFiltersSelected={ numericFiltersSelected }
+        numericFilterDelete={ numericFilterDelete }
+        numericFilterDeleteAll={ numericFilterDeleteAll }
       />
       <GermplasmTable
         germplasms={ filteredGermplasms }

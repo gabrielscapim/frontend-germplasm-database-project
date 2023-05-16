@@ -15,6 +15,8 @@ function Filters(
     filters,
     numericFilterSubmit,
     numericFiltersSelected,
+    numericFilterDelete,
+    numericFilterDeleteAll,
   },
 ) {
   const ROW_CLASS = 'filters-row';
@@ -150,6 +152,7 @@ function Filters(
             marginBottom: '12px',
             marginTop: '12px',
           } }
+          onClick={ numericFilterDeleteAll }
         />
       </div>
       { numericFiltersSelected.length > 0 && (
@@ -167,6 +170,7 @@ function Filters(
               border: 'none',
               background: 'none',
             } }
+            onClick={ () => numericFilterDelete(filter.numericFilterColumn) }
           >
             <i className="bi bi-trash"> </i>
           </button>
@@ -189,6 +193,7 @@ Filters.propTypes = {
   handleChangeFilters: PropTypes.func,
   numericFilterSubmit: PropTypes.func,
   numericFiltersSelected: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
+  numericFilterDelete: PropTypes.func,
 }.isRequired;
 
 export default Filters;
