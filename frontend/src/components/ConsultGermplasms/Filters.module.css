@@ -1,8 +1,7 @@
 .filters-container {
-    border: 1px solid #dfddda;
+    padding: 0px 12px 0px 12px;
     border-radius: 12px;
-    margin-bottom: 24px;
-    width: 98%;
+    width: 95%;
 }
 
 .filters-container-first-line {
@@ -10,22 +9,14 @@
     margin: 12px 12px 12px 1%;
 }
 
-.filters-container-second-line {
-    padding: 0px 0px 16px 0px;
+.filters-row {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin: 12px 0px 12px 1%;
-}
-
-.filters-container-third-line {
+    gap: 10px;
     padding: 0px 0px 16px 0px;
-    display: flex;
-    justify-content: space-between;
     align-items: flex-end;
-    margin: 12px 0px 12px 1%;
+    width: 100%;
 }
 
 .filters-radios-container {
-    margin-right: 2%;
+    display: flex;
 }

@@ -1,12 +1,19 @@
 import PropTypes from 'prop-types';
 
-function Datalist({ id, label, options, inputValue, name, placeholder }) {
+function Datalist({
+  id,
+  label,
+  options,
+  inputValue,
+  name,
+  placeholder,
+  containerStyles,
+}) {
   return (
-    <div style={ { width: '30%', marginRight: '24px' } }>
+    <div style={ { ...containerStyles } }>
       <label
         htmlFor={ id }
         className="form-label"
-        style={ { marginBottom: '4px' } }
       >
         { label }
       </label>
@@ -39,6 +46,7 @@ Datalist.propTypes = {
   inputValue: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
+  containerStyles: PropTypes.objectOf(PropTypes.string).isRequired,
   // handleChange: PropTypes.func.isRequired,
 };
 

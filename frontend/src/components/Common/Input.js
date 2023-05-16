@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import styles from './Input.module.css';
 
 function Input({
   id,
@@ -9,32 +8,29 @@ function Input({
   name,
   handleChange,
   placeholder,
-  containerClassName,
-  labelClassName,
-  inputClassName,
-  componentStyles,
+  containerStyles,
 }) {
   return (
     <div
       className={
         type === 'radio'
-          ? `form-check ${styles[containerClassName]}`
-          : `form-group ${styles[containerClassName]}`
+          ? 'form-check'
+          : 'form-group'
       }
-      style={ { ...componentStyles } }
+      style={ { ...containerStyles } }
     >
       <label
         className={ type === 'radio'
-          ? `form-check-label ${styles[labelClassName]}`
-          : `${styles[labelClassName]}` }
+          ? 'form-check-label'
+          : '' }
         htmlFor={ id }
       >
         { label }
       </label>
       <input
         className={ type === 'radio'
-          ? `form-check-input ${styles[inputClassName]}`
-          : `form-control ${styles[inputClassName]}` }
+          ? 'form-check-input'
+          : 'form-control' }
         id={ id }
         type={ type }
         name={ name }
@@ -55,10 +51,7 @@ Input.propTypes = {
   name: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string.isRequired,
-  containerClassName: PropTypes.string.isRequired,
-  labelClassName: PropTypes.string.isRequired,
-  inputClassName: PropTypes.string.isRequired,
-  componentStyles: PropTypes.objectOf(PropTypes.string).isRequired,
+  containerStyles: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 export default Input;
