@@ -6,7 +6,7 @@ import Select from '../Common/Select';
 import Button from '../Common/Button';
 import Datalist from '../Common/Datalist';
 import { GlobalContext } from '../../context/GlobalContext';
-import { verifyNumericInput } from '../../helpers/verifyInputs';
+import { isNumericInputCorrect } from '../../helpers/isNumericInputCorrect';
 
 function Filters(
   { numericFiltersAvaible,
@@ -38,9 +38,10 @@ function Filters(
     sortFilterOperator,
   } = filters;
 
-  const verifyGermplasmNameFilter = germplasmsNames.includes(germplasmNameFilter);
-  const verifyNumericFilterColumn = numericFiltersAvaible.includes(numericFilterColumn);
-  const verifySortFilterColumn = attributes.includes(sortFilterColumn);
+  const isGermplasmFilterCorrect = germplasmsNames.includes(germplasmNameFilter);
+  const isNumericFilterColumnCorrect = numericFiltersAvaible
+    .includes(numericFilterColumn);
+  const isSortFilterColumnCorrect = attributes.includes(sortFilterColumn);
 
   return (
     <div className={ styles['filters-container'] }>
@@ -55,7 +56,7 @@ function Filters(
           value={ germplasmNameFilter }
         />
       </div>
-      { !verifyGermplasmNameFilter
+      { !isGermplasmFilterCorrect
         && germplasmNameFilter !== ''
           && (
             <p style={ { fontSize: '14px', color: '#dc3545' } }>
@@ -65,7 +66,7 @@ function Filters(
       <div className={ styles[ROW_CLASS] }>
         <Datalist
           id="column-order"
-          label="Coluna a ser ordenada"
+          label="Coluna (atributo) a ser ordenada"
           options={ attributes.filter((attr) => attr !== 'nome') }
           name="sortFilterColumn"
           placeholder="Digite a coluna a ser ordenada"
@@ -84,14 +85,14 @@ function Filters(
           inputValue={ sortFilterOperator }
         />
       </div>
-      { !verifySortFilterColumn
+      { !isSortFilterColumnCorrect
           && sortFilterColumn !== ''
           && (
             <p style={ { fontSize: '14px', color: '#dc3545' } }>
               Digite uma coluna existente
             </p>
           )}
-      { verifySortFilterColumn
+      { isSortFilterColumnCorrect
           && sortFilterColumn !== ''
           && (
             <p style={ { fontSize: '14px' } }>
@@ -101,7 +102,7 @@ function Filters(
       <div className={ styles[ROW_CLASS] }>
         <Datalist
           id="column-filter"
-          label="Coluna a ser filtrada"
+          label="Coluna (atributo) a ser filtrada"
           options={ numericFiltersAvaible }
           name="numericFilterColumn"
           placeholder="Digite a coluna a ser filtrada"
@@ -129,25 +130,26 @@ function Filters(
           inputClassName="value-input"
           handleChange={ handleChangeFilters }
           inputValue={ numericFilterValue }
+          minInput={ 1 }
         />
         <Button
           id="button-filter"
           label="Filtrar"
           type="button"
-          disabled={ !verifyNumericFilterColumn
-            || !verifyNumericInput(numericFilterValue) }
+          disabled={ !isNumericFilterColumnCorrect
+            || !isNumericInputCorrect(numericFilterValue) }
           componentStyles={ purpleButtonStyles }
           onClick={ numericFilterSubmit }
         />
       </div>
-      { !verifyNumericFilterColumn
+      { !isNumericFilterColumnCorrect
           && numericFilterColumn !== ''
           && (
             <p style={ { fontSize: '14px', color: '#dc3545' } }>
               Digite uma coluna existente
             </p>
           )}
-      { !verifyNumericInput(numericFilterValue)
+      { !isNumericInputCorrect(numericFilterValue)
           && numericFilterValue !== ''
           && (
             <p style={ { fontSize: '14px', color: '#dc3545' } }>

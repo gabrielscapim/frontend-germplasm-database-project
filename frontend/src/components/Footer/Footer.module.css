@@ -1,15 +1,15 @@
 .footer {
-    /* position:absolute; */
-    left:0;
-    bottom:0;
-    right:0;
-    height: auto;
+    position:absolute;
+    clear: both;
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     color: #0c0c0c;
     background-color: #faf9f6;
+    bottom: 0;
+    width: 100%;
 }
 
 footer a {

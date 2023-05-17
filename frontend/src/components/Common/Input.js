@@ -10,6 +10,7 @@ function Input({
   handleChange,
   placeholder,
   containerStyles,
+  minInput,
 }) {
   return (
     <div
@@ -25,7 +26,7 @@ function Input({
           ? 'form-check-label'
           : '' }
         htmlFor={ id }
-        style={ { marginBottom: '4px' } }
+        style={ { marginBottom: '8px' } }
       >
         { label }
       </label>
@@ -39,6 +40,7 @@ function Input({
         value={ inputValue }
         onChange={ (event) => handleChange(event) }
         placeholder={ placeholder }
+        min={ minInput }
       />
 
     </div>
@@ -54,6 +56,7 @@ Input.propTypes = {
   handleChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string.isRequired,
   containerStyles: PropTypes.objectOf(PropTypes.string).isRequired,
+  minInput: PropTypes.number.isRequired,
 };
 
 export default Input;

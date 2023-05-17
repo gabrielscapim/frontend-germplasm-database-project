@@ -1,9 +1,12 @@
 import PropTypes from 'prop-types';
 import styles from './GermplasmTable.module.css';
 
-function GermplasmTable({ germplasms, attributes }) {
+function GermplasmTable({ germplasms, attributes, tableContainerStyles }) {
   return (
-    <div className={ `text-nowrap ${styles['table-wrapper']}` }>
+    <div
+      className={ `text-nowrap ${styles['table-wrapper']}` }
+      style={ tableContainerStyles }
+    >
       <table className="table table-striped">
         <thead>
           <tr>
@@ -18,6 +21,13 @@ function GermplasmTable({ germplasms, attributes }) {
               <tr key={ `row-result-${index}` }>
                 {
                   Object.values(apiResult).map((result, apiResultIndex) => {
+                    const booleanColumn = (
+                      <td
+                        key={ `column-result-${result}-${index}-${apiResultIndex}` }
+                      >
+                        { result === false ? 'não' : 'sim' }
+                      </td>
+                    );
                     const column = (
                       <td
                         key={ `column-result-${result}-${index}-${apiResultIndex}` }
@@ -25,7 +35,7 @@ function GermplasmTable({ germplasms, attributes }) {
                         { result }
                       </td>
                     );
-                    return column;
+                    return typeof result === 'boolean' ? booleanColumn : column;
                   })
                 }
               </tr>
@@ -40,6 +50,7 @@ function GermplasmTable({ germplasms, attributes }) {
 GermplasmTable.propTypes = {
   germplasms: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
   attributes: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
+  tableContainerStyles: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
 }.isRequired;
 
 export default GermplasmTable;

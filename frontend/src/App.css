@@ -1,3 +1,7 @@
 * {
     background-color: #faf9f6;
 }
+
+body {
+    overflow:auto;
+}

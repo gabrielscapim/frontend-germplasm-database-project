@@ -2,9 +2,59 @@
     width: 10%;
 }
 
+.new-germplasm-name {
+    width: 50%;
+    margin-right: 2%;
+}
+
+.new-germplasm-column-value-input {
+    margin-left: 2%;
+    width: 50%;
+}
+
+.new-germplasm-genetic-events-details {
+    width: 100%;
+}
+
+.new-germplasm-cold-chamber-local {
+    width: 50%;
+    margin-right: 2%;
+}
+
+.new-germplasm-entry-date {
+    width: 50%;
+    margin-right: 2%; 
+}
+
+.new-germplasm-last-harvert-date {
+    width: 50%;
+}
+
 @media all and (max-width: 768px) {
     .value-filter {
         width: 100%;
         margin-bottom: 12px;
+    }
+
+    .new-germplasm-name {
+        width: 100%;
+        margin-bottom: 12px;
+        margin-right: 0%;
+    }
+
+    .new-germplasm-column-value-input {
+        margin-left: 0%;
+        width: 100%;
+    }
+    .new-germplasm-cold-chamber-local {
+        width: 100%;
+        margin-right: 0%;
+    }
+    .new-germplasm-entry-date {
+        width: 100%;
+        margin-right: 0%; 
+    }
+    .new-germplasm-last-harvert-date {
+        width: 100%;
     }
 }
