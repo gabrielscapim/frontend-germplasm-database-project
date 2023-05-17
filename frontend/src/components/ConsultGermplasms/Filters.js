@@ -65,7 +65,7 @@ function Filters(
       <div className={ styles[ROW_CLASS] }>
         <Datalist
           id="column-order"
-          label="Coluna a ser ordenada"
+          label="Coluna (atributo) a ser ordenada"
           options={ attributes.filter((attr) => attr !== 'nome') }
           name="sortFilterColumn"
           placeholder="Digite a coluna a ser ordenada"
@@ -101,7 +101,7 @@ function Filters(
       <div className={ styles[ROW_CLASS] }>
         <Datalist
           id="column-filter"
-          label="Coluna a ser filtrada"
+          label="Coluna (atributo) a ser filtrada"
           options={ numericFiltersAvaible }
           name="numericFilterColumn"
           placeholder="Digite a coluna a ser filtrada"

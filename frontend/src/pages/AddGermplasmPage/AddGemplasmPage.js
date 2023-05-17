@@ -57,6 +57,7 @@ function AddGermplasmPage() {
           <Button
             id="button-filter"
             label="Continuar"
+            disabled
             type="button"
             componentStyles={ {
               backgroundColor: '#684f92',
