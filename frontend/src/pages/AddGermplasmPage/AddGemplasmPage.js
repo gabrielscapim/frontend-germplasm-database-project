@@ -270,19 +270,21 @@ function AddGermplasmPage() {
         germplasms={ newGermplasm }
         tableContainerStyles={ { height: '200px' } }
       />
-      <Button
-        id="button-filter"
-        label="Adicionar germoplasma"
-        type="button"
-        componentStyles={ {
-          backgroundColor: '#006400',
-          border: '1px solid #006400',
-          height: '38px',
-          marginBottom: '12px',
-          marginTop: '8px',
-        } }
-        onClick={ handleAddGermplasmClick }
-      />
+      <div className={ styles['add-germplasm-button-row'] }>
+        <Button
+          id="button-filter"
+          label="Adicionar germoplasma"
+          type="button"
+          componentStyles={ {
+            backgroundColor: '#006400',
+            border: '1px solid #006400',
+            height: '38px',
+            marginBottom: '12px',
+            marginTop: '8px',
+          } }
+          onClick={ handleAddGermplasmClick }
+        />
+      </div>
     </section>
   );
 }
