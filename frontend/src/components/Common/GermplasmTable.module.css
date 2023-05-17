@@ -1,11 +1,15 @@
 .table-wrapper {
-    border: 1px solid #dfddda;
+    border: 1px solid #bdbbb7;
     border-radius: 12px;
-    height: 400px;
+    height: 600px;
     width: 95%;
     overflow-y: scroll;
     overflow-x: scroll;
     font-family: 'Museo Sans Rounded';
+}
+
+.table-wrapper td {
+    border-right: 1px solid #bdbbb7;
 }
 
 .table-wrapper thead {
