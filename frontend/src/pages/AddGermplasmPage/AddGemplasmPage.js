@@ -10,14 +10,13 @@ import {
 } from '../../data/geneticMaterial';
 import { GlobalContext } from '../../context/GlobalContext';
 import GermplasmTable from '../../components/Common/GermplasmTable';
+import notAttributesRequired from '../../helpers/notAttributesRequired';
 
 function AddGermplasmPage() {
   const global = useContext(GlobalContext);
   const { attributes, germplasmsNames } = global;
 
-  const columnsToAdd = attributes.filter((attribute) => (
-    attribute !== 'id' && attribute !== 'nome' && attribute !== 'tipoDeMaterialGenetico'
-  ));
+  const columnsToAdd = notAttributesRequired(attributes);
   const ROW_CLASS = 'add-germplasm-row';
 
   const [inputsState, setInputsState] = useState({
@@ -27,18 +26,20 @@ function AddGermplasmPage() {
     newGermplasmColumnSelect: 'primeiraFolhaPigmentacaoAntocianinicaDaBainha',
     newGermplasmGeneticGeneticOrigin: 'temperado',
     newGermplasmGeneticTransgenicSelect: 'Não',
-    newGermplasmNameEventsDetails: '',
+    newGermplasmGeneticEventsDetails: '',
   });
+  const [newGermplasm, setNewGermplasm] = useState({});
   const [nameIsCorrect, setNameIsCorrect] = useState(false);
 
   const {
     newGermplasmName,
     newGermplasmGeneticMaterial,
     newGermplasmGeneticGrainTexture,
-    newGermplasmColumnSelect,
-    newGermplasmColumnValue,
     newGermplasmGeneticGeneticOrigin,
     newGermplasmGeneticTransgenicSelect,
+    newGermplasmGeneticEventsDetails,
+    newGermplasmColumnValue,
+    newGermplasmColumnSelect,
   } = inputsState;
 
   const namesWithoutSpace = germplasmsNames.map((name) => name.replace(/\s/g, ''));
@@ -57,6 +58,17 @@ function AddGermplasmPage() {
   const handleContinueClick = () => {
     if (verifyGermplasmName) {
       setNameIsCorrect(true);
+      setNewGermplasm({
+        nome: newGermplasmName,
+        tipoDeMaterialGenetico: newGermplasmGeneticMaterial,
+        texturaDoGrao: newGermplasmGeneticGrainTexture,
+        origem: newGermplasmGeneticGeneticOrigin,
+        transgenico: newGermplasmGeneticTransgenicSelect === 'Sim',
+        eventosTransgenicos: newGermplasmGeneticEventsDetails,
+        localNaCamaraFria: 'c13',
+        dataDeEntrada: '03-12-2022',
+        dataDaUltimaColheita: '04-02-22',
+      });
     }
   };
 
@@ -129,9 +141,9 @@ function AddGermplasmPage() {
             { newGermplasmGeneticTransgenicSelect === 'Sim' && (
               <div className={ styles[ROW_CLASS] }>
                 <Input
-                  id="new-germplasm-events-details"
+                  id="new-germplasm-genetic-events-details"
                   label="Descreva os eventos transgênicos"
-                  name="newGermplasmNameEventsDetails"
+                  name="newGermplasmGeneticEventsDetails"
                   placeholder="Digite os eventos transgênicos"
                   handleChange={ handleChange }
                 />
@@ -210,7 +222,7 @@ function AddGermplasmPage() {
         ) }
       </div>
       <GermplasmTable
-        attributes={ attributes }
+        attributes={ attributes.filter((attribute) => attribute !== 'id') }
         germplasms={ [] }
         tableContainerStyles={ { height: '200px' } }
       />
