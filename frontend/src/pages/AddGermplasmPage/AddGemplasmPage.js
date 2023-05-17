@@ -231,7 +231,7 @@ function AddGermplasmPage() {
             <div className={ styles[ROW_CLASS] }>
               <Select
                 id="new-germplasm-column-select"
-                label="Coluna (atributo) a ser adicionada"
+                label="Coluna (atributo) a ser adicionada ou editada"
                 options={ columnsToAdd }
                 name="newGermplasmColumnSelect"
                 handleChange={ handleChange }
