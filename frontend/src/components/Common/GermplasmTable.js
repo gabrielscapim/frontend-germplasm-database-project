@@ -21,6 +21,13 @@ function GermplasmTable({ germplasms, attributes, tableContainerStyles }) {
               <tr key={ `row-result-${index}` }>
                 {
                   Object.values(apiResult).map((result, apiResultIndex) => {
+                    const booleanColumn = (
+                      <td
+                        key={ `column-result-${result}-${index}-${apiResultIndex}` }
+                      >
+                        { result === false ? 'não' : 'sim' }
+                      </td>
+                    );
                     const column = (
                       <td
                         key={ `column-result-${result}-${index}-${apiResultIndex}` }
@@ -28,7 +35,7 @@ function GermplasmTable({ germplasms, attributes, tableContainerStyles }) {
                         { result }
                       </td>
                     );
-                    return column;
+                    return typeof result === 'boolean' ? booleanColumn : column;
                   })
                 }
               </tr>

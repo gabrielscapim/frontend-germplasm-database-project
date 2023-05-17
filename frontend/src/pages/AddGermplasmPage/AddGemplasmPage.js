@@ -32,7 +32,7 @@ function AddGermplasmPage() {
     newGermplasmEntryDate: '',
     newGermplasmLastHarvertDate: '',
   });
-  const [newGermplasm, setNewGermplasm] = useState({});
+  const [newGermplasm, setNewGermplasm] = useState([]);
   const [nameIsCorrect, setNameIsCorrect] = useState(false);
 
   const {
@@ -42,14 +42,19 @@ function AddGermplasmPage() {
     newGermplasmGeneticGeneticOrigin,
     newGermplasmGeneticTransgenicSelect,
     newGermplasmGeneticEventsDetails,
-    newGermplasmColumnValue,
+    newGermplasmColdChamberLocal,
+    newGermplasmEntryDate,
+    newGermplasmLastHarvertDate,
     newGermplasmColumnSelect,
+    newGermplasmColumnValue,
   } = inputsState;
 
   const namesWithoutSpace = germplasmsNames.map((name) => name.replace(/\s/g, ''));
   const newGermplasmNameWithoutSpace = newGermplasmName.replace(/\s/g, '');
-  const verifyGermplasmName = !namesWithoutSpace
-    .includes(newGermplasmNameWithoutSpace) && newGermplasmName !== '';
+  const isGermplasmNameExist = namesWithoutSpace.includes(newGermplasmNameWithoutSpace);
+  const isRequiredInputsCorrect = newGermplasmColdChamberLocal !== ''
+    && newGermplasmEntryDate !== '' && newGermplasmLastHarvertDate !== ''
+    && newGermplasmName !== '';
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
@@ -58,21 +63,21 @@ function AddGermplasmPage() {
       [name]: value,
     }));
   };
-
+  console.log(newGermplasm);
   const handleContinueClick = () => {
-    if (verifyGermplasmName) {
+    if (!isGermplasmNameExist && isRequiredInputsCorrect) {
       setNameIsCorrect(true);
-      setNewGermplasm({
+      setNewGermplasm([{
         nome: newGermplasmName,
         tipoDeMaterialGenetico: newGermplasmGeneticMaterial,
         texturaDoGrao: newGermplasmGeneticGrainTexture,
         origem: newGermplasmGeneticGeneticOrigin,
         transgenico: newGermplasmGeneticTransgenicSelect === 'Sim',
         eventosTransgenicos: newGermplasmGeneticEventsDetails,
-        localNaCamaraFria: 'c13',
-        dataDeEntrada: '03-12-2022',
-        dataDaUltimaColheita: '04-02-22',
-      });
+        localNaCamaraFria: newGermplasmColdChamberLocal,
+        dataDeEntrada: newGermplasmEntryDate,
+        dataDaUltimaColheita: newGermplasmLastHarvertDate,
+      }]);
     }
   };
 
@@ -93,7 +98,7 @@ function AddGermplasmPage() {
             <div className={ styles[ROW_CLASS] }>
               <Input
                 id="new-germplasm-name"
-                label="Nome do novo germoplasma"
+                label="*Nome do novo germoplasma"
                 name="newGermplasmName"
                 placeholder="Digite o nome"
                 handleChange={ handleChange }
@@ -131,7 +136,7 @@ function AddGermplasmPage() {
                 inputValue={ newGermplasmGeneticTransgenicSelect }
               />
             </div>
-            { !verifyGermplasmName
+            { isGermplasmNameExist
                 && (
                   <p
                     style={ {
@@ -146,7 +151,7 @@ function AddGermplasmPage() {
               <div className={ styles[ROW_CLASS] }>
                 <Input
                   id="new-germplasm-genetic-events-details"
-                  label="Descreva os eventos transgênicos"
+                  label="*Descreva os eventos transgênicos"
                   name="newGermplasmGeneticEventsDetails"
                   placeholder="Digite os eventos transgênicos"
                   handleChange={ handleChange }
@@ -156,7 +161,7 @@ function AddGermplasmPage() {
             <div className={ styles[ROW_CLASS] }>
               <Input
                 id="new-germplasm-cold-chamber-local"
-                label="Local na câmara fria"
+                label="*Local na câmara fria"
                 name="newGermplasmColdChamberLocal"
                 placeholder="Digite o local na câmara fria"
                 handleChange={ handleChange }
@@ -164,18 +169,29 @@ function AddGermplasmPage() {
               <Input
                 type="date"
                 id="new-germplasm-entry-date"
-                label="Data de entrada na câmara fria"
+                label="*Data de entrada na câmara fria"
                 name="newGermplasmEntryDate"
                 handleChange={ handleChange }
               />
               <Input
                 type="date"
                 id="new-germplasm-last-harvert-date"
-                label="Data da última colheita"
+                label="*Data da última colheita"
                 name="newGermplasmLastHarvertDate"
                 handleChange={ handleChange }
               />
             </div>
+            { !isRequiredInputsCorrect
+                && (
+                  <p
+                    style={ {
+                      fontSize: '14px',
+                      color: '#dc3545',
+                      marginBottom: '8px' } }
+                  >
+                    Preencha os campos obrigatórios *
+                  </p>
+                )}
             <div className={ styles[ROW_CLASS] }>
               <Button
                 id="button-filter"
@@ -189,7 +205,7 @@ function AddGermplasmPage() {
                   marginTop: '8px',
                 } }
                 onClick={ handleContinueClick }
-                disabled={ !verifyGermplasmName }
+                disabled={ !(!isGermplasmNameExist && isRequiredInputsCorrect) }
               />
             </div>
           </>
@@ -250,7 +266,7 @@ function AddGermplasmPage() {
       </div>
       <GermplasmTable
         attributes={ attributes.filter((attribute) => attribute !== 'id') }
-        germplasms={ [] }
+        germplasms={ newGermplasm }
         tableContainerStyles={ { height: '200px' } }
       />
     </section>

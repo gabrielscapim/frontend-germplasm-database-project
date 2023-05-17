@@ -6,7 +6,7 @@ import Select from '../Common/Select';
 import Button from '../Common/Button';
 import Datalist from '../Common/Datalist';
 import { GlobalContext } from '../../context/GlobalContext';
-import { verifyNumericInput } from '../../helpers/verifyInputs';
+import { isNumericInputCorrect } from '../../helpers/isNumericInputCorrect';
 
 function Filters(
   { numericFiltersAvaible,
@@ -38,9 +38,10 @@ function Filters(
     sortFilterOperator,
   } = filters;
 
-  const verifyGermplasmNameFilter = germplasmsNames.includes(germplasmNameFilter);
-  const verifyNumericFilterColumn = numericFiltersAvaible.includes(numericFilterColumn);
-  const verifySortFilterColumn = attributes.includes(sortFilterColumn);
+  const isGermplasmFilterCorrect = germplasmsNames.includes(germplasmNameFilter);
+  const isNumericFilterColumnCorrect = numericFiltersAvaible
+    .includes(numericFilterColumn);
+  const isSortFilterColumnCorrect = attributes.includes(sortFilterColumn);
 
   return (
     <div className={ styles['filters-container'] }>
@@ -55,7 +56,7 @@ function Filters(
           value={ germplasmNameFilter }
         />
       </div>
-      { !verifyGermplasmNameFilter
+      { !isGermplasmFilterCorrect
         && germplasmNameFilter !== ''
           && (
             <p style={ { fontSize: '14px', color: '#dc3545' } }>
@@ -84,14 +85,14 @@ function Filters(
           inputValue={ sortFilterOperator }
         />
       </div>
-      { !verifySortFilterColumn
+      { !isSortFilterColumnCorrect
           && sortFilterColumn !== ''
           && (
             <p style={ { fontSize: '14px', color: '#dc3545' } }>
               Digite uma coluna existente
             </p>
           )}
-      { verifySortFilterColumn
+      { isSortFilterColumnCorrect
           && sortFilterColumn !== ''
           && (
             <p style={ { fontSize: '14px' } }>
@@ -135,20 +136,20 @@ function Filters(
           id="button-filter"
           label="Filtrar"
           type="button"
-          disabled={ !verifyNumericFilterColumn
-            || !verifyNumericInput(numericFilterValue) }
+          disabled={ !isNumericFilterColumnCorrect
+            || !isNumericInputCorrect(numericFilterValue) }
           componentStyles={ purpleButtonStyles }
           onClick={ numericFilterSubmit }
         />
       </div>
-      { !verifyNumericFilterColumn
+      { !isNumericFilterColumnCorrect
           && numericFilterColumn !== ''
           && (
             <p style={ { fontSize: '14px', color: '#dc3545' } }>
               Digite uma coluna existente
             </p>
           )}
-      { !verifyNumericInput(numericFilterValue)
+      { !isNumericInputCorrect(numericFilterValue)
           && numericFilterValue !== ''
           && (
             <p style={ { fontSize: '14px', color: '#dc3545' } }>
