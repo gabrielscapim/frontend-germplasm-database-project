@@ -1,9 +1,12 @@
 import PropTypes from 'prop-types';
 import styles from './GermplasmTable.module.css';
 
-function GermplasmTable({ germplasms, attributes }) {
+function GermplasmTable({ germplasms, attributes, tableContainerStyles }) {
   return (
-    <div className={ `text-nowrap ${styles['table-wrapper']}` }>
+    <div
+      className={ `text-nowrap ${styles['table-wrapper']}` }
+      style={ tableContainerStyles }
+    >
       <table className="table table-striped">
         <thead>
           <tr>
@@ -40,6 +43,7 @@ function GermplasmTable({ germplasms, attributes }) {
 GermplasmTable.propTypes = {
   germplasms: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
   attributes: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
+  tableContainerStyles: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
 }.isRequired;
 
 export default GermplasmTable;

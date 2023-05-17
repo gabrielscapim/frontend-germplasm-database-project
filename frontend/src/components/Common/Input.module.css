@@ -12,6 +12,10 @@
     width: 50%;
 }
 
+.new-germplasm-events-details {
+    width: 100%;
+}
+
 @media all and (max-width: 768px) {
     .value-filter {
         width: 100%;

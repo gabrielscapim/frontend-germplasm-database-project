@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useContext, useState } from 'react';
 import Filters from '../../components/ConsultGermplasms/Filters';
-import GermplasmTable from '../../components/ConsultGermplasms/GermplasmTable';
+import GermplasmTable from '../../components/Common/GermplasmTable';
 import styles from './ConsultGermplasmsPage.module.css';
 import { GlobalContext } from '../../context/GlobalContext';
 

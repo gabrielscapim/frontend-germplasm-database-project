@@ -12,8 +12,6 @@ export const tiposDeMaterialGenetico = [
 
 export const tiposDeLinhagem = [
   'milho comum',
-  'milho comum tropical',
-  'milho comum temperada',
   'milho doce',
   'milho pipoca',
   'milho superdoce',
@@ -22,4 +20,9 @@ export const tiposDeLinhagem = [
   'milho cerroso',
   'milho de alta qualidade proteica',
   'milho canjica',
+];
+
+export const origemMaterialGenetico = [
+  'temperado',
+  'tropical',
 ];

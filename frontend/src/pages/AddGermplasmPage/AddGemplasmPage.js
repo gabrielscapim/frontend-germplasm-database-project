@@ -4,8 +4,12 @@ import styles from './AddGermplasmPage.module.css';
 import Select from '../../components/Common/Select';
 import Button from '../../components/Common/Button';
 import Input from '../../components/Common/Input';
-import { tiposDeLinhagem, tiposDeMaterialGenetico } from '../../data/geneticMaterial';
+import {
+  origemMaterialGenetico,
+  tiposDeLinhagem, tiposDeMaterialGenetico,
+} from '../../data/geneticMaterial';
 import { GlobalContext } from '../../context/GlobalContext';
+import GermplasmTable from '../../components/Common/GermplasmTable';
 
 function AddGermplasmPage() {
   const global = useContext(GlobalContext);
@@ -21,7 +25,9 @@ function AddGermplasmPage() {
     newGermplasmGeneticMaterial: 'linhagem',
     newGermplasmGeneticGrainTexture: 'milho comum',
     newGermplasmColumnSelect: 'primeiraFolhaPigmentacaoAntocianinicaDaBainha',
-    newGermplasmColumnValue: '',
+    newGermplasmGeneticGeneticOrigin: 'temperado',
+    newGermplasmGeneticTransgenicSelect: 'Não',
+    newGermplasmNameEventsDetails: '',
   });
   const [nameIsCorrect, setNameIsCorrect] = useState(false);
 
@@ -31,7 +37,14 @@ function AddGermplasmPage() {
     newGermplasmGeneticGrainTexture,
     newGermplasmColumnSelect,
     newGermplasmColumnValue,
+    newGermplasmGeneticGeneticOrigin,
+    newGermplasmGeneticTransgenicSelect,
   } = inputsState;
+
+  const namesWithoutSpace = germplasmsNames.map((name) => name.replace(/\s/g, ''));
+  const newGermplasmNameWithoutSpace = newGermplasmName.replace(/\s/g, '');
+  const verifyGermplasmName = !namesWithoutSpace
+    .includes(newGermplasmNameWithoutSpace) && newGermplasmName !== '';
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
@@ -42,11 +55,7 @@ function AddGermplasmPage() {
   };
 
   const handleContinueClick = () => {
-    const namesWithoutSpace = germplasmsNames.map((name) => name.replace(/\s/g, ''));
-    const newGermplasmNameWithoutSpace = newGermplasmName.replace(/\s/g, '');
-
-    if (!namesWithoutSpace.includes(newGermplasmNameWithoutSpace)
-    && newGermplasmName !== '') {
+    if (verifyGermplasmName) {
       setNameIsCorrect(true);
     }
   };
@@ -70,7 +79,7 @@ function AddGermplasmPage() {
                 id="new-germplasm-name"
                 label="Nome do novo germoplasma"
                 name="newGermplasmName"
-                placeholder="Digite o nome do novo germoplasma"
+                placeholder="Digite o nome"
                 handleChange={ handleChange }
               />
               <Select
@@ -83,13 +92,51 @@ function AddGermplasmPage() {
               />
               <Select
                 id="new-germplasm-genetic-grain-texture"
-                label="Tipo de linhagem"
+                label="Textura do grão"
                 options={ tiposDeLinhagem }
                 name="newGermplasmGeneticGrainTexture"
                 handleChange={ handleChange }
                 inputValue={ newGermplasmGeneticGrainTexture }
               />
+              <Select
+                id="new-germplasm-genetic-genetic-origin"
+                label="Origem"
+                options={ origemMaterialGenetico }
+                name="newGermplasmGeneticGeneticOrigin"
+                handleChange={ handleChange }
+                inputValue={ newGermplasmGeneticGeneticOrigin }
+              />
+              <Select
+                id="new-germplasm-genetic-transgenic-select"
+                label="Transgênico"
+                options={ ['Sim', 'Não'] }
+                name="newGermplasmGeneticTransgenicSelect"
+                handleChange={ handleChange }
+                inputValue={ newGermplasmGeneticTransgenicSelect }
+              />
             </div>
+            { !verifyGermplasmName
+                && (
+                  <p
+                    style={ {
+                      fontSize: '14px',
+                      color: '#dc3545',
+                      marginBottom: '8px' } }
+                  >
+                    Digite o nome de um germoplasma não existente
+                  </p>
+                )}
+            { newGermplasmGeneticTransgenicSelect === 'Sim' && (
+              <div className={ styles[ROW_CLASS] }>
+                <Input
+                  id="new-germplasm-events-details"
+                  label="Descreva os eventos transgênicos"
+                  name="newGermplasmNameEventsDetails"
+                  placeholder="Digite os eventos transgênicos"
+                  handleChange={ handleChange }
+                />
+              </div>
+            ) }
             <div className={ styles[ROW_CLASS] }>
               <Button
                 id="button-filter"
@@ -103,6 +150,7 @@ function AddGermplasmPage() {
                   marginTop: '8px',
                 } }
                 onClick={ handleContinueClick }
+                disabled={ !verifyGermplasmName }
               />
             </div>
           </>
@@ -161,6 +209,11 @@ function AddGermplasmPage() {
           </>
         ) }
       </div>
+      <GermplasmTable
+        attributes={ attributes }
+        germplasms={ [] }
+        tableContainerStyles={ { height: '200px' } }
+      />
     </section>
   );
 }

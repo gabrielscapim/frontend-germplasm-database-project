@@ -20,6 +20,16 @@
     width: 50%;
 }
 
+.new-germplasm-genetic-genetic-origin {
+    margin-left: 2%;
+    width: 30%;
+}
+
+.new-germplasm-genetic-transgenic-select {
+    margin-left: 2%;
+    width: 20%;
+}
+
 @media all and (max-width: 768px) {
     .comparison-filter {
         width: 100%;
@@ -35,6 +45,11 @@
         margin-bottom: 12px;
     }
 
+    .new-germplasm-genetic-grain-texture {
+        margin-left: 0%;
+        width: 100%;
+    }
+
     .new-germplasm-genetic-material-linhagem {
         margin-left: 0%;
         width: 100%;
@@ -43,5 +58,14 @@
     .new-germplasm-column-select {
         width: 100%;
         margin-bottom: 12px;
+    }
+    .new-germplasm-genetic-genetic-origin {
+        margin-left: 0%;
+        width: 100%;
+    }
+    
+    .new-germplasm-genetic-transgenic-select {
+        margin-left: 0%;
+        width: 100%;
     }
 }
