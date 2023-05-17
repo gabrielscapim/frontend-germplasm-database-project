@@ -25,7 +25,7 @@ function Input({
           ? 'form-check-label'
           : '' }
         htmlFor={ id }
-        style={ { marginBottom: '4px' } }
+        style={ { marginBottom: '8px' } }
       >
         { label }
       </label>

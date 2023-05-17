@@ -1,3 +1,29 @@
 .page-container {
     padding-top: 20px;
+    padding-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-germplasm-container {
+    padding: 0px 12px 0px 12px;
+    border-radius: 12px;
+    width: 95%;
+}
+
+.add-germplasm-row {
+    display: flex;
+    gap: 10px;
+    padding: 0px 0px 16px 0px;
+    align-items: flex-end;
+    flex-direction: row;
+    width: 100%;
+}
+
+@media all and (max-width: 768px) {
+    .add-germplasm-row  {
+        flex-direction: column;
+    }
 }
