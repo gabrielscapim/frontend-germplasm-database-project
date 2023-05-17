@@ -10,7 +10,32 @@ import { GlobalContext } from '../../context/GlobalContext';
 function AddGermplasmPage() {
   const global = useContext(GlobalContext);
   const { attributes } = global;
+
+  const columnsToAdd = attributes.filter((attribute) => (
+    attribute !== 'id' && attribute !== 'nome' && attribute !== 'tipoDeMaterialGenetico'
+  ));
+  const ROW_CLASS = 'add-germplasm-row';
+
+  const [inputsState, setInputsState] = useState({
+    newGermplasmGeneticMaterial: 'linhagem',
+    newGermplasmGeneticMaterialLinhagem: 'milho comum',
+    newGermplasmColumnSelect: columnsToAdd[0],
+  });
   const [nameIsCorrect, setNameIsCorrect] = useState(false);
+
+  const {
+    newGermplasmGeneticMaterial,
+    newGermplasmGeneticMaterialLinhagem,
+    newGermplasmColumnSelect,
+  } = inputsState;
+
+  const handleChange = ({ target }) => {
+    const { name, value } = target;
+    return setInputsState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
   const handleContinueClick = () => {
     console.log('nome está correto');
@@ -24,11 +49,6 @@ function AddGermplasmPage() {
     console.log('adicionou germoplasma');
   };
 
-  const columnsToAdd = attributes.filter((attribute) => (
-    attribute !== 'id' && attribute !== 'nome' && attribute !== 'tipoDeMaterialGenetico'
-  ));
-  const ROW_CLASS = 'add-germplasm-row';
-
   return (
     <section className={ styles['page-container'] }>
       <div className={ styles['add-germplasm-container'] }>
@@ -38,18 +58,23 @@ function AddGermplasmPage() {
             label="Nome do novo germoplasma"
             name="newGermplasmName"
             placeholder="Digite o nome do novo germoplasma"
+            handleChange={ handleChange }
           />
           <Select
             id="new-germplasm-genetic-material"
             label="Tipo de material génetico"
             options={ tiposDeMaterialGenetico }
             name="newGermplasmGeneticMaterial"
+            handleChange={ handleChange }
+            inputValue={ newGermplasmGeneticMaterial }
           />
           <Select
             id="new-germplasm-genetic-material-linhagem"
             label="Tipo de linhagem"
             options={ tiposDeLinhagem }
             name="newGermplasmGeneticMaterialLinhagem"
+            handleChange={ handleChange }
+            inputValue={ newGermplasmGeneticMaterialLinhagem }
           />
         </div>
         <div className={ styles[ROW_CLASS] }>
@@ -73,6 +98,8 @@ function AddGermplasmPage() {
             label="Coluna (atributo) a ser adicionada"
             options={ columnsToAdd }
             name="newGermplasmColumnSelect"
+            handleChange={ handleChange }
+            inputValue={ newGermplasmColumnSelect }
           />
           <Input
             type="number"
@@ -81,6 +108,7 @@ function AddGermplasmPage() {
             name="newGermplasmName"
             placeholder="Digite o valor da coluna a ser adicionada"
             minInput={ 1 }
+            handleChange={ handleChange }
           />
         </div>
         <div className={ styles['buttons-row'] }>
