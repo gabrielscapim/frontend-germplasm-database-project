@@ -129,6 +129,7 @@ function Filters(
           inputClassName="value-input"
           handleChange={ handleChangeFilters }
           inputValue={ numericFilterValue }
+          minInput={ 1 }
         />
         <Button
           id="button-filter"
