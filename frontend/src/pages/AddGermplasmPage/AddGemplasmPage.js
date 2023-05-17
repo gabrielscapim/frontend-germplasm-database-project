@@ -32,7 +32,17 @@ function AddGermplasmPage() {
     newGermplasmEntryDate: '',
     newGermplasmLastHarvertDate: '',
   });
-  const [newGermplasm, setNewGermplasm] = useState([]);
+  const [newGermplasm, setNewGermplasm] = useState([{
+    nome: '',
+    tipoDeMaterialGenetico: '',
+    texturaDoGrao: '',
+    origem: '',
+    transgenico: '',
+    eventosTransgenicos: '',
+    localNaCamaraFria: '',
+    dataDeEntrada: '',
+    dataDaUltimaColheita: '',
+  }]);
   const [nameIsCorrect, setNameIsCorrect] = useState(false);
 
   const {
@@ -48,7 +58,7 @@ function AddGermplasmPage() {
     newGermplasmColumnSelect,
     newGermplasmColumnValue,
   } = inputsState;
-
+  console.log(Object.keys(newGermplasm[0]));
   const namesWithoutSpace = germplasmsNames.map((name) => name.replace(/\s/g, ''));
   const newGermplasmNameWithoutSpace = newGermplasmName.replace(/\s/g, '');
   const isGermplasmNameExist = namesWithoutSpace.includes(newGermplasmNameWithoutSpace);
@@ -82,7 +92,11 @@ function AddGermplasmPage() {
   };
 
   const handleAddAttributeClick = () => {
-    console.log('adicionou atributo');
+    console.log(newGermplasmColumnSelect);
+    setNewGermplasm((prevState) => ([{
+      ...prevState[0],
+      [newGermplasmColumnSelect]: newGermplasmColumnValue,
+    }]));
   };
 
   const handleAddGermplasmClick = () => {
@@ -233,7 +247,7 @@ function AddGermplasmPage() {
                 handleChange={ handleChange }
               />
             </div>
-            <div className={ styles['buttons-row'] }>
+            <div className={ styles[ROW_CLASS] }>
               <Button
                 id="button-filter"
                 label="Adicionar atributo"
@@ -247,27 +261,27 @@ function AddGermplasmPage() {
                 } }
                 onClick={ handleAddAttributeClick }
               />
-              <Button
-                id="button-filter"
-                label="Adicionar germoplasma"
-                type="button"
-                componentStyles={ {
-                  backgroundColor: '#006400',
-                  border: '1px solid #006400',
-                  height: '38px',
-                  marginBottom: '12px',
-                  marginTop: '8px',
-                } }
-                onClick={ handleAddGermplasmClick }
-              />
             </div>
           </>
         ) }
       </div>
       <GermplasmTable
-        attributes={ attributes.filter((attribute) => attribute !== 'id') }
+        attributes={ Object.keys(newGermplasm[0]) || [] }
         germplasms={ newGermplasm }
         tableContainerStyles={ { height: '200px' } }
+      />
+      <Button
+        id="button-filter"
+        label="Adicionar germoplasma"
+        type="button"
+        componentStyles={ {
+          backgroundColor: '#006400',
+          border: '1px solid #006400',
+          height: '38px',
+          marginBottom: '12px',
+          marginTop: '8px',
+        } }
+        onClick={ handleAddGermplasmClick }
       />
     </section>
   );
