@@ -1,7 +1,8 @@
 * {
     background-color: #faf9f6;
+    font-family: 'Museo Sans Rounded';
 }
 
 body {
-    overflow:auto;
+    overflow: auto;
 }
