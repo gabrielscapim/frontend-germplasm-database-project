@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 /* eslint-disable no-unused-vars */
 import { useContext, useState } from 'react';
 import styles from './AddGermplasmPage.module.css';
@@ -27,6 +28,9 @@ function AddGermplasmPage() {
     newGermplasmGeneticGeneticOrigin: 'temperado',
     newGermplasmGeneticTransgenicSelect: 'Não',
     newGermplasmGeneticEventsDetails: '',
+    newGermplasmColdChamberLocal: '',
+    newGermplasmEntryDate: '',
+    newGermplasmLastHarvertDate: '',
   });
   const [newGermplasm, setNewGermplasm] = useState({});
   const [nameIsCorrect, setNameIsCorrect] = useState(false);
@@ -149,6 +153,29 @@ function AddGermplasmPage() {
                 />
               </div>
             ) }
+            <div className={ styles[ROW_CLASS] }>
+              <Input
+                id="new-germplasm-cold-chamber-local"
+                label="Local na câmara fria"
+                name="newGermplasmColdChamberLocal"
+                placeholder="Digite o local na câmara fria"
+                handleChange={ handleChange }
+              />
+              <Input
+                type="date"
+                id="new-germplasm-entry-date"
+                label="Data de entrada na câmara fria"
+                name="newGermplasmEntryDate"
+                handleChange={ handleChange }
+              />
+              <Input
+                type="date"
+                id="new-germplasm-last-harvert-date"
+                label="Data da última colheita"
+                name="newGermplasmLastHarvertDate"
+                handleChange={ handleChange }
+              />
+            </div>
             <div className={ styles[ROW_CLASS] }>
               <Button
                 id="button-filter"
