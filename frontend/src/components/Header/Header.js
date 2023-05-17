@@ -21,10 +21,10 @@ function Header() {
           </a>
         </nav>
       </div>
-      <div className={ styles['user-container'] }>
+      {/* <div className={ styles['user-container'] }>
         <i className="bi bi-person-circle"> </i>
         Carlos Scapim
-      </div>
+      </div> */}
     </header>
   );
 }
