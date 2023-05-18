@@ -44,13 +44,12 @@ function Select({
 }
 
 Select.propTypes = {
-  id: PropTypes.string.isRequired,
-  options: PropTypes.arrayOf(PropTypes.string).isRequired,
-  label: PropTypes.string.isRequired,
-  inputValue: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  containerStyles: PropTypes.objectOf(PropTypes.string).isRequired,
-};
+  id: PropTypes.string,
+  options: PropTypes.arrayOf(PropTypes.string),
+  label: PropTypes.string,
+  inputValue: PropTypes.string,
+  name: PropTypes.string,
+  handleChange: PropTypes.func,
+}.isRequired;
 
 export default Select;
