@@ -96,6 +96,7 @@ function EditGermplasmPage() {
       try {
         await axios.put('http://localhost:8080/api/germplasm', { ...newGermplasm, deletado: false });
         navigate('/consult-germplasms');
+        window.alert('Germoplasma editado com sucesso!');
         window.location.reload();
       } catch (error) {
         window.alert('Erro: não foi possível editar o germoplasmama,'
