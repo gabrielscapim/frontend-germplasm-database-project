@@ -6,15 +6,13 @@ import styles from './AddGermplasmPage.module.css';
 import Select from '../../components/Common/Select';
 import Button from '../../components/Common/Button';
 import Input from '../../components/Common/Input';
-import {
-  origemMaterialGenetico,
-  texturaDoGrao, tiposDeMaterialGenetico,
-} from '../../data/geneticMaterial';
 import { GlobalContext } from '../../context/GlobalContext';
 import GermplasmTable from '../../components/Common/GermplasmTable';
 import notAttributesRequired from '../../helpers/notAttributesRequired';
-import { newGermplasmInitialState,
+import {
+  newGermplasmInitialState,
   newGermplasmInputs } from '../../helpers/newGermplasmState';
+import RequiredGermplasmsInputs from '../../components/Common/RequiredGermplasmsInputs';
 
 function AddGermplasmPage() {
   const global = useContext(GlobalContext);
@@ -115,107 +113,10 @@ function AddGermplasmPage() {
         { !nameIsCorrect
         && (
           <>
-            <div className={ styles[ROW_CLASS] }>
-              <Input
-                id="new-germplasm-name"
-                label="*Nome do novo germoplasma"
-                name="newGermplasmName"
-                placeholder="Digite o nome germoplasma que deseja adicionar"
-                handleChange={ handleChange }
-              />
-            </div>
-            <div className={ styles[ROW_CLASS] }>
-              <Select
-                id="new-germplasm-genetic-material"
-                label="*Tipo de material génetico"
-                options={ tiposDeMaterialGenetico }
-                name="newGermplasmGeneticMaterial"
-                handleChange={ handleChange }
-                inputValue={ newGermplasmGeneticMaterial }
-              />
-              <Select
-                id="new-germplasm-genetic-grain-texture"
-                label="*Textura do grão"
-                options={ texturaDoGrao }
-                name="newGermplasmGeneticGrainTexture"
-                handleChange={ handleChange }
-                inputValue={ newGermplasmGeneticGrainTexture }
-              />
-            </div>
-            <div className={ styles[ROW_CLASS] }>
-              <Select
-                id="new-germplasm-genetic-genetic-origin"
-                label="*Origem"
-                options={ origemMaterialGenetico }
-                name="newGermplasmGeneticGeneticOrigin"
-                handleChange={ handleChange }
-                inputValue={ newGermplasmGeneticGeneticOrigin }
-              />
-              <Select
-                id="new-germplasm-genetic-transgenic-select"
-                label="*Transgênico"
-                options={ ['Sim', 'Não'] }
-                name="newGermplasmGeneticTransgenicSelect"
-                handleChange={ handleChange }
-                inputValue={ newGermplasmGeneticTransgenicSelect }
-              />
-            </div>
-            { isGermplasmNameExist
-                && (
-                  <p
-                    style={ {
-                      fontSize: '14px',
-                      color: '#dc3545',
-                      marginBottom: '8px' } }
-                  >
-                    Digite o nome de um germoplasma não existente
-                  </p>
-                )}
-            { newGermplasmGeneticTransgenicSelect === 'Sim' && (
-              <div className={ styles[ROW_CLASS] }>
-                <Input
-                  id="new-germplasm-genetic-events-details"
-                  label="*Descreva os eventos transgênicos"
-                  name="newGermplasmGeneticEventsDetails"
-                  placeholder="Digite os eventos transgênicos"
-                  handleChange={ handleChange }
-                />
-              </div>
-            ) }
-            <div className={ styles[ROW_CLASS] }>
-              <Input
-                id="new-germplasm-cold-chamber-local"
-                label="*Local na câmara fria"
-                name="newGermplasmColdChamberLocal"
-                placeholder="Digite o local do germoplasma na câmara fria"
-                handleChange={ handleChange }
-              />
-              <Input
-                type="date"
-                id="new-germplasm-entry-date"
-                label="*Data de entrada na câmara fria"
-                name="newGermplasmEntryDate"
-                handleChange={ handleChange }
-              />
-              <Input
-                type="date"
-                id="new-germplasm-last-harvert-date"
-                label="*Data da última colheita"
-                name="newGermplasmLastHarvertDate"
-                handleChange={ handleChange }
-              />
-            </div>
-            { !isRequiredInputsCorrect
-                && (
-                  <p
-                    style={ {
-                      fontSize: '14px',
-                      color: '#dc3545',
-                      marginBottom: '8px' } }
-                  >
-                    * Preencha os campos obrigatórios
-                  </p>
-                )}
+            <RequiredGermplasmsInputs
+              inputsState={ inputsState }
+              handleChange={ handleChange }
+            />
             <div className={ styles[ROW_CLASS] }>
               <Button
                 id="button-continue-add-germplasm"

@@ -9,6 +9,7 @@ import styles from './EditGermplasmPage.module.css';
 import GermplasmTable from '../../components/Common/GermplasmTable';
 import { GlobalContext } from '../../context/GlobalContext';
 import notAttributesRequired from '../../helpers/notAttributesRequired';
+import RequiredGermplasmsInputs from '../../components/Common/RequiredGermplasmsInputs';
 
 function EditGermplasmPage() {
   const ROW_CLASS = 'edit-germplasm-row';
@@ -21,17 +22,48 @@ function EditGermplasmPage() {
   const germplasmToEdit = apiResults.find((apiResult) => (
     apiResult.id === Number(germplasmIdToEdit)));
 
+  const {
+    nome,
+    tipoDeMaterialGenetico,
+    texturaDoGrao,
+    origem,
+    transgenico,
+    eventosTransgenicos,
+    localNaCamaraFria,
+    dataDeEntrada,
+    dataDaUltimaColheita,
+  } = germplasmToEdit;
+
   const [inputsState, setInputsState] = useState({
-    editGermplasmColumnSelect: columns[0],
-    editGermplasmColumnValue: '',
+    newGermplasmName: nome,
+    newGermplasmGeneticMaterial: tipoDeMaterialGenetico,
+    newGermplasmGeneticGrainTexture: texturaDoGrao,
+    newGermplasmColumnSelect: 'primeiraFolhaPigmentacaoAntocianinicaDaBainha',
+    newGermplasmGeneticGeneticOrigin: origem,
+    newGermplasmGeneticTransgenicSelect: transgenico ? 'Sim' : 'Não',
+    newGermplasmGeneticEventsDetails: eventosTransgenicos,
+    newGermplasmColdChamberLocal: localNaCamaraFria,
+    newGermplasmEntryDate: dataDeEntrada,
+    newGermplasmLastHarvertDate: dataDaUltimaColheita,
   });
   const [newGermplasm, setNewGermplasm] = useState({
     ...germplasmToEdit,
   });
+  const {
+    newGermplasmName,
+    newGermplasmGeneticMaterial,
+    newGermplasmGeneticGrainTexture,
+    newGermplasmGeneticGeneticOrigin,
+    newGermplasmGeneticTransgenicSelect,
+    newGermplasmGeneticEventsDetails,
+    newGermplasmColdChamberLocal,
+    newGermplasmEntryDate,
+    newGermplasmLastHarvertDate,
+    newGermplasmColumnSelect,
+    newGermplasmColumnValue,
+  } = inputsState;
 
-  const { editGermplasmColumnSelect, editGermplasmColumnValue } = inputsState;
-
-  const handleChangeInputs = ({ target }) => {
+  const handleChange = ({ target }) => {
     const { name, value } = target;
     return setInputsState((prevState) => ({
       ...prevState,
@@ -42,7 +74,16 @@ function EditGermplasmPage() {
   const handleEditGermplasmClick = async () => {
     setNewGermplasm((prevState) => ({
       ...prevState,
-      [editGermplasmColumnSelect]: editGermplasmColumnValue,
+      [newGermplasmColumnSelect]: newGermplasmColumnValue,
+      nome: newGermplasmName,
+      tipoDeMaterialGenetico: newGermplasmGeneticMaterial,
+      texturaDoGrao: newGermplasmGeneticGrainTexture,
+      origem: newGermplasmGeneticGeneticOrigin,
+      transgenico: newGermplasmGeneticTransgenicSelect === 'Sim',
+      eventosTransgenicos: newGermplasmGeneticEventsDetails,
+      localNaCamaraFria: newGermplasmColdChamberLocal,
+      dataDeEntrada: newGermplasmEntryDate,
+      dataDaUltimaColheita: newGermplasmLastHarvertDate,
     }));
     setInputsState((prevState) => ({
       ...prevState,
@@ -68,23 +109,28 @@ function EditGermplasmPage() {
   return (
     <form className={ styles['page-container'] }>
       <div className={ styles['edit-germplasm-container'] }>
+        <RequiredGermplasmsInputs
+          inputsState={ inputsState }
+          handleChange={ handleChange }
+          actualName={ nome }
+        />
         <div className={ styles[ROW_CLASS] }>
           <Select
             id="edit-germplasm-column-select"
             label="Coluna (atributo) a ser editada"
             options={ columns }
-            name="editGermplasmColumnSelect"
-            handleChange={ handleChangeInputs }
-            inputValue={ editGermplasmColumnSelect }
+            name="newGermplasmColumnSelect"
+            handleChange={ handleChange }
+            inputValue={ newGermplasmColumnSelect }
           />
           <Input
             id="edit-germplasm-column-value-input"
             label="Valor da coluna (atributo) a ser editada"
-            name="editGermplasmColumnValue"
+            name="newGermplasmColumnValue"
             placeholder="Digite o valor da coluna a ser editada"
             minInput={ 1 }
-            handleChange={ handleChangeInputs }
-            inputValue={ editGermplasmColumnValue }
+            handleChange={ handleChange }
+            inputValue={ newGermplasmColumnValue }
           />
         </div>
         <div className={ styles[ROW_CLASS] }>
