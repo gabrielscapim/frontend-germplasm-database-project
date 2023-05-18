@@ -22,8 +22,6 @@ function RequiredGermplasmsInputs({ handleChange, inputsState, actualName }) {
     newGermplasmLastHarvertDate,
   } = inputsState;
 
-  console.log(actualName);
-
   const global = useContext(GlobalContext);
   const { germplasmsNames } = global;
 
@@ -34,7 +32,7 @@ function RequiredGermplasmsInputs({ handleChange, inputsState, actualName }) {
   const newGermplasmNameWithoutSpace = newGermplasmName.replace(/\s/g, '');
   const isGermplasmNameExist = actualName === undefined
     ? namesWithoutSpace.includes(newGermplasmNameWithoutSpace)
-    : namesWithoutSpace.filter((nameWithoutSpace) => nameWithoutSpace !== actualName)
+    : namesWithoutSpace.filter((nameWithoutSpace) => nameWithoutSpace !== actualName.replace(/\s/g, ''))
       .includes(newGermplasmNameWithoutSpace);
 
   const isRequiredInputsCorrect = newGermplasmColdChamberLocal !== ''
