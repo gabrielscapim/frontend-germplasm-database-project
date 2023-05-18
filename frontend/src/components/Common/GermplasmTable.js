@@ -32,7 +32,19 @@ function GermplasmTable({
                     <td>
                       <button
                         style={ {
-                          marginRight: '1%',
+                          marginRight: '10%',
+                          padding: '0px',
+                          border: 'none',
+                          background: 'none',
+                        } }
+                        onClick={ () => deleteGermplasm(apiResult.id) }
+                      >
+                        <i className="bi bi-pencil"> </i>
+                      </button>
+
+                      <button
+                        style={ {
+                          marginRight: '10%',
                           padding: '0px',
                           border: 'none',
                           background: 'none',

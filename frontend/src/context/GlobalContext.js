@@ -19,6 +19,9 @@ export function GlobalStorage({ children }) {
         setApiResults(deletedDeletadoColumn);
         setAttributes(Object.keys(deletedDeletadoColumn[0]));
         setGermplasmsNames(deletedDeletadoColumn.map(({ nome }) => nome));
+      })
+      .catch(() => {
+
       });
     // setApiResults(mockApi);
     // setAttributes(Object.keys(mockApi[0]));

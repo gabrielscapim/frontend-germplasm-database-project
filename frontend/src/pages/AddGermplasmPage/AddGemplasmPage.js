@@ -86,7 +86,9 @@ function AddGermplasmPage() {
         window.alert('Germoplasma adicionado com sucesso!');
         window.location.reload();
       } catch (error) {
-        console.log(error);
+        window.alert('Erro: não foi possível adicionar o germoplasmama,'
+        + ' tente novamente mais tarde.');
+        window.location.reload();
       }
     }
   };
@@ -117,7 +119,7 @@ function AddGermplasmPage() {
             <div className={ styles[ROW_CLASS] }>
               <Select
                 id="new-germplasm-genetic-material"
-                label="Tipo de material génetico"
+                label="*Tipo de material génetico"
                 options={ tiposDeMaterialGenetico }
                 name="newGermplasmGeneticMaterial"
                 handleChange={ handleChange }
@@ -125,7 +127,7 @@ function AddGermplasmPage() {
               />
               <Select
                 id="new-germplasm-genetic-grain-texture"
-                label="Textura do grão"
+                label="*Textura do grão"
                 options={ tiposDeLinhagem }
                 name="newGermplasmGeneticGrainTexture"
                 handleChange={ handleChange }
@@ -135,7 +137,7 @@ function AddGermplasmPage() {
             <div className={ styles[ROW_CLASS] }>
               <Select
                 id="new-germplasm-genetic-genetic-origin"
-                label="Origem"
+                label="*Origem"
                 options={ origemMaterialGenetico }
                 name="newGermplasmGeneticGeneticOrigin"
                 handleChange={ handleChange }
@@ -143,7 +145,7 @@ function AddGermplasmPage() {
               />
               <Select
                 id="new-germplasm-genetic-transgenic-select"
-                label="Transgênico"
+                label="*Transgênico"
                 options={ ['Sim', 'Não'] }
                 name="newGermplasmGeneticTransgenicSelect"
                 handleChange={ handleChange }
@@ -203,7 +205,7 @@ function AddGermplasmPage() {
                       color: '#dc3545',
                       marginBottom: '8px' } }
                   >
-                    Preencha os campos obrigatórios *
+                    * Preencha os campos obrigatórios
                   </p>
                 )}
             <div className={ styles[ROW_CLASS] }>
