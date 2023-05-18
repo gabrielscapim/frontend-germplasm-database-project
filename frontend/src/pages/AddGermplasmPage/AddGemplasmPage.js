@@ -113,6 +113,8 @@ function AddGermplasmPage() {
                 placeholder="Digite o nome"
                 handleChange={ handleChange }
               />
+            </div>
+            <div className={ styles[ROW_CLASS] }>
               <Select
                 id="new-germplasm-genetic-material"
                 label="Tipo de material génetico"
@@ -129,6 +131,8 @@ function AddGermplasmPage() {
                 handleChange={ handleChange }
                 inputValue={ newGermplasmGeneticGrainTexture }
               />
+            </div>
+            <div className={ styles[ROW_CLASS] }>
               <Select
                 id="new-germplasm-genetic-genetic-origin"
                 label="Origem"
