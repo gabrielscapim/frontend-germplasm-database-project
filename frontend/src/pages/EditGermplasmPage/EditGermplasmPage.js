@@ -131,6 +131,7 @@ function EditGermplasmPage() {
             minInput={ 1 }
             handleChange={ handleChange }
             inputValue={ newGermplasmColumnValue }
+            maxInput={ 100 }
           />
         </div>
         <div className={ styles[ROW_CLASS] }>

@@ -11,6 +11,7 @@ function Input({
   placeholder,
   containerStyles,
   minInput,
+  maxInput,
 }) {
   return (
     <div
@@ -41,6 +42,7 @@ function Input({
         onChange={ (event) => handleChange(event) }
         placeholder={ placeholder }
         min={ minInput }
+        max={ maxInput }
       />
 
     </div>

@@ -157,6 +157,7 @@ function AddGermplasmPage() {
                 placeholder="Digite o valor da coluna a ser adicionada ou editada"
                 minInput={ 1 }
                 handleChange={ handleChange }
+                maxInput={ 100 }
               />
             </div>
             <div className={ styles[ROW_CLASS] }>
