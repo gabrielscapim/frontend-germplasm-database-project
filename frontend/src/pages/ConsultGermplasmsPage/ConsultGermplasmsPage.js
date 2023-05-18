@@ -76,7 +76,6 @@ function ConsultGermplasmsPage() {
     notUnknownValues = notUnknownValues.sort((a, b) => (
       Number(b[sortFilterColumn]) - Number(a[sortFilterColumn])));
     filteredGermplasms = [...notUnknownValues, ...unknownValues];
-    console.log(filteredGermplasms);
     break;
 
   default:
@@ -129,7 +128,8 @@ function ConsultGermplasmsPage() {
         window.alert('Germoplasma excluído com sucesso!');
         window.location.reload();
       } catch (error) {
-        console.log(error);
+        window.alert('Erro: não foi possível excluir o germoplasmama,'
+        + ' tente novamente mais tarde.');
       }
     }
   };

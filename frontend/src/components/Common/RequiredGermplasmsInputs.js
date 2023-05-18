@@ -9,7 +9,11 @@ import {
 } from '../../data/geneticMaterial';
 import { GlobalContext } from '../../context/GlobalContext';
 
-function RequiredGermplasmsInputs({ handleChange, inputsState, actualName }) {
+function RequiredGermplasmsInputs({
+  handleChange,
+  inputsState,
+  actualName,
+}) {
   const {
     newGermplasmName,
     newGermplasmGeneticMaterial,
@@ -24,7 +28,6 @@ function RequiredGermplasmsInputs({ handleChange, inputsState, actualName }) {
 
   const global = useContext(GlobalContext);
   const { germplasmsNames } = global;
-
   const ROW_CLASS = 'add-germplasm-row';
 
   const namesWithoutSpace = germplasmsNames.map((name) => name.replace(/\s/g, ''));
@@ -40,7 +43,7 @@ function RequiredGermplasmsInputs({ handleChange, inputsState, actualName }) {
     && newGermplasmName !== '';
 
   return (
-    <>
+    <section>
       <div className={ styles[ROW_CLASS] }>
         <Input
           id="new-germplasm-name"
@@ -151,7 +154,7 @@ function RequiredGermplasmsInputs({ handleChange, inputsState, actualName }) {
             * Preencha os campos obrigatórios
           </p>
         )}
-    </>
+    </section>
   );
 }
 

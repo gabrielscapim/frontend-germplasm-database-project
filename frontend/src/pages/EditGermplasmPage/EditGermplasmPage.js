@@ -1,21 +1,20 @@
 import { useContext, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Select from '../../components/Common/Select';
-import Input from '../../components/Common/Input';
 import Button from '../../components/Common/Button';
 import styles from './EditGermplasmPage.module.css';
 import GermplasmTable from '../../components/Common/GermplasmTable';
 import { GlobalContext } from '../../context/GlobalContext';
 import notAttributesRequired from '../../helpers/notAttributesRequired';
 import RequiredGermplasmsInputs from '../../components/Common/RequiredGermplasmsInputs';
+import NoRequiredGermplasmsInputs
+  from '../../components/Common/NoRequiredGermplasmsInputs';
 
 function EditGermplasmPage() {
-  const ROW_CLASS = 'edit-germplasm-row';
   const global = useContext(GlobalContext);
   const { attributes, apiResults } = global;
-
   const navigate = useNavigate();
+
   const columns = notAttributesRequired(attributes);
   const germplasmIdToEdit = window.location.href.split('id/')[1];
   const germplasmToEdit = apiResults.find((apiResult) => (
@@ -49,6 +48,7 @@ function EditGermplasmPage() {
   const [newGermplasm, setNewGermplasm] = useState({
     ...germplasmToEdit,
   });
+
   const {
     newGermplasmName,
     newGermplasmGeneticMaterial,
@@ -106,6 +106,9 @@ function EditGermplasmPage() {
     }
   };
 
+  console.log(newGermplasmName);
+  console.log(nome);
+
   return (
     <form className={ styles['page-container'] }>
       <div className={ styles['edit-germplasm-container'] }>
@@ -114,41 +117,13 @@ function EditGermplasmPage() {
           handleChange={ handleChange }
           actualName={ nome }
         />
-        <div className={ styles[ROW_CLASS] }>
-          <Select
-            id="edit-germplasm-column-select"
-            label="Coluna (atributo) a ser editada"
-            options={ columns }
-            name="newGermplasmColumnSelect"
-            handleChange={ handleChange }
-            inputValue={ newGermplasmColumnSelect }
-          />
-          <Input
-            id="edit-germplasm-column-value-input"
-            label="Valor da coluna (atributo) a ser editada"
-            name="newGermplasmColumnValue"
-            placeholder="Digite o valor da coluna a ser editada"
-            minInput={ 1 }
-            handleChange={ handleChange }
-            inputValue={ newGermplasmColumnValue }
-            maxInput={ 100 }
-          />
-        </div>
-        <div className={ styles[ROW_CLASS] }>
-          <Button
-            id="button-filter"
-            label="Editar atributo"
-            type="button"
-            componentStyles={ {
-              backgroundColor: '#684f92',
-              border: '1px solid #684f92',
-              height: '38px',
-              marginBottom: '12px',
-              marginTop: '8px',
-            } }
-            onClick={ handleEditGermplasmClick }
-          />
-        </div>
+        <NoRequiredGermplasmsInputs
+          columnsToAdd={ columns }
+          handleChange={ handleChange }
+          handleAddAttributeClick={ handleEditGermplasmClick }
+          newGermplasmColumnSelect={ newGermplasmColumnSelect }
+          newGermplasmColumnValue={ newGermplasmColumnValue }
+        />
       </div>
       <GermplasmTable
         attributes={ Object.keys(germplasmToEdit) || [] }
@@ -156,6 +131,17 @@ function EditGermplasmPage() {
         tableContainerStyles={ { height: '200px' } }
       />
       <div className={ styles['button-container'] }>
+        { newGermplasm.nome === ''
+        && (
+          <p
+            style={ {
+              fontSize: '14px',
+              color: '#dc3545',
+              marginBottom: '8px' } }
+          >
+            Preencha o nome do germoplasma
+          </p>
+        )}
         <Button
           id="button-add-germplasm"
           label="Finalizar"
@@ -168,6 +154,7 @@ function EditGermplasmPage() {
             marginTop: '8px',
           } }
           onClick={ handleConfirmClick }
+          disabled={ newGermplasm.nome === '' }
         />
       </div>
     </form>

@@ -1,11 +1,8 @@
-/* eslint-disable max-lines */
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styles from './AddGermplasmPage.module.css';
-import Select from '../../components/Common/Select';
 import Button from '../../components/Common/Button';
-import Input from '../../components/Common/Input';
 import { GlobalContext } from '../../context/GlobalContext';
 import GermplasmTable from '../../components/Common/GermplasmTable';
 import notAttributesRequired from '../../helpers/notAttributesRequired';
@@ -13,6 +10,8 @@ import {
   newGermplasmInitialState,
   newGermplasmInputs } from '../../helpers/newGermplasmState';
 import RequiredGermplasmsInputs from '../../components/Common/RequiredGermplasmsInputs';
+import NoRequiredGermplasmsInputs
+  from '../../components/Common/NoRequiredGermplasmsInputs';
 
 function AddGermplasmPage() {
   const global = useContext(GlobalContext);
@@ -138,44 +137,13 @@ function AddGermplasmPage() {
         )}
         { nameIsCorrect
         && (
-          <>
-            <div className={ styles[ROW_CLASS] }>
-              <Select
-                id="new-germplasm-column-select"
-                label="Coluna (atributo) a ser adicionada ou editada"
-                options={ columnsToAdd }
-                name="newGermplasmColumnSelect"
-                handleChange={ handleChange }
-                inputValue={ newGermplasmColumnSelect }
-              />
-              <Input
-                type="number"
-                inputValue={ newGermplasmColumnValue }
-                id="new-germplasm-column-value-input"
-                label="Valor da coluna (atributo) a ser adicionada ou editada"
-                name="newGermplasmColumnValue"
-                placeholder="Digite o valor da coluna a ser adicionada ou editada"
-                minInput={ 1 }
-                handleChange={ handleChange }
-                maxInput={ 100 }
-              />
-            </div>
-            <div className={ styles[ROW_CLASS] }>
-              <Button
-                id="butto-add-attribute"
-                label="Adicionar atributo"
-                type="button"
-                componentStyles={ {
-                  backgroundColor: '#684f92',
-                  border: '1px solid #684f92',
-                  height: '38px',
-                  marginBottom: '12px',
-                  marginTop: '8px',
-                } }
-                onClick={ handleAddAttributeClick }
-              />
-            </div>
-          </>
+          <NoRequiredGermplasmsInputs
+            columnsToAdd={ columnsToAdd }
+            handleChange={ handleChange }
+            newGermplasmColumnSelect={ newGermplasmColumnSelect }
+            newGermplasmColumnValue={ newGermplasmColumnValue }
+            handleAddAttributeClick={ handleAddAttributeClick }
+          />
         ) }
       </div>
       { nameIsCorrect && (
