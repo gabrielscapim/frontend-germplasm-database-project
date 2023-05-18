@@ -26,6 +26,7 @@ public class GermplasmController {
 		return germplasmRepository.findAll();
 	}
 	
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT})
 	public @ResponseBody Germplasm saveGermplasm(@RequestBody Germplasm germplasm) {
 		germplasmRepository.save(germplasm);
