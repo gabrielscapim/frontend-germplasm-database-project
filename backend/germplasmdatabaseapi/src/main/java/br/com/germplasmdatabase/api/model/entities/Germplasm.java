@@ -20,7 +20,6 @@ public class Germplasm {
 	@Column(name="nome")
 	private String nome;
 	
-	@NotBlank
 	@Column(name="deletado")
 	private Boolean deletado;
 
@@ -36,11 +35,9 @@ public class Germplasm {
 	@Column(name = "origem")
 	private String origem;
 
-	@NotBlank
 	@Column(name = "transgenico")
 	private Boolean transgenico;
 
-	@NotBlank
 	@Column(name = "eventos_transgenicos")
 	private String eventosTransgenicos;
 
