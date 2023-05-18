@@ -6,9 +6,10 @@ function GermplasmTable({
   attributes,
   tableContainerStyles,
   deleteGermplasm,
+  editGermplasm,
 }) {
-  const addGermplasmPage = window.location.href.includes('add');
-  const columns = addGermplasmPage ? attributes : ['', ...attributes];
+  const consultGermplasmsPage = window.location.href.includes('consult');
+  const columns = consultGermplasmsPage ? ['', ...attributes] : attributes;
   return (
     <div
       className={ `text-nowrap ${styles['table-wrapper']}` }
@@ -27,7 +28,7 @@ function GermplasmTable({
             return (
               <tr key={ `row-result-${index}` }>
                 {
-                  !addGermplasmPage
+                  consultGermplasmsPage
                   && (
                     <td>
                       <button
@@ -37,7 +38,7 @@ function GermplasmTable({
                           border: 'none',
                           background: 'none',
                         } }
-                        onClick={ () => deleteGermplasm(apiResult.id) }
+                        onClick={ () => editGermplasm(apiResult.id) }
                       >
                         <i className="bi bi-pencil"> </i>
                       </button>
@@ -89,6 +90,7 @@ GermplasmTable.propTypes = {
   attributes: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
   tableContainerStyles: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
   deleteGermplasm: PropTypes.func,
+  editGermplasm: PropTypes.func,
 }.isRequired;
 
 export default GermplasmTable;

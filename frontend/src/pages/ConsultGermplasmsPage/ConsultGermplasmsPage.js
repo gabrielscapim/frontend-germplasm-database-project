@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Filters from '../../components/ConsultGermplasms/Filters';
 import GermplasmTable from '../../components/Common/GermplasmTable';
@@ -18,6 +19,7 @@ function ConsultGermplasmsPage() {
   });
   const [numericFiltersSelected, setNumericFiltersSelected] = useState([]);
 
+  const navigate = useNavigate();
   let numericFiltersAvaible = attributes.filter((attribute) => attribute !== 'nome');
 
   numericFiltersAvaible = numericFiltersAvaible.filter((numericFilterAvaible) => (
@@ -132,6 +134,10 @@ function ConsultGermplasmsPage() {
     }
   };
 
+  const editGermplasm = (id) => {
+    navigate(`/edit-germplasm/${id}`);
+  };
+
   return (
     <section className={ styles['page-container'] }>
       <Filters
@@ -148,6 +154,7 @@ function ConsultGermplasmsPage() {
         germplasms={ filteredGermplasms }
         attributes={ attributes }
         deleteGermplasm={ deleteGermplasm }
+        editGermplasm={ editGermplasm }
       />
     </section>
   );
