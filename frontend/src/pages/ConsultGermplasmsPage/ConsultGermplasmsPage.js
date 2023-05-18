@@ -1,5 +1,5 @@
-/* eslint-disable no-unused-vars */
 import { useContext, useState } from 'react';
+import axios from 'axios';
 import Filters from '../../components/ConsultGermplasms/Filters';
 import GermplasmTable from '../../components/Common/GermplasmTable';
 import styles from './ConsultGermplasmsPage.module.css';
@@ -119,6 +119,19 @@ function ConsultGermplasmsPage() {
     setNumericFiltersSelected([]);
   };
 
+  const deleteGermplasm = async (id) => {
+    if (window.confirm(`Deseja excluir o germoplasma de id igual a ${id}?`)) {
+      const germplasmSelected = apiResults.find((result) => result.id === id);
+      try {
+        await axios.post('http://localhost:8080/api/germplasm', { ...germplasmSelected, deletado: true });
+        window.alert('Germoplasma excluído com sucesso!');
+        window.location.reload();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   return (
     <section className={ styles['page-container'] }>
       <Filters
@@ -134,6 +147,7 @@ function ConsultGermplasmsPage() {
       <GermplasmTable
         germplasms={ filteredGermplasms }
         attributes={ attributes }
+        deleteGermplasm={ deleteGermplasm }
       />
     </section>
   );
