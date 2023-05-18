@@ -6,3 +6,12 @@
     flex-direction: row;
     width: 100%;
 }
+
+@media all and (max-width: 768px) {
+    .germplasm-row {
+        flex-direction: column;
+    }
+    .germplasm-row * {
+        width: 100%;
+    }
+}
