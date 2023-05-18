@@ -13,9 +13,12 @@ export function GlobalStorage({ children }) {
   useEffect(() => {
     apiGET()
       .then((results) => {
-        setApiResults(results);
-        setAttributes(Object.keys(results[0]));
-        setGermplasmsNames(results.map(({ nome }) => nome));
+        const noDeletedResults = results.filter(({ deletado }) => deletado === false);
+        const deletedDeletadoColumn = noDeletedResults
+          .map(({ deletado, ...result }) => result);
+        setApiResults(deletedDeletadoColumn);
+        setAttributes(Object.keys(deletedDeletadoColumn[0]));
+        setGermplasmsNames(deletedDeletadoColumn.map(({ nome }) => nome));
       });
     // setApiResults(mockApi);
     // setAttributes(Object.keys(mockApi[0]));
