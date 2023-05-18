@@ -1,5 +1,4 @@
 /* eslint-disable max-lines */
-/* eslint-disable no-unused-vars */
 import { useContext, useState } from 'react';
 import styles from './AddGermplasmPage.module.css';
 import Select from '../../components/Common/Select';
@@ -12,6 +11,7 @@ import {
 import { GlobalContext } from '../../context/GlobalContext';
 import GermplasmTable from '../../components/Common/GermplasmTable';
 import notAttributesRequired from '../../helpers/notAttributesRequired';
+import apiPOST from '../../services/apiPOST';
 
 function AddGermplasmPage() {
   const global = useContext(GlobalContext);
@@ -58,7 +58,7 @@ function AddGermplasmPage() {
     newGermplasmColumnSelect,
     newGermplasmColumnValue,
   } = inputsState;
-  console.log(Object.keys(newGermplasm[0]));
+
   const namesWithoutSpace = germplasmsNames.map((name) => name.replace(/\s/g, ''));
   const newGermplasmNameWithoutSpace = newGermplasmName.replace(/\s/g, '');
   const isGermplasmNameExist = namesWithoutSpace.includes(newGermplasmNameWithoutSpace);
@@ -73,7 +73,7 @@ function AddGermplasmPage() {
       [name]: value,
     }));
   };
-  console.log(newGermplasm);
+
   const handleContinueClick = () => {
     if (!isGermplasmNameExist && isRequiredInputsCorrect) {
       setNameIsCorrect(true);
@@ -100,7 +100,8 @@ function AddGermplasmPage() {
   };
 
   const handleAddGermplasmClick = () => {
-    console.log('adicionou germoplasma');
+    console.log(newGermplasm);
+    apiPOST(newGermplasm[0]);
   };
 
   return (
