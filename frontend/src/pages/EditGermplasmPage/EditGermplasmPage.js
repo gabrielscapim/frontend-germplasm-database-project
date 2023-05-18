@@ -39,6 +39,7 @@ function EditGermplasmPage() {
     newGermplasmGeneticMaterial: tipoDeMaterialGenetico,
     newGermplasmGeneticGrainTexture: texturaDoGrao,
     newGermplasmColumnSelect: 'primeiraFolhaPigmentacaoAntocianinicaDaBainha',
+    newGermplasmColumnValue: '',
     newGermplasmGeneticGeneticOrigin: origem,
     newGermplasmGeneticTransgenicSelect: transgenico ? 'Sim' : 'Não',
     newGermplasmGeneticEventsDetails: eventosTransgenicos,
@@ -87,7 +88,7 @@ function EditGermplasmPage() {
     }));
     setInputsState((prevState) => ({
       ...prevState,
-      editGermplasmColumnValue: '',
+      newGermplasmColumnValue: '',
     }));
   };
 
