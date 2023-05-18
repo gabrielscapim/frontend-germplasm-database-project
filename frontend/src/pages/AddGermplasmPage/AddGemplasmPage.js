@@ -110,7 +110,7 @@ function AddGermplasmPage() {
                 id="new-germplasm-name"
                 label="*Nome do novo germoplasma"
                 name="newGermplasmName"
-                placeholder="Digite o nome"
+                placeholder="Digite o nome germoplasma que deseja adicionar"
                 handleChange={ handleChange }
               />
             </div>
@@ -177,7 +177,7 @@ function AddGermplasmPage() {
                 id="new-germplasm-cold-chamber-local"
                 label="*Local na câmara fria"
                 name="newGermplasmColdChamberLocal"
-                placeholder="Digite o local na câmara fria"
+                placeholder="Digite o local do germoplasma na câmara fria"
                 handleChange={ handleChange }
               />
               <Input
