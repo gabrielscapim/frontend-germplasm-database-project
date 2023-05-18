@@ -15,7 +15,7 @@ function App() {
         <Routes>
           <Route path="/add-germplasm" Component={ AddGermplasmPage } />
           <Route path="/consult-germplasms" Component={ ConsultGermplasmsPage } />
-          <Route path="/edit-germplasm/:id" Component={ EditGermplasmPage } />
+          <Route path="/edit-germplasm/id/:id" Component={ EditGermplasmPage } />
         </Routes>
         <Footer />
       </GlobalStorage>

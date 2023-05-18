@@ -29,6 +29,10 @@
     width: 50%;
 }
 
+.edit-germplasm-column-select {
+    width: 50%;
+}
+
 @media all and (max-width: 768px) {
     .comparison-filter {
         width: 100%;

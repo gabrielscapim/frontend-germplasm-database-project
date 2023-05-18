@@ -29,6 +29,11 @@
     width: 50%;
 }
 
+.edit-germplasm-column-value-input {
+    width: 50%;
+    margin-left: 2%;
+}
+
 @media all and (max-width: 768px) {
     .value-filter {
         width: 100%;

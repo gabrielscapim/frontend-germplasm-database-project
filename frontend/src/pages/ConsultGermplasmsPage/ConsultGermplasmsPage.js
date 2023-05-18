@@ -125,7 +125,7 @@ function ConsultGermplasmsPage() {
     if (window.confirm(`Deseja excluir o germoplasma de id igual a ${id}?`)) {
       const germplasmSelected = apiResults.find((result) => result.id === id);
       try {
-        await axios.post('http://localhost:8080/api/germplasm', { ...germplasmSelected, deletado: true });
+        await axios.put('http://localhost:8080/api/germplasm', { ...germplasmSelected, deletado: true });
         window.alert('Germoplasma excluído com sucesso!');
         window.location.reload();
       } catch (error) {
@@ -135,7 +135,9 @@ function ConsultGermplasmsPage() {
   };
 
   const editGermplasm = (id) => {
-    navigate(`/edit-germplasm/${id}`);
+    if (window.confirm(`Deseja editar o germoplasma de id igual a ${id}?`)) {
+      navigate(`/edit-germplasm/id/${id}`);
+    }
   };
 
   return (

@@ -1,5 +1,6 @@
 /* eslint-disable max-lines */
 import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styles from './AddGermplasmPage.module.css';
 import Select from '../../components/Common/Select';
@@ -7,7 +8,7 @@ import Button from '../../components/Common/Button';
 import Input from '../../components/Common/Input';
 import {
   origemMaterialGenetico,
-  tiposDeLinhagem, tiposDeMaterialGenetico,
+  texturaDoGrao, tiposDeMaterialGenetico,
 } from '../../data/geneticMaterial';
 import { GlobalContext } from '../../context/GlobalContext';
 import GermplasmTable from '../../components/Common/GermplasmTable';
@@ -18,6 +19,7 @@ import { newGermplasmInitialState,
 function AddGermplasmPage() {
   const global = useContext(GlobalContext);
   const { attributes, germplasmsNames } = global;
+  const navigate = useNavigate();
 
   const columnsToAdd = notAttributesRequired(attributes);
   const ROW_CLASS = 'add-germplasm-row';
@@ -59,6 +61,7 @@ function AddGermplasmPage() {
     if (!isGermplasmNameExist && isRequiredInputsCorrect) {
       setNameIsCorrect(true);
       setNewGermplasm([{
+        deletado: false,
         nome: newGermplasmName,
         tipoDeMaterialGenetico: newGermplasmGeneticMaterial,
         texturaDoGrao: newGermplasmGeneticGrainTexture,
@@ -77,6 +80,10 @@ function AddGermplasmPage() {
       ...prevState[0],
       [newGermplasmColumnSelect]: newGermplasmColumnValue,
     }]));
+    setInputsState((prevState) => ({
+      ...prevState,
+      newGermplasmColumnValue: '',
+    }));
   };
 
   const handleAddGermplasmClick = async () => {
@@ -84,6 +91,7 @@ function AddGermplasmPage() {
       try {
         await axios.post('http://localhost:8080/api/germplasm', newGermplasm[0]);
         window.alert('Germoplasma adicionado com sucesso!');
+        navigate('/consult-germplasms');
         window.location.reload();
       } catch (error) {
         window.alert('Erro: não foi possível adicionar o germoplasmama,'
@@ -128,7 +136,7 @@ function AddGermplasmPage() {
               <Select
                 id="new-germplasm-genetic-grain-texture"
                 label="*Textura do grão"
-                options={ tiposDeLinhagem }
+                options={ texturaDoGrao }
                 name="newGermplasmGeneticGrainTexture"
                 handleChange={ handleChange }
                 inputValue={ newGermplasmGeneticGrainTexture }
@@ -210,7 +218,7 @@ function AddGermplasmPage() {
                 )}
             <div className={ styles[ROW_CLASS] }>
               <Button
-                id="button-filter"
+                id="button-continue-add-germplasm"
                 label="Continuar"
                 type="button"
                 componentStyles={ {
@@ -241,17 +249,18 @@ function AddGermplasmPage() {
               />
               <Input
                 type="number"
+                inputValue={ newGermplasmColumnValue }
                 id="new-germplasm-column-value-input"
-                label="Valor da coluna (atributo) a ser adicionada"
+                label="Valor da coluna (atributo) a ser adicionada ou editada"
                 name="newGermplasmColumnValue"
-                placeholder="Digite o valor da coluna a ser adicionada"
+                placeholder="Digite o valor da coluna a ser adicionada ou editada"
                 minInput={ 1 }
                 handleChange={ handleChange }
               />
             </div>
             <div className={ styles[ROW_CLASS] }>
               <Button
-                id="button-filter"
+                id="butto-add-attribute"
                 label="Adicionar atributo"
                 type="button"
                 componentStyles={ {
@@ -276,7 +285,7 @@ function AddGermplasmPage() {
           />
           <div className={ styles['add-germplasm-button-row'] }>
             <Button
-              id="button-filter"
+              id="button-cancel-add-germplasm"
               label="Cancelar"
               type="button"
               componentStyles={ {
@@ -289,7 +298,7 @@ function AddGermplasmPage() {
               onClick={ handleCancelAddGermplasClick }
             />
             <Button
-              id="button-filter"
+              id="button-add-germplasm"
               label="Adicionar germoplasma"
               type="button"
               componentStyles={ {
