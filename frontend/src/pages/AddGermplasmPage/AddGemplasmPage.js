@@ -1,5 +1,6 @@
 /* eslint-disable max-lines */
 import { useContext, useState } from 'react';
+import axios from 'axios';
 import styles from './AddGermplasmPage.module.css';
 import Select from '../../components/Common/Select';
 import Button from '../../components/Common/Button';
@@ -11,7 +12,8 @@ import {
 import { GlobalContext } from '../../context/GlobalContext';
 import GermplasmTable from '../../components/Common/GermplasmTable';
 import notAttributesRequired from '../../helpers/notAttributesRequired';
-import apiPOST from '../../services/apiPOST';
+import { newGermplasmInitialState,
+  newGermplasmInputs } from '../../helpers/newGermplasmState';
 
 function AddGermplasmPage() {
   const global = useContext(GlobalContext);
@@ -20,29 +22,8 @@ function AddGermplasmPage() {
   const columnsToAdd = notAttributesRequired(attributes);
   const ROW_CLASS = 'add-germplasm-row';
 
-  const [inputsState, setInputsState] = useState({
-    newGermplasmName: '',
-    newGermplasmGeneticMaterial: 'linhagem',
-    newGermplasmGeneticGrainTexture: 'milho comum',
-    newGermplasmColumnSelect: 'primeiraFolhaPigmentacaoAntocianinicaDaBainha',
-    newGermplasmGeneticGeneticOrigin: 'temperado',
-    newGermplasmGeneticTransgenicSelect: 'Não',
-    newGermplasmGeneticEventsDetails: '',
-    newGermplasmColdChamberLocal: '',
-    newGermplasmEntryDate: '',
-    newGermplasmLastHarvertDate: '',
-  });
-  const [newGermplasm, setNewGermplasm] = useState([{
-    nome: '',
-    tipoDeMaterialGenetico: '',
-    texturaDoGrao: '',
-    origem: '',
-    transgenico: '',
-    eventosTransgenicos: '',
-    localNaCamaraFria: '',
-    dataDeEntrada: '',
-    dataDaUltimaColheita: '',
-  }]);
+  const [inputsState, setInputsState] = useState(newGermplasmInputs);
+  const [newGermplasm, setNewGermplasm] = useState(newGermplasmInitialState);
   const [nameIsCorrect, setNameIsCorrect] = useState(false);
 
   const {
@@ -92,20 +73,34 @@ function AddGermplasmPage() {
   };
 
   const handleAddAttributeClick = () => {
-    console.log(newGermplasmColumnSelect);
     setNewGermplasm((prevState) => ([{
       ...prevState[0],
       [newGermplasmColumnSelect]: newGermplasmColumnValue,
     }]));
   };
 
-  const handleAddGermplasmClick = () => {
-    console.log(newGermplasm);
-    apiPOST(newGermplasm[0]);
+  const handleAddGermplasmClick = async () => {
+    if (window.confirm('Deseja adicionar o germoplasma no banco de dados?')) {
+      try {
+        await axios.post('http://localhost:8080/api/germplasm', newGermplasm[0]);
+        window.alert('Germoplasma adicionado com sucesso!');
+        window.location.reload();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  const handleCancelAddGermplasClick = () => {
+    if (window.confirm('Deseja cancelar a inclusão do germoplasma no banco de dados?')) {
+      setInputsState(newGermplasmInputs);
+      setNewGermplasm(newGermplasmInitialState);
+      setNameIsCorrect(false);
+    }
   };
 
   return (
-    <section className={ styles['page-container'] }>
+    <form className={ styles['page-container'] }>
       <div className={ styles['add-germplasm-container'] }>
         { !nameIsCorrect
         && (
@@ -266,27 +261,44 @@ function AddGermplasmPage() {
           </>
         ) }
       </div>
-      <GermplasmTable
-        attributes={ Object.keys(newGermplasm[0]) || [] }
-        germplasms={ newGermplasm }
-        tableContainerStyles={ { height: '200px' } }
-      />
-      <div className={ styles['add-germplasm-button-row'] }>
-        <Button
-          id="button-filter"
-          label="Adicionar germoplasma"
-          type="button"
-          componentStyles={ {
-            backgroundColor: '#006400',
-            border: '1px solid #006400',
-            height: '38px',
-            marginBottom: '12px',
-            marginTop: '8px',
-          } }
-          onClick={ handleAddGermplasmClick }
-        />
-      </div>
-    </section>
+      { nameIsCorrect && (
+        <>
+          <GermplasmTable
+            attributes={ Object.keys(newGermplasm[0]) || [] }
+            germplasms={ newGermplasm }
+            tableContainerStyles={ { height: '200px' } }
+          />
+          <div className={ styles['add-germplasm-button-row'] }>
+            <Button
+              id="button-filter"
+              label="Cancelar"
+              type="button"
+              componentStyles={ {
+                backgroundColor: '#dc3545',
+                border: '1px solid #dc3545',
+                height: '38px',
+                marginBottom: '12px',
+                marginTop: '8px',
+              } }
+              onClick={ handleCancelAddGermplasClick }
+            />
+            <Button
+              id="button-filter"
+              label="Adicionar germoplasma"
+              type="button"
+              componentStyles={ {
+                backgroundColor: '#006400',
+                border: '1px solid #006400',
+                height: '38px',
+                marginBottom: '12px',
+                marginTop: '8px',
+              } }
+              onClick={ handleAddGermplasmClick }
+            />
+          </div>
+        </>
+      )}
+    </form>
   );
 }
 
