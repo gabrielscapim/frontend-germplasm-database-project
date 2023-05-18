@@ -21,3 +21,11 @@
     flex-direction: row;
     width: 100%;
 }
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 16px 0px 0px 0px;
+    width: 95%;
+}

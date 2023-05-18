@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useContext, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -155,19 +154,21 @@ function EditGermplasmPage() {
         germplasms={ [{ ...newGermplasm }] }
         tableContainerStyles={ { height: '200px' } }
       />
-      <Button
-        id="button-add-germplasm"
-        label="Finalizar"
-        type="button"
-        componentStyles={ {
-          backgroundColor: '#006400',
-          border: '1px solid #006400',
-          height: '38px',
-          marginBottom: '12px',
-          marginTop: '8px',
-        } }
-        onClick={ handleConfirmClick }
-      />
+      <div className={ styles['button-container'] }>
+        <Button
+          id="button-add-germplasm"
+          label="Finalizar"
+          type="button"
+          componentStyles={ {
+            backgroundColor: '#006400',
+            border: '1px solid #006400',
+            height: '38px',
+            marginBottom: '12px',
+            marginTop: '8px',
+          } }
+          onClick={ handleConfirmClick }
+        />
+      </div>
     </form>
   );
 }
