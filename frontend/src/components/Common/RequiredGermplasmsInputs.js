@@ -49,6 +49,7 @@ function RequiredGermplasmsInputs({ handleChange, inputsState, actualName }) {
           placeholder="Digite o nome germoplasma"
           handleChange={ handleChange }
           inputValue={ newGermplasmName }
+          maxInputLength={ 64 }
         />
       </div>
       <div className={ styles[ROW_CLASS] }>
@@ -120,6 +121,7 @@ function RequiredGermplasmsInputs({ handleChange, inputsState, actualName }) {
           placeholder="Digite o local do germoplasma na câmara fria"
           handleChange={ handleChange }
           inputValue={ newGermplasmColdChamberLocal }
+          maxInputLength={ 64 }
         />
         <Input
           type="date"

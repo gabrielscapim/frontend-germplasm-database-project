@@ -12,6 +12,7 @@ function Input({
   containerStyles,
   minInput,
   maxInput,
+  maxInputLength,
 }) {
   return (
     <div
@@ -43,6 +44,7 @@ function Input({
         placeholder={ placeholder }
         min={ minInput }
         max={ maxInput }
+        maxLength={ maxInputLength }
       />
 
     </div>
