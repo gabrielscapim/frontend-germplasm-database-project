@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+import PropTypes from 'prop-types';
 import { useContext } from 'react';
 import Input from './Input';
 import Select from './Select';
@@ -152,5 +152,10 @@ function RequiredGermplasmsInputs({ handleChange, inputsState, actualName }) {
     </>
   );
 }
+
+RequiredGermplasmsInputs.propTypes = {
+  handleChange: PropTypes.func,
+  inputsState: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
+}.isRequired;
 
 export default RequiredGermplasmsInputs;
