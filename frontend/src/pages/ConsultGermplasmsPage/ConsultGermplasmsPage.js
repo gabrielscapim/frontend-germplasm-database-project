@@ -1,5 +1,6 @@
-/* eslint-disable no-unused-vars */
 import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import Filters from '../../components/ConsultGermplasms/Filters';
 import GermplasmTable from '../../components/Common/GermplasmTable';
 import styles from './ConsultGermplasmsPage.module.css';
@@ -18,6 +19,7 @@ function ConsultGermplasmsPage() {
   });
   const [numericFiltersSelected, setNumericFiltersSelected] = useState([]);
 
+  const navigate = useNavigate();
   let numericFiltersAvaible = attributes.filter((attribute) => attribute !== 'nome');
 
   numericFiltersAvaible = numericFiltersAvaible.filter((numericFilterAvaible) => (
@@ -74,7 +76,6 @@ function ConsultGermplasmsPage() {
     notUnknownValues = notUnknownValues.sort((a, b) => (
       Number(b[sortFilterColumn]) - Number(a[sortFilterColumn])));
     filteredGermplasms = [...notUnknownValues, ...unknownValues];
-    console.log(filteredGermplasms);
     break;
 
   default:
@@ -119,6 +120,26 @@ function ConsultGermplasmsPage() {
     setNumericFiltersSelected([]);
   };
 
+  const deleteGermplasm = async (id) => {
+    if (window.confirm(`Deseja excluir o germoplasma de id igual a ${id}?`)) {
+      const germplasmSelected = apiResults.find((result) => result.id === id);
+      try {
+        await axios.put('http://localhost:8080/api/germplasm', { ...germplasmSelected, deletado: true });
+        window.alert('Germoplasma excluído com sucesso!');
+        window.location.reload();
+      } catch (error) {
+        window.alert('Erro: não foi possível excluir o germoplasmama,'
+        + ' tente novamente mais tarde.');
+      }
+    }
+  };
+
+  const editGermplasm = (id) => {
+    if (window.confirm(`Deseja editar o germoplasma de id igual a ${id}?`)) {
+      navigate(`/edit-germplasm/id/${id}`);
+    }
+  };
+
   return (
     <section className={ styles['page-container'] }>
       <Filters
@@ -134,6 +155,8 @@ function ConsultGermplasmsPage() {
       <GermplasmTable
         germplasms={ filteredGermplasms }
         attributes={ attributes }
+        deleteGermplasm={ deleteGermplasm }
+        editGermplasm={ editGermplasm }
       />
     </section>
   );

@@ -21,13 +21,16 @@
 }
 
 .new-germplasm-genetic-genetic-origin {
-    margin-left: 2%;
-    width: 30%;
+    width: 50%;
 }
 
 .new-germplasm-genetic-transgenic-select {
     margin-left: 2%;
-    width: 20%;
+    width: 50%;
+}
+
+.edit-germplasm-column-select {
+    width: 50%;
 }
 
 @media all and (max-width: 768px) {

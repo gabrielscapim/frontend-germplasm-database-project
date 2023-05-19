@@ -11,6 +11,8 @@ function Input({
   placeholder,
   containerStyles,
   minInput,
+  maxInput,
+  maxInputLength,
 }) {
   return (
     <div
@@ -41,6 +43,8 @@ function Input({
         onChange={ (event) => handleChange(event) }
         placeholder={ placeholder }
         min={ minInput }
+        max={ maxInput }
+        maxLength={ maxInputLength }
       />
 
     </div>
@@ -48,15 +52,14 @@ function Input({
 }
 
 Input.propTypes = {
-  id: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  inputValue: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  placeholder: PropTypes.string.isRequired,
-  containerStyles: PropTypes.objectOf(PropTypes.string).isRequired,
-  minInput: PropTypes.number.isRequired,
-};
+  id: PropTypes.string,
+  label: PropTypes.string,
+  type: PropTypes.string,
+  inputValue: PropTypes.string,
+  name: PropTypes.string,
+  handleChange: PropTypes.func,
+  containerStyles: PropTypes.objectOf(PropTypes.string),
+  minInput: PropTypes.number,
+}.isRequired;
 
 export default Input;

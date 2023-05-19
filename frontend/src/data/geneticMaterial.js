@@ -10,7 +10,7 @@ export const tiposDeMaterialGenetico = [
   'top cross',
 ];
 
-export const tiposDeLinhagem = [
+export const texturaDoGrao = [
   'milho comum',
   'milho doce',
   'milho pipoca',

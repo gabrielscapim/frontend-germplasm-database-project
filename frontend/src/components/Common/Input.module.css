@@ -3,8 +3,7 @@
 }
 
 .new-germplasm-name {
-    width: 50%;
-    margin-right: 2%;
+    width: 100%;
 }
 
 .new-germplasm-column-value-input {
@@ -28,6 +27,11 @@
 
 .new-germplasm-last-harvert-date {
     width: 50%;
+}
+
+.edit-germplasm-column-value-input {
+    width: 50%;
+    margin-left: 2%;
 }
 
 @media all and (max-width: 768px) {

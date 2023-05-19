@@ -5,6 +5,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Germplasm {
@@ -13,128 +16,246 @@ public class Germplasm {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
+	@NotBlank
 	@Column(name="nome")
 	private String nome;
 	
+	@Column(name="deletado")
+	private Boolean deletado;
+
+	@NotBlank
+	@Column(name="tipo_de_material_genetico")
+	private String tipoDeMaterialGenetico;
+	
+	@NotBlank
+	@Column(name = "textura_do_grao")
+	private String texturaDoGrao;
+
+	@NotBlank
+	@Column(name = "origem")
+	private String origem;
+
+	@Column(name = "transgenico")
+	private Boolean transgenico;
+
+	@Column(name = "eventos_transgenicos")
+	private String eventosTransgenicos;
+
+	@NotBlank
+	@Column(name = "local_na_camara_fria")
+	private String localNaCamaraFria;
+
+	@NotBlank
+	@Column(name = "data_de_entrada")
+	private String dataDeEntrada;
+
+	@NotBlank
+	@Column(name = "data_da_ultima_colheita")
+	private String dataDaUltimaColheita;
+
+	@Min(0)
+	@Max(100)
 	@Column(name="primeira_folha_pigmentacao_antocianinica_da_bainha")
 	private Integer primeiraFolhaPigmentacaoAntocianinicaDaBainha;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="primeira_folha_forma_do_apice")
 	private Integer primeiraFolhaFormaDoApice;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="folhagem_intensidade_da_cor_verde")
 	private Integer folhagemIntensidadeDaCorVerde;
-
+	
+	@Min(0)
+	@Max(100)
 	@Column(name="folha_ondulacao_da_margem_da_lamina")
 	private Integer folhaOndulacaoDaMargemDaLamina;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="folha_angulo_entre_a_lamina_e_o_colmo")
 	private Integer folhaAnguloEntreALaminaEOColmo;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="folha_curvatura_da_lamina")
 	private Integer folhaCurvaturaDaLamina;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="colmo_grau_do_zig_zag")
 	private Integer colmoGrauDoZigZag;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="pendao_ciclo_ate_a_antese")
 	private Integer pendaoCicloAteAAntese;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="pendao_pigmentacao_antocianinica_na_base_da_gluma")
 	private Integer pendaoPigmentacaoAntocianinicaNaBaseDaGluma;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="pendao_pigmentacao_antocianinica_da_gluma_excluida_a_base")
 	private Integer pendaoPigmentacaoAntocianinicaDaGlumaExcluidaABase;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="pendao_pigmentacao_antocianinica_das_anteras")
 	private Integer pendaoPigmentacaoAntocianinicaDasAnteras;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="pendao_angulo_entre_o_eixo_principal_e_os_ramos_laterais")
 	private Integer pendaoAnguloEntreOEixoPrincipalEOsRamosLaterais;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="pendao_curvatura_dos_ramos_laterais")
 	private Integer pendaoCurvaturaDosRamosLaterais;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="pendao_numero_de_ramificacoes_primarias")
 	private Integer pendaoNumeroDeRamificacoesPrimarias;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="espiga_ciclo_ate_o_aparecimento_dos_estigmas")
 	private Integer espigaCicloAteOAparecimentoDosEstigmas;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="espiga_pigmentacao_antocianinica_dos_estigmas")
 	private Integer espigaPigmentacaoAntocianinicaDosEstigmas;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="colmo_pigmentacao_antocianinica_das_raizes_aereas")
 	private Integer colmoPigmentacaoAntocianinicaDasRaizesAereas;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="pendao_densidade_das_espiguetas")
 	private Integer pendaoDensidadeDasEspiguetas;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="folha_pigmentacao_antocianinica_da_bainha")
 	private Integer folhaPigmentacaoAntocianinicaDaBainha;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="colmo_pigmentacao_antocianinica_dos_entrenos")
 	private Integer colmoPigmentacaoAntocianinicaDosEntrenos;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="pendao_comp_do_eixo_principal_acima_do_ramo_lateral_mais_baixo")
 	private Integer pendaoCompDoEixoPrincipalAcimaDoRamoLateralMaisBaixo;
     
-    
+	@Min(0)
+	@Max(100)
 	@Column(name="pendao_comp_do_eixo_principal_acima_do_ramo_lateral_mais_alto")
 	private Integer pendaoCompDoEixoPrincipalAcimaDoRamoLateralMaisAlto;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="pendao_comp_do_ramo_lateral")
 	private Integer pendaoCompDoRamoLateral;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="planta_comp")
 	private Integer plantaComp;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="planta_relacao_alt_ins_pedunculo_espiga_mais_alta_e_comp_planta")
 	private Integer plantaRelacaoAltInsPedunculoEspigaMaisAltaECompPlanta;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="folha_largura_da_lamina")
 	private Integer folhaLarguraDaLamina;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="pedunculo_comp")
 	private Integer pedunculoComp;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="espiga_comp")
 	private Integer espigaComp;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="espiga_diametro_no_meio_da_espiga")
 	private Integer espigaDiametroNoMeioDaEspiga;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="espiga_forma")
 	private Integer espigaForma;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="espiga_numero_de_fileiras_de_graos")
 	private Integer espigaNumeroDeFileirasDeGraos;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="espiga_numero_de_cores_dos_graos")
 	private Integer espigaNumeroDeCoresDosGraos;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="grao_intensidade_da_cor_amarela")
 	private Integer graoIntensidadeDaCorAmarela;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="grao_comp")
 	private Integer graoComp;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="grao_largura")
 	private Integer graoLargura;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="espiga_tipo_de_grao")
 	private Integer espigaTipoDeGrao;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="espiga_enrugamento_do_extremo_superior_do_grao")
 	private Integer espigaEnrugamentoDoExtremoSuperiorDoGrao;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="espiga_cor_do_extremo_superior_do_grao")
 	private Integer espigaCorDoExtremoSuperiorDoGrao;
 
+	@Min(0)
+	@Max(100)
 	@Column(name="espiga_cor_do_lado_dorsal_do_grao")
 	private Integer espigaCorDoLadoDorsalDoGrao;
+	
+	@Min(0)
+	@Max(100)
+	@Column(name="tipo_de_grao_estourado")
+	private Integer tipoDeGraoEstourado;
 
-	public Germplasm(int id, String nome, Integer primeiraFolhaPigmentacaoAntocianinicaDaBainha,
+	public Germplasm(int id, String nome, Boolean deletado, String tipoDeMaterialGenetico, String texturaDoGrao,
+			String origem, Boolean transgenico, String eventosTransgenicos, String localNaCamaraFria,
+			String dataDeEntrada, String dataDaUltimaColheita, Integer primeiraFolhaPigmentacaoAntocianinicaDaBainha,
 			Integer primeiraFolhaFormaDoApice, Integer folhagemIntensidadeDaCorVerde,
 			Integer folhaOndulacaoDaMargemDaLamina, Integer folhaAnguloEntreALaminaEOColmo,
 			Integer folhaCurvaturaDaLamina, Integer colmoGrauDoZigZag, Integer pendaoCicloAteAAntese,
@@ -157,6 +278,15 @@ public class Germplasm {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.deletado = deletado;
+		this.tipoDeMaterialGenetico = tipoDeMaterialGenetico;
+		this.texturaDoGrao = texturaDoGrao;
+		this.origem = origem;
+		this.transgenico = transgenico;
+		this.eventosTransgenicos = eventosTransgenicos;
+		this.localNaCamaraFria = localNaCamaraFria;
+		this.dataDeEntrada = dataDeEntrada;
+		this.dataDaUltimaColheita = dataDaUltimaColheita;
 		this.primeiraFolhaPigmentacaoAntocianinicaDaBainha = primeiraFolhaPigmentacaoAntocianinicaDaBainha;
 		this.primeiraFolhaFormaDoApice = primeiraFolhaFormaDoApice;
 		this.folhagemIntensidadeDaCorVerde = folhagemIntensidadeDaCorVerde;
@@ -201,6 +331,9 @@ public class Germplasm {
 	}
 
 
+	@Column(name="espiga_pigmentacao_antocianinica_das_glumas_do_sabugo")
+	private Integer espigaPigmentacaoAntocianinicaDasGlumasDoSabugo;
+
 	public int getId() {
 		return id;
 	}
@@ -209,6 +342,17 @@ public class Germplasm {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	
+	public Boolean getDeletado() {
+		return deletado;
+	}
+
+
+	public void setDeletado(Boolean deletado) {
+		this.deletado = deletado;
+	}
+
 
 
 	public String getNome() {
@@ -219,6 +363,85 @@ public class Germplasm {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	public String getTipoDeMaterialGenetico() {
+		return tipoDeMaterialGenetico;
+	}
+
+
+	public void setTipoDeMaterialGenetico(String tipoDeMaterialGenetico) {
+		this.tipoDeMaterialGenetico = tipoDeMaterialGenetico;
+	}
+
+
+	public String getTexturaDoGrao() {
+		return texturaDoGrao;
+	}
+
+
+	public void setTexturaDoGrao(String texturaDoGrao) {
+		this.texturaDoGrao = texturaDoGrao;
+	}
+
+
+	public String getOrigem() {
+		return origem;
+	}
+
+
+	public void setOrigem(String origem) {
+		this.origem = origem;
+	}
+
+
+	public Boolean getTransgenico() {
+		return transgenico;
+	}
+
+
+	public void setTransgenico(Boolean transgenico) {
+		this.transgenico = transgenico;
+	}
+
+
+	public String getEventosTransgenicos() {
+		return eventosTransgenicos;
+	}
+
+
+	public void setEventosTransgenicos(String eventosTransgenicos) {
+		this.eventosTransgenicos = eventosTransgenicos;
+	}
+
+
+	public String getLocalNaCamaraFria() {
+		return localNaCamaraFria;
+	}
+
+
+	public void setLocalNaCamaraFria(String localNaCamaraFria) {
+		this.localNaCamaraFria = localNaCamaraFria;
+	}
+
+
+	public String getDataDeEntrada() {
+		return dataDeEntrada;
+	}
+
+
+	public void setDataDeEntrada(String dataDeEntrada) {
+		this.dataDeEntrada = dataDeEntrada;
+	}
+
+
+	public String getDataDaUltimaColheita() {
+		return dataDaUltimaColheita;
+	}
+
+
+	public void setDataDaUltimaColheita(String dataDaUltimaColheita) {
+		this.dataDaUltimaColheita = dataDaUltimaColheita;
+	}
+
 
 
 	public Integer getPrimeiraFolhaPigmentacaoAntocianinicaDaBainha() {
@@ -635,13 +858,6 @@ public class Germplasm {
 			Integer espigaPigmentacaoAntocianinicaDasGlumasDoSabugo) {
 		this.espigaPigmentacaoAntocianinicaDasGlumasDoSabugo = espigaPigmentacaoAntocianinicaDasGlumasDoSabugo;
 	}
-
-
-	@Column(name="tipo_de_grao_estourado")
-	private Integer tipoDeGraoEstourado;
-
-	@Column(name="espiga_pigmentacao_antocianinica_das_glumas_do_sabugo")
-	private Integer espigaPigmentacaoAntocianinicaDasGlumasDoSabugo;
 
 
 	public Germplasm() {

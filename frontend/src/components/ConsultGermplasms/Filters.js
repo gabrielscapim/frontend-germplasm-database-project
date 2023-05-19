@@ -131,6 +131,7 @@ function Filters(
           handleChange={ handleChangeFilters }
           inputValue={ numericFilterValue }
           minInput={ 1 }
+          maxInput={ 100 }
         />
         <Button
           id="button-filter"

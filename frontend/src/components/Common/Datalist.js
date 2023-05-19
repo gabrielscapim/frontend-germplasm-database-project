@@ -44,14 +44,13 @@ function Datalist({
 }
 
 Datalist.propTypes = {
-  id: PropTypes.string.isRequired,
-  options: PropTypes.arrayOf(PropTypes.string).isRequired,
-  label: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired,
-  containerStyles: PropTypes.objectOf(PropTypes.string).isRequired,
-  handleChange: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
-};
+  id: PropTypes.string,
+  options: PropTypes.arrayOf(PropTypes.string),
+  label: PropTypes.string,
+  name: PropTypes.string,
+  placeholder: PropTypes.string,
+  handleChange: PropTypes.func,
+  value: PropTypes.string,
+}.isRequired;
 
 export default Datalist;
