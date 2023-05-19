@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import PropTypes from 'prop-types';
 import styles from './GermplasmTable.module.css';
 
@@ -30,17 +31,23 @@ function GermplasmTable({
                 {
                   consultGermplasmsPage
                   && (
-                    <td>
+                    <td style={ { display: 'flex', flexDirection: 'column' } }>
                       <button
                         style={ {
                           marginRight: '10%',
                           padding: '0px',
                           border: 'none',
                           background: 'none',
+                          color: '#006400',
+                          fontSize: '12px',
                         } }
                         onClick={ () => editGermplasm(apiResult.id) }
                       >
-                        <i className="bi bi-pencil"> </i>
+                        <i
+                          className="bi bi-pencil-fill"
+                          style={ { backgroundColor: 'inherit', marginRight: '4px' } }
+                        />
+                        Editar
                       </button>
 
                       <button
@@ -49,10 +56,16 @@ function GermplasmTable({
                           padding: '0px',
                           border: 'none',
                           background: 'none',
+                          color: '#DC3545',
+                          fontSize: '12px',
                         } }
                         onClick={ () => deleteGermplasm(apiResult.id) }
                       >
-                        <i className="bi bi-trash"> </i>
+                        <i
+                          className="bi bi-trash3-fill"
+                          style={ { backgroundColor: 'inherit', marginRight: '4px' } }
+                        />
+                        Excluir
                       </button>
                     </td>
                   )
@@ -63,6 +76,7 @@ function GermplasmTable({
                       ? (
                         <td
                           key={ `column-result-${result}-${index}-${apiResultIndex}` }
+                          style={ { textAlign: 'center', verticalAlign: 'middle' } }
                         >
                           { result === false ? 'não' : 'sim' }
                         </td>
@@ -70,6 +84,7 @@ function GermplasmTable({
                       : (
                         <td
                           key={ `column-result-${result}-${index}-${apiResultIndex}` }
+                          style={ { textAlign: 'center', verticalAlign: 'middle' } }
                         >
                           { result }
                         </td>

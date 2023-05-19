@@ -6,6 +6,7 @@ import Footer from './components/Footer/Footer';
 import './App.css';
 import { GlobalStorage } from './context/GlobalContext';
 import EditGermplasmPage from './pages/EditGermplasmPage/EditGermplasmPage';
+import LoginPage from './pages/LoginPage/LoginPage';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <GlobalStorage>
         <Header />
         <Routes>
+          <Route exact path="/" Component={ LoginPage } />
           <Route path="/add-germplasm" Component={ AddGermplasmPage } />
           <Route path="/consult-germplasms" Component={ ConsultGermplasmsPage } />
           <Route path="/edit-germplasm/id/:id" Component={ EditGermplasmPage } />

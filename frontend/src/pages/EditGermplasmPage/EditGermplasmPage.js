@@ -107,9 +107,6 @@ function EditGermplasmPage() {
     }
   };
 
-  console.log(newGermplasmName);
-  console.log(nome);
-
   return (
     <form className={ styles['page-container'] }>
       <div className={ styles['edit-germplasm-container'] }>
