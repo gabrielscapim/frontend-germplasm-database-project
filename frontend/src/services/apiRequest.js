@@ -3,7 +3,7 @@ import axios from 'axios';
 const URL = 'http://localhost:8080';
 const HTTP_STATUS_OK = 200;
 
-const loginRequest = async (login, password, setLoginFailed) => {
+const loginRequest = async (login, password, setLoginFailed, setIsLoggedIn) => {
   try {
     const response = await axios.post(`${URL}/login`, {
       login,
@@ -15,6 +15,7 @@ const loginRequest = async (login, password, setLoginFailed) => {
     if (status === HTTP_STATUS_OK) {
       localStorage.setItem('token', data);
       setLoginFailed(false);
+      setIsLoggedIn(true);
     }
   } catch (error) {
     console.error(error);

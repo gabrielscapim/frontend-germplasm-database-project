@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Button from '../../components/Common/Button';
 import Input from '../../components/Common/Input';
 import styles from './LoginPage.module.css';
-import { loginRequest } from '../../services/apiRequest';
+import { GlobalContext } from '../../context/GlobalContext';
 
 function LoginPage() {
+  const global = useContext(GlobalContext);
+  const { handleLoginClick } = global;
+
   const [state, setState] = useState({
     userInput: '',
     passwordInput: '',
@@ -19,11 +22,6 @@ function LoginPage() {
       ...prevState,
       [name]: value,
     }));
-  };
-
-  const handleLoginClick = () => {
-    console.log('entrou');
-    loginRequest(userInput, passwordInput, setLoginFailed);
   };
 
   return (
@@ -72,7 +70,7 @@ function LoginPage() {
             marginTop: '8px',
             width: '100%',
           } }
-          onClick={ handleLoginClick }
+          onClick={ () => handleLoginClick(userInput, passwordInput, setLoginFailed) }
           // disabled={ newGermplasm.nome === '' }
         />
       </form>

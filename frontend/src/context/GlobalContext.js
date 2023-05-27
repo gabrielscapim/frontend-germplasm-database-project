@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { createContext, useEffect, useMemo, useState } from 'react';
 // import apiGET from '../services/apiGET';
 import mockApi from '../helpers/mockApi';
+import { loginRequest } from '../services/apiRequest';
 
 export const GlobalContext = createContext();
 
@@ -9,6 +10,9 @@ export function GlobalStorage({ children }) {
   const [apiResults, setApiResults] = useState([]);
   const [attributes, setAttributes] = useState([]);
   const [germplasmsNames, setGermplasmsNames] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const TOKEN_EXPIRATION_TIME = 10000;
 
   useEffect(() => {
     // apiGET()
@@ -28,7 +32,18 @@ export function GlobalStorage({ children }) {
     setGermplasmsNames(mockApi.map(({ nome }) => nome));
   }, []);
 
-  const setValue = useMemo(() => ({ apiResults, attributes, germplasmsNames }));
+  const handleLoginClick = (userInput, passwordInput, setLoginFailed) => {
+    console.log(isLoggedIn);
+    loginRequest(userInput, passwordInput, setLoginFailed, setIsLoggedIn);
+    setTimeout(() => {
+      localStorage.removeItem('token');
+      setIsLoggedIn(false);
+      console.log(isLoggedIn);
+    }, TOKEN_EXPIRATION_TIME);
+  };
+
+  const setValue = useMemo(() => (
+    { apiResults, attributes, germplasmsNames, handleLoginClick }));
 
   return (
     <GlobalContext.Provider
