@@ -1,9 +1,14 @@
 package br.com.germplasmdatabase.api.model.repositories;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import br.com.germplasmdatabase.api.model.entities.User;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+
+@Repository
+public interface UserRepository extends CrudRepository<User, Long> {
+
+    User findByLogin(String login);
 
 }
