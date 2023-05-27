@@ -2,12 +2,14 @@ import { useState } from 'react';
 import Button from '../../components/Common/Button';
 import Input from '../../components/Common/Input';
 import styles from './LoginPage.module.css';
+import { loginRequest } from '../../services/apiRequest';
 
 function LoginPage() {
   const [state, setState] = useState({
     userInput: '',
     passwordInput: '',
   });
+  const [loginFailed, setLoginFailed] = useState(false);
 
   const { userInput, passwordInput } = state;
 
@@ -21,6 +23,7 @@ function LoginPage() {
 
   const handleLoginClick = () => {
     console.log('entrou');
+    loginRequest(userInput, passwordInput, setLoginFailed);
   };
 
   return (
@@ -46,6 +49,17 @@ function LoginPage() {
           inputValue={ passwordInput }
           maxInputLength={ 30 }
         />
+        { loginFailed
+          && (
+            <p
+              style={ {
+                fontSize: '14px',
+                color: '#dc3545',
+                marginBottom: '8px' } }
+            >
+              Usuário ou senha incorretos
+            </p>
+          )}
         <Button
           id="login-button"
           label="Entrar"
