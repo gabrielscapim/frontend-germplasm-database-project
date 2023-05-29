@@ -70,6 +70,7 @@ function LoginPage() {
             marginTop: '8px',
             width: '100%',
           } }
+          disabled={ false }
           onClick={ () => handleLoginClick(userInput, passwordInput, setLoginFailed) }
           // disabled={ newGermplasm.nome === '' }
         />

@@ -38,6 +38,7 @@ export function GlobalStorage({ children }) {
     loginRequest(userInput, passwordInput, setLoginFailed, setIsLoggedIn);
     setTimeout(() => {
       localStorage.removeItem('token');
+      localStorage.removeItem('tokenGenerationTime');
       setIsLoggedIn(false);
       navigate('/login');
     }, TOKEN_EXPIRATION_TIME);
