@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { createContext, useEffect, useMemo, useState } from 'react';
 // import apiGET from '../services/apiGET';
+import { useNavigate } from 'react-router-dom';
 import mockApi from '../helpers/mockApi';
 import { loginRequest } from '../services/apiRequest';
 
@@ -13,6 +14,7 @@ export function GlobalStorage({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const TOKEN_EXPIRATION_TIME = 10000;
+  const navigate = useNavigate();
 
   useEffect(() => {
     // apiGET()
@@ -33,17 +35,25 @@ export function GlobalStorage({ children }) {
   }, []);
 
   const handleLoginClick = (userInput, passwordInput, setLoginFailed) => {
-    console.log(isLoggedIn);
     loginRequest(userInput, passwordInput, setLoginFailed, setIsLoggedIn);
     setTimeout(() => {
       localStorage.removeItem('token');
       setIsLoggedIn(false);
-      console.log(isLoggedIn);
+      navigate('/login');
     }, TOKEN_EXPIRATION_TIME);
   };
 
+  useEffect(() => {
+    if (isLoggedIn) navigate('/consult-germplasms');
+  }, [isLoggedIn]);
+
   const setValue = useMemo(() => (
-    { apiResults, attributes, germplasmsNames, handleLoginClick }));
+    { apiResults,
+      attributes,
+      germplasmsNames,
+      handleLoginClick,
+      isLoggedIn,
+    }));
 
   return (
     <GlobalContext.Provider

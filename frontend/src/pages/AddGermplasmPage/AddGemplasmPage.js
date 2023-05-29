@@ -12,6 +12,7 @@ import {
 import RequiredGermplasmsInputs from '../../components/Common/RequiredGermplasmsInputs';
 import NoRequiredGermplasmsInputs
   from '../../components/Common/NoRequiredGermplasmsInputs';
+import Header from '../../components/Header/Header';
 
 function AddGermplasmPage() {
   const global = useContext(GlobalContext);
@@ -107,83 +108,86 @@ function AddGermplasmPage() {
   };
 
   return (
-    <form className={ styles['page-container'] }>
-      <div className={ styles['add-germplasm-container'] }>
-        { !nameIsCorrect
-        && (
-          <>
-            <RequiredGermplasmsInputs
-              inputsState={ inputsState }
+    <>
+      <Header />
+      <form className={ styles['page-container'] }>
+        <div className={ styles['add-germplasm-container'] }>
+          { !nameIsCorrect
+          && (
+            <>
+              <RequiredGermplasmsInputs
+                inputsState={ inputsState }
+                handleChange={ handleChange }
+              />
+              <div className={ styles[ROW_CLASS] }>
+                <Button
+                  id="button-continue-add-germplasm"
+                  label="Continuar"
+                  type="button"
+                  componentStyles={ {
+                    backgroundColor: '#684f92',
+                    border: '1px solid #684f92',
+                    height: '38px',
+                    marginBottom: '12px',
+                    marginTop: '8px',
+                  } }
+                  onClick={ handleContinueClick }
+                  disabled={ !(!isGermplasmNameExist && isRequiredInputsCorrect) }
+                />
+              </div>
+            </>
+
+          )}
+          { nameIsCorrect
+          && (
+            <NoRequiredGermplasmsInputs
+              columnsToAdd={ columnsToAdd }
               handleChange={ handleChange }
+              newGermplasmColumnSelect={ newGermplasmColumnSelect }
+              newGermplasmColumnValue={ newGermplasmColumnValue }
+              handleAddAttributeClick={ handleAddAttributeClick }
             />
-            <div className={ styles[ROW_CLASS] }>
+          ) }
+        </div>
+        { nameIsCorrect && (
+          <>
+            <GermplasmTable
+              attributes={ Object.keys(newGermplasm[0]) || [] }
+              germplasms={ newGermplasm }
+              tableContainerStyles={ { height: '200px' } }
+            />
+            <div className={ styles['add-germplasm-button-row'] }>
               <Button
-                id="button-continue-add-germplasm"
-                label="Continuar"
+                id="button-cancel-add-germplasm"
+                label="Cancelar"
                 type="button"
                 componentStyles={ {
-                  backgroundColor: '#684f92',
-                  border: '1px solid #684f92',
+                  backgroundColor: '#dc3545',
+                  border: '1px solid #dc3545',
                   height: '38px',
                   marginBottom: '12px',
                   marginTop: '8px',
                 } }
-                onClick={ handleContinueClick }
-                disabled={ !(!isGermplasmNameExist && isRequiredInputsCorrect) }
+                onClick={ handleCancelAddGermplasClick }
+              />
+              <Button
+                id="button-add-germplasm"
+                label="Adicionar germoplasma"
+                type="button"
+                componentStyles={ {
+                  backgroundColor: '#006400',
+                  border: '1px solid #006400',
+                  height: '38px',
+                  marginBottom: '12px',
+                  marginTop: '8px',
+                } }
+                onClick={ handleAddGermplasmClick }
               />
             </div>
           </>
-
         )}
-        { nameIsCorrect
-        && (
-          <NoRequiredGermplasmsInputs
-            columnsToAdd={ columnsToAdd }
-            handleChange={ handleChange }
-            newGermplasmColumnSelect={ newGermplasmColumnSelect }
-            newGermplasmColumnValue={ newGermplasmColumnValue }
-            handleAddAttributeClick={ handleAddAttributeClick }
-          />
-        ) }
-      </div>
-      { nameIsCorrect && (
-        <>
-          <GermplasmTable
-            attributes={ Object.keys(newGermplasm[0]) || [] }
-            germplasms={ newGermplasm }
-            tableContainerStyles={ { height: '200px' } }
-          />
-          <div className={ styles['add-germplasm-button-row'] }>
-            <Button
-              id="button-cancel-add-germplasm"
-              label="Cancelar"
-              type="button"
-              componentStyles={ {
-                backgroundColor: '#dc3545',
-                border: '1px solid #dc3545',
-                height: '38px',
-                marginBottom: '12px',
-                marginTop: '8px',
-              } }
-              onClick={ handleCancelAddGermplasClick }
-            />
-            <Button
-              id="button-add-germplasm"
-              label="Adicionar germoplasma"
-              type="button"
-              componentStyles={ {
-                backgroundColor: '#006400',
-                border: '1px solid #006400',
-                height: '38px',
-                marginBottom: '12px',
-                marginTop: '8px',
-              } }
-              onClick={ handleAddGermplasmClick }
-            />
-          </div>
-        </>
-      )}
-    </form>
+      </form>
+    </>
   );
 }
 

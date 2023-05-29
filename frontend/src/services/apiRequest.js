@@ -14,12 +14,12 @@ const loginRequest = async (login, password, setLoginFailed, setIsLoggedIn) => {
 
     if (status === HTTP_STATUS_OK) {
       localStorage.setItem('token', data);
+      localStorage.setItem('tokenGenerationTime', Date.now());
       setLoginFailed(false);
       setIsLoggedIn(true);
     }
   } catch (error) {
     console.error(error);
-    localStorage.removeItem('token');
     setLoginFailed(true);
   }
 };

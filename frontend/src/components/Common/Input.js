@@ -45,6 +45,7 @@ function Input({
         min={ minInput }
         max={ maxInput }
         maxLength={ maxInputLength }
+        autoComplete="off"
       />
 
     </div>

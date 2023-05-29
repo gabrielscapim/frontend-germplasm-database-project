@@ -9,6 +9,7 @@ import notAttributesRequired from '../../helpers/notAttributesRequired';
 import RequiredGermplasmsInputs from '../../components/Common/RequiredGermplasmsInputs';
 import NoRequiredGermplasmsInputs
   from '../../components/Common/NoRequiredGermplasmsInputs';
+import Header from '../../components/Header/Header';
 
 function EditGermplasmPage() {
   const global = useContext(GlobalContext);
@@ -108,54 +109,57 @@ function EditGermplasmPage() {
   };
 
   return (
-    <form className={ styles['page-container'] }>
-      <div className={ styles['edit-germplasm-container'] }>
-        <RequiredGermplasmsInputs
-          inputsState={ inputsState }
-          handleChange={ handleChange }
-          actualName={ nome }
+    <>
+      <Header />
+      <form className={ styles['page-container'] }>
+        <div className={ styles['edit-germplasm-container'] }>
+          <RequiredGermplasmsInputs
+            inputsState={ inputsState }
+            handleChange={ handleChange }
+            actualName={ nome }
+          />
+          <NoRequiredGermplasmsInputs
+            columnsToAdd={ columns }
+            handleChange={ handleChange }
+            handleAddAttributeClick={ handleEditGermplasmClick }
+            newGermplasmColumnSelect={ newGermplasmColumnSelect }
+            newGermplasmColumnValue={ newGermplasmColumnValue }
+          />
+        </div>
+        <GermplasmTable
+          attributes={ Object.keys(germplasmToEdit) || [] }
+          germplasms={ [{ ...newGermplasm }] }
+          tableContainerStyles={ { height: '200px' } }
         />
-        <NoRequiredGermplasmsInputs
-          columnsToAdd={ columns }
-          handleChange={ handleChange }
-          handleAddAttributeClick={ handleEditGermplasmClick }
-          newGermplasmColumnSelect={ newGermplasmColumnSelect }
-          newGermplasmColumnValue={ newGermplasmColumnValue }
-        />
-      </div>
-      <GermplasmTable
-        attributes={ Object.keys(germplasmToEdit) || [] }
-        germplasms={ [{ ...newGermplasm }] }
-        tableContainerStyles={ { height: '200px' } }
-      />
-      <div className={ styles['button-container'] }>
-        { newGermplasm.nome === ''
-        && (
-          <p
-            style={ {
-              fontSize: '14px',
-              color: '#dc3545',
-              marginBottom: '8px' } }
-          >
-            Preencha o nome do germoplasma
-          </p>
-        )}
-        <Button
-          id="button-add-germplasm"
-          label="Finalizar"
-          type="button"
-          componentStyles={ {
-            backgroundColor: '#006400',
-            border: '1px solid #006400',
-            height: '38px',
-            marginBottom: '12px',
-            marginTop: '8px',
-          } }
-          onClick={ handleConfirmClick }
-          disabled={ newGermplasm.nome === '' }
-        />
-      </div>
-    </form>
+        <div className={ styles['button-container'] }>
+          { newGermplasm.nome === ''
+          && (
+            <p
+              style={ {
+                fontSize: '14px',
+                color: '#dc3545',
+                marginBottom: '8px' } }
+            >
+              Preencha o nome do germoplasma
+            </p>
+          )}
+          <Button
+            id="button-add-germplasm"
+            label="Finalizar"
+            type="button"
+            componentStyles={ {
+              backgroundColor: '#006400',
+              border: '1px solid #006400',
+              height: '38px',
+              marginBottom: '12px',
+              marginTop: '8px',
+            } }
+            onClick={ handleConfirmClick }
+            disabled={ newGermplasm.nome === '' }
+          />
+        </div>
+      </form>
+    </>
   );
 }
 
