@@ -33,8 +33,6 @@ public class FilterToken extends OncePerRequestFilter {
         var authorizationHeader = request.getHeader("Authorization");
 
         if(authorizationHeader != null) {
-        	System.out.println("entrou");
-        	System.out.println(authorizationHeader);
             token = authorizationHeader.replace("Bearer ", "");
             var subject = this.tokenService.getSubject(token);
 
@@ -45,7 +43,6 @@ public class FilterToken extends OncePerRequestFilter {
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
-        System.out.println("não entrou");
         filterChain.doFilter(request, response);
 		
 	}
