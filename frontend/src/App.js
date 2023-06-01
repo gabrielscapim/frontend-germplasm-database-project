@@ -1,23 +1,36 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import AddGermplasmPage from './pages/AddGermplasmPage/AddGemplasmPage';
 import ConsultGermplasmsPage from './pages/ConsultGermplasmsPage/ConsultGermplasmsPage';
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
 import './App.css';
 import { GlobalStorage } from './context/GlobalContext';
 import EditGermplasmPage from './pages/EditGermplasmPage/EditGermplasmPage';
+import LoginPage from './pages/LoginPage/LoginPage';
+import PrivateRoutes from './pages/PrivateRoutes';
 
 function App() {
+  const dateNow = Date.now();
+  const tokenGenerationTime = localStorage.getItem('tokenGenerationTime');
+  const TOKEN_EXPIRATION_TIME = 10000000;
+
+  if (tokenGenerationTime && (dateNow - tokenGenerationTime > TOKEN_EXPIRATION_TIME)) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('tokenGenerationTime');
+  }
+
   return (
     <BrowserRouter>
       <GlobalStorage>
-        <Header />
         <Routes>
-          <Route path="/add-germplasm" Component={ AddGermplasmPage } />
-          <Route path="/consult-germplasms" Component={ ConsultGermplasmsPage } />
-          <Route path="/edit-germplasm/id/:id" Component={ EditGermplasmPage } />
+          <Route path="*" element={ <Navigate to="login" replace /> } />
+          <Route exact path="/login" Component={ LoginPage } />
+
+          <Route element={ <PrivateRoutes /> }>
+            <Route exact path="/add-germplasm" Component={ AddGermplasmPage } />
+            <Route exact path="/consult-germplasms" Component={ ConsultGermplasmsPage } />
+            <Route exact path="/edit-germplasm/id/:id" Component={ EditGermplasmPage } />
+          </Route>
+
         </Routes>
-        <Footer />
       </GlobalStorage>
     </BrowserRouter>
   );

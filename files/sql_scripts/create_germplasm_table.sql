@@ -1,6 +1,6 @@
 CREATE TABLE `germplasm` (
 	`id` int NOT NULL AUTO_INCREMENT,
-    `deletado` boolean DEFAULT 0,
+    `deletado` boolean DEFAULT FALSE,
     `nome` varchar(90),
     `tipo_de_material_genetico` varchar(90),
     `textura_do_grao` varchar(90),

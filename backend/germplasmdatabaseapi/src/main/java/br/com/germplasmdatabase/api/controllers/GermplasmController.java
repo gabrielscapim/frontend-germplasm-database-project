@@ -14,7 +14,7 @@ import br.com.germplasmdatabase.api.model.repositories.GermplasmRepository;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/germplasm")
+@RequestMapping("/germplasm")
 public class GermplasmController {
 	
 	@Autowired

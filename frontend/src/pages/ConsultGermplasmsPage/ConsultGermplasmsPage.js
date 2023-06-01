@@ -5,6 +5,7 @@ import Filters from '../../components/ConsultGermplasms/Filters';
 import GermplasmTable from '../../components/Common/GermplasmTable';
 import styles from './ConsultGermplasmsPage.module.css';
 import { GlobalContext } from '../../context/GlobalContext';
+import Header from '../../components/Header/Header';
 
 function ConsultGermplasmsPage() {
   const global = useContext(GlobalContext);
@@ -141,24 +142,27 @@ function ConsultGermplasmsPage() {
   };
 
   return (
-    <section className={ styles['page-container'] }>
-      <Filters
-        attributes={ attributes }
-        numericFiltersAvaible={ numericFiltersAvaible }
-        filters={ filters }
-        handleChangeFilters={ handleChangeFilters }
-        numericFilterSubmit={ numericFilterSubmit }
-        numericFiltersSelected={ numericFiltersSelected }
-        numericFilterDelete={ numericFilterDelete }
-        numericFilterDeleteAll={ numericFilterDeleteAll }
-      />
-      <GermplasmTable
-        germplasms={ filteredGermplasms }
-        attributes={ attributes }
-        deleteGermplasm={ deleteGermplasm }
-        editGermplasm={ editGermplasm }
-      />
-    </section>
+    <>
+      <Header />
+      <section className={ styles['page-container'] }>
+        <Filters
+          attributes={ attributes }
+          numericFiltersAvaible={ numericFiltersAvaible }
+          filters={ filters }
+          handleChangeFilters={ handleChangeFilters }
+          numericFilterSubmit={ numericFilterSubmit }
+          numericFiltersSelected={ numericFiltersSelected }
+          numericFilterDelete={ numericFilterDelete }
+          numericFilterDeleteAll={ numericFilterDeleteAll }
+        />
+        <GermplasmTable
+          germplasms={ filteredGermplasms }
+          attributes={ attributes }
+          deleteGermplasm={ deleteGermplasm }
+          editGermplasm={ editGermplasm }
+        />
+      </section>
+    </>
   );
 }
 

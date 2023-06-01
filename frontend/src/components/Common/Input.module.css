@@ -34,6 +34,14 @@
     margin-left: 2%;
 }
 
+.user-input {
+    margin-bottom: 20px;
+}
+
+.password-input {
+    margin-bottom: 20px;
+}
+
 @media all and (max-width: 768px) {
     .value-filter {
         width: 100%;

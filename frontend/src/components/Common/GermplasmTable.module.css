@@ -11,6 +11,10 @@
     border-right: 1px solid #bdbbb7;
 }
 
+.table-wrapper th {
+    font-weight: 600;
+}
+
 .table-wrapper thead {
     position: sticky;
     top: 0px;
