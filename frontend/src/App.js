@@ -10,9 +10,9 @@ import PrivateRoutes from './pages/PrivateRoutes';
 function App() {
   const dateNow = Date.now();
   const tokenGenerationTime = localStorage.getItem('tokenGenerationTime');
-  const seconds = 10000;
+  const TOKEN_EXPIRATION_TIME = 10000000;
 
-  if (tokenGenerationTime && (dateNow - tokenGenerationTime > seconds)) {
+  if (tokenGenerationTime && (dateNow - tokenGenerationTime > TOKEN_EXPIRATION_TIME)) {
     localStorage.removeItem('token');
     localStorage.removeItem('tokenGenerationTime');
   }

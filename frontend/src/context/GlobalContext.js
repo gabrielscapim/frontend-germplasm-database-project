@@ -13,7 +13,7 @@ export function GlobalStorage({ children }) {
   const [germplasmsNames, setGermplasmsNames] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const TOKEN_EXPIRATION_TIME = 10000;
+  const TOKEN_EXPIRATION_TIME = 10000000;
   const navigate = useNavigate();
 
   useEffect(() => {
