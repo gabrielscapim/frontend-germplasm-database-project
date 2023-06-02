@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import { createContext, useEffect, useMemo, useState } from 'react';
 // import apiGET from '../services/apiGET';
 import { useNavigate } from 'react-router-dom';
-import mockApi from '../helpers/mockApi';
-import { loginRequest } from '../services/apiRequest';
+// import mockApi from '../helpers/mockApi';
+import { apiRequest, loginRequest } from '../services/apiRequest';
 
 export const GlobalContext = createContext();
 
@@ -17,21 +17,22 @@ export function GlobalStorage({ children }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // apiGET()
-    //   .then((results) => {
-    //     const noDeletedResults = results.filter(({ deletado }) => deletado === false);
-    //     const deletedDeletadoColumn = noDeletedResults
-    //       .map(({ deletado, ...result }) => result);
-    //     setApiResults(deletedDeletadoColumn);
-    //     setAttributes(Object.keys(deletedDeletadoColumn[0]));
-    //     setGermplasmsNames(deletedDeletadoColumn.map(({ nome }) => nome));
-    //   })
-    //   .catch(() => {
-
-    //   });
-    setApiResults(mockApi);
-    setAttributes(Object.keys(mockApi[0]));
-    setGermplasmsNames(mockApi.map(({ nome }) => nome));
+    apiRequest('GET', '/germplasm')
+      .then((results) => {
+        const noDeletedResults = results.filter(({ deletado }) => deletado === false);
+        const deletedDeletadoColumn = noDeletedResults
+          .map(({ deletado, ...result }) => result);
+        setApiResults(deletedDeletadoColumn);
+        setAttributes(Object.keys(deletedDeletadoColumn[0]));
+        setGermplasmsNames(deletedDeletadoColumn.map(({ nome }) => nome));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    // setApiResults(mockApi);
+    // setAttributes(Object.keys(mockApi[0]));
+    // setGermplasmsNames(mockApi.map(({ nome }) => nome));
+    // apiRequest('GET', '/germplasm').then((response) => console.log(response));
   }, []);
 
   const handleLoginClick = (userInput, passwordInput, setLoginFailed) => {
