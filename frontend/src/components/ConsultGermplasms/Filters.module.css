@@ -4,6 +4,16 @@
     width: 95%;
 }
 
+.warning-text {
+    font-size: 14px;
+    color: rgb(220, 53, 69);
+}
+
+.order-filter-advice {
+    font-size: 14px;
+    color: rgb(105, 101, 101);
+}
+
 .filters-container h6 {
     margin-bottom: 12px;
 }

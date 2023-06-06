@@ -6,20 +6,21 @@ import Select from '../Common/Select';
 import Button from '../Common/Button';
 import Datalist from '../Common/Datalist';
 import { GlobalContext } from '../../context/GlobalContext';
-import { isNumericInputCorrect } from '../../helpers/isNumericInputCorrect';
+import numericColumns from '../../helpers/numericColumns';
 
 function Filters(
-  { numericFiltersAvaible,
+  { columnFiltersAvaible,
     attributes,
     handleChangeFilters,
     filters,
-    numericFilterSubmit,
-    numericFiltersSelected,
-    numericFilterDelete,
-    numericFilterDeleteAll,
+    columnFilterSubmit,
+    columnFiltersSelected,
+    columnFilterDelete,
+    columnFilterDeleteAll,
   },
 ) {
   const ROW_CLASS = 'filters-row';
+  const WARNING_TEXT_CLASS = 'warning-text';
   const purpleButtonStyles = {
     backgroundColor: '#684f92',
     border: '1px solid #684f92',
@@ -31,16 +32,16 @@ function Filters(
 
   const {
     germplasmNameFilter,
-    numericFilterColumn,
-    numericFilterOperator,
-    numericFilterValue,
+    columnFilterColumn,
+    columnFilterOperator,
+    columnFilterValue,
     sortFilterColumn,
     sortFilterOperator,
   } = filters;
 
-  const isGermplasmFilterCorrect = germplasmsNames.includes(germplasmNameFilter);
-  const isNumericFilterColumnCorrect = numericFiltersAvaible
-    .includes(numericFilterColumn);
+  const isNameFilterCorrect = germplasmsNames.includes(germplasmNameFilter);
+  const iscolumnFilterColumnCorrect = columnFiltersAvaible
+    .includes(columnFilterColumn);
   const isSortFilterColumnCorrect = attributes.includes(sortFilterColumn);
 
   return (
@@ -56,10 +57,10 @@ function Filters(
           value={ germplasmNameFilter }
         />
       </div>
-      { !isGermplasmFilterCorrect
+      { !isNameFilterCorrect
         && germplasmNameFilter !== ''
           && (
-            <p style={ { fontSize: '14px', color: '#dc3545' } }>
+            <p className={ styles[WARNING_TEXT_CLASS] }>
               Digite um nome existente
             </p>
           )}
@@ -67,7 +68,7 @@ function Filters(
         <Datalist
           id="column-order"
           label="Coluna (atributo) a ser ordenada"
-          options={ attributes.filter((attr) => attr !== 'nome') }
+          options={ numericColumns }
           name="sortFilterColumn"
           placeholder="Digite a coluna a ser ordenada"
           handleChange={ handleChangeFilters }
@@ -88,14 +89,14 @@ function Filters(
       { !isSortFilterColumnCorrect
           && sortFilterColumn !== ''
           && (
-            <p style={ { fontSize: '14px', color: '#dc3545' } }>
+            <p className={ styles[WARNING_TEXT_CLASS] }>
               Digite uma coluna existente
             </p>
           )}
       { isSortFilterColumnCorrect
           && sortFilterColumn !== ''
           && (
-            <p style={ { fontSize: '14px' } }>
+            <p className={ styles['order-filter-advice'] }>
               {`Filtro de ordenação aplicado: ${sortFilterColumn} ${sortFilterOperator}`}
             </p>
           )}
@@ -103,58 +104,49 @@ function Filters(
         <Datalist
           id="column-filter"
           label="Coluna (atributo) a ser filtrada"
-          options={ numericFiltersAvaible }
-          name="numericFilterColumn"
+          options={ columnFiltersAvaible }
+          name="columnFilterColumn"
           placeholder="Digite a coluna a ser filtrada"
           handleChange={ handleChangeFilters }
-          value={ numericFilterColumn }
+          value={ columnFilterColumn }
         />
         <Select
           id="comparison-filter"
           label="Operador"
           options={ [
+            'igual a',
             'maior que',
             'menor que',
-            'igual a',
           ] }
-          name="numericFilterOperator"
+          name="columnFilterOperator"
           handleChange={ handleChangeFilters }
-          inputValue={ numericFilterOperator }
+          inputValue={ columnFilterOperator }
         />
         <Input
           id="value-filter"
           label="Valor"
-          type="number"
-          name="numericFilterValue"
+          type="text"
+          name="columnFilterValue"
           labelClassName="general-input-label"
           inputClassName="value-input"
           handleChange={ handleChangeFilters }
-          inputValue={ numericFilterValue }
-          minInput={ 1 }
-          maxInput={ 100 }
+          inputValue={ columnFilterValue }
         />
         <Button
           id="button-filter"
           label="Filtrar"
           type="button"
-          disabled={ !isNumericFilterColumnCorrect
-            || !isNumericInputCorrect(numericFilterValue) }
+          disabled={ !iscolumnFilterColumnCorrect
+            || columnFilterColumn === '' }
           componentStyles={ purpleButtonStyles }
-          onClick={ numericFilterSubmit }
+          onClick={ columnFilterSubmit }
         />
       </div>
-      { !isNumericFilterColumnCorrect
-          && numericFilterColumn !== ''
+      { !iscolumnFilterColumnCorrect
+          && columnFilterColumn !== ''
           && (
-            <p style={ { fontSize: '14px', color: '#dc3545' } }>
+            <p className={ styles[WARNING_TEXT_CLASS] }>
               Digite uma coluna existente
-            </p>
-          )}
-      { !isNumericInputCorrect(numericFilterValue)
-          && numericFilterValue !== ''
-          && (
-            <p style={ { fontSize: '14px', color: '#dc3545' } }>
-              Digite um valor acima de 0
             </p>
           )}
       <div className={ styles[ROW_CLASS] }>
@@ -170,15 +162,15 @@ function Filters(
             marginBottom: '12px',
             marginTop: '12px',
           } }
-          onClick={ numericFilterDeleteAll }
+          onClick={ columnFilterDeleteAll }
         />
       </div>
-      { numericFiltersSelected.length > 0 && (
+      { columnFiltersSelected.length > 0 && (
         <h6>Filtros aplicados:</h6>
       )}
-      { numericFiltersSelected.map((filter) => (
+      { columnFiltersSelected.map((filter) => (
         <div
-          key={ `${filter.numericFilterColumn}-applied` }
+          key={ `${filter.columnFilterColumn}-applied` }
           className={ styles['delete-filter-container'] }
         >
           <button
@@ -188,15 +180,15 @@ function Filters(
               border: 'none',
               background: 'none',
             } }
-            onClick={ () => numericFilterDelete(filter.numericFilterColumn) }
+            onClick={ () => columnFilterDelete(filter.columnFilterColumn) }
           >
             <i className="bi bi-trash"> </i>
           </button>
           <p>
             {
-              `${filter.numericFilterColumn} 
-              ${filter.numericFilterOperator} 
-              ${filter.numericFilterValue}`
+              `${filter.columnFilterColumn} 
+              ${filter.columnFilterOperator} 
+              ${filter.columnFilterValue}`
             }
           </p>
         </div>
@@ -206,12 +198,12 @@ function Filters(
 }
 
 Filters.propTypes = {
-  numericFiltersAvaible: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
+  columnFiltersAvaible: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
   attributes: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
   handleChangeFilters: PropTypes.func,
-  numericFilterSubmit: PropTypes.func,
-  numericFiltersSelected: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
-  numericFilterDelete: PropTypes.func,
+  columnFilterSubmit: PropTypes.func,
+  columnFiltersSelected: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
+  columnFilterDelete: PropTypes.func,
 }.isRequired;
 
 export default Filters;
