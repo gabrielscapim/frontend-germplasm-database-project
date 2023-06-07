@@ -2,6 +2,7 @@
     padding: 0px 12px 0px 12px;
     border-radius: 12px;
     width: 95%;
+    margin-bottom: 24px;
 }
 
 .warning-text {
@@ -12,10 +13,6 @@
 .order-filter-advice {
     font-size: 14px;
     color: rgb(105, 101, 101);
-}
-
-.filters-container h6 {
-    margin-bottom: 12px;
 }
 
 .filters-container-first-line {

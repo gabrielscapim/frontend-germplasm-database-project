@@ -149,24 +149,26 @@ function Filters(
               Digite uma coluna existente
             </p>
           )}
-      <div className={ styles[ROW_CLASS] }>
-        <Button
-          id="button-filter"
-          label="Remover todos os filtros"
-          type="button"
-          disabled={ false }
-          componentStyles={ {
-            backgroundColor: '#dc3545',
-            border: '1px solid #dc3545',
-            height: '38px',
-            marginBottom: '12px',
-            marginTop: '12px',
-          } }
-          onClick={ columnFilterDeleteAll }
-        />
-      </div>
       { columnFiltersSelected.length > 0 && (
-        <h6>Filtros aplicados:</h6>
+        <>
+          <div className={ styles[ROW_CLASS] }>
+            <Button
+              id="button-filter"
+              label="Remover todos os filtros"
+              type="button"
+              disabled={ false }
+              componentStyles={ {
+                backgroundColor: '#dc3545',
+                border: '1px solid #dc3545',
+                height: '38px',
+                marginBottom: '12px',
+                marginTop: '12px',
+              } }
+              onClick={ columnFilterDeleteAll }
+            />
+          </div>
+          <h6>Filtros aplicados:</h6>
+        </>
       )}
       { columnFiltersSelected.map((filter) => (
         <div
