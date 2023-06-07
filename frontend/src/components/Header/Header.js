@@ -26,7 +26,6 @@ function Header() {
           <div>
             <a
               href="/consult-germplasms"
-              // eslint-disable-next-line sonarjs/no-duplicate-string
               className={ styles['nav-option'] }
               style={ location.includes('consult') ? headerOptionDecoration : {} }
             >
