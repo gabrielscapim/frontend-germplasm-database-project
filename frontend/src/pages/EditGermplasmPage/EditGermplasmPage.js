@@ -1,6 +1,5 @@
 /* eslint-disable no-alert */
 import { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styles from './EditGermplasmPage.module.css';
 import GermplasmTable from '../../components/Common/GermplasmTable';
@@ -14,6 +13,7 @@ import AddEditGermplasmButtons from '../../components/Common/AddEditGermplasmBut
 import {
   newGermplasmInitialState,
   newGermplasmInputs } from '../../helpers/newGermplasmState';
+import { apiRequest } from '../../services/apiRequest';
 
 function EditGermplasmPage() {
   const global = useContext(GlobalContext);
@@ -107,9 +107,10 @@ function EditGermplasmPage() {
   const handleConfirmEditGermplasmClick = async () => {
     if (window.confirm('Deseja editar o germoplasma no banco de dados?')) {
       try {
-        await axios.put('http://localhost:8080/api/germplasm', { ...newGermplasm, deletado: false });
-        navigate('/consult-germplasms');
+        const germplasmEdited = { deletado: false, ...newGermplasm };
+        await apiRequest('PUT', '/germplasm', germplasmEdited);
         window.alert('Germoplasma editado com sucesso!');
+        navigate('/consult-germplasms');
         window.location.reload();
       } catch (error) {
         window.alert('Erro: não foi possível editar o germoplasmama,'
@@ -124,7 +125,6 @@ function EditGermplasmPage() {
     if (window.confirm('Deseja cancelar as alterações realizadas no germoplasma?')) {
       setInputsState(newGermplasmInputs);
       setNewGermplasm(newGermplasmInitialState);
-      // setNameIsCorrect(false);
     }
   };
 

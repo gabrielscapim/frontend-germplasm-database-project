@@ -9,6 +9,8 @@ function AddEditGermplasmButtons(
     isFieldsCorrect,
   },
 ) {
+  const locationIsEdit = window.location.href.includes('edit');
+
   return (
     <div className={ styles['buttons-container'] }>
       <Button
@@ -26,7 +28,7 @@ function AddEditGermplasmButtons(
       />
       <Button
         id="button-add-germplasm"
-        label="Adicionar germoplasma"
+        label={ locationIsEdit ? 'Editar germoplasma' : 'Adicionar germoplasma' }
         type="button"
         componentStyles={ {
           backgroundColor: '#006400',
