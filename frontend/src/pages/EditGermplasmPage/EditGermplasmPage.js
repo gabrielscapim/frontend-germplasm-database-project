@@ -2,7 +2,6 @@
 import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Button from '../../components/Common/Button';
 import styles from './EditGermplasmPage.module.css';
 import GermplasmTable from '../../components/Common/GermplasmTable';
 import { GlobalContext } from '../../context/GlobalContext';
@@ -11,6 +10,7 @@ import RequiredGermplasmsInputs from '../../components/Common/RequiredGermplasms
 import NoRequiredGermplasmsInputs
   from '../../components/Common/NoRequiredGermplasmsInputs';
 import Header from '../../components/Header/Header';
+import AddEditGermplasmButtons from '../../components/Common/AddEditGermplasmButtons';
 
 function EditGermplasmPage() {
   const global = useContext(GlobalContext);
@@ -117,6 +117,14 @@ function EditGermplasmPage() {
     }
   };
 
+  const handleCancelEditGermplasmClick = () => {
+    if (window.confirm('Deseja cancelar as alterações realizadas no germoplasma?')) {
+      setInputsState(newGermplasmInputs);
+      setNewGermplasm(newGermplasmInitialState);
+      // setNameIsCorrect(false);
+    }
+  };
+
   return (
     <>
       <Header />
@@ -140,33 +148,10 @@ function EditGermplasmPage() {
           germplasms={ [{ ...newGermplasm }] }
           tableContainerStyles={ { height: '200px' } }
         />
-        <div className={ styles['button-container'] }>
-          { newGermplasm.nome === ''
-          && (
-            <p
-              style={ {
-                fontSize: '14px',
-                color: '#dc3545',
-                marginBottom: '8px' } }
-            >
-              Preencha o nome do germoplasma
-            </p>
-          )}
-          <Button
-            id="button-add-germplasm"
-            label="Finalizar"
-            type="button"
-            componentStyles={ {
-              backgroundColor: '#006400',
-              border: '1px solid #006400',
-              height: '38px',
-              marginBottom: '12px',
-              marginTop: '8px',
-            } }
-            onClick={ handleConfirmClick }
-            disabled={ newGermplasm.nome === '' }
-          />
-        </div>
+        <AddEditGermplasmButtons
+          handleCancelAddGermplasmClick={ handleCancelEditGermplasmClick }
+          handleAddGermplasmClick={ handleConfirmClick }
+        />
       </form>
     </>
   );

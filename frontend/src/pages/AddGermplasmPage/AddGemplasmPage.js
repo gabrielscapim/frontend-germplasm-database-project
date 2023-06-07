@@ -3,7 +3,6 @@ import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styles from './AddGermplasmPage.module.css';
-import Button from '../../components/Common/Button';
 import { GlobalContext } from '../../context/GlobalContext';
 import GermplasmTable from '../../components/Common/GermplasmTable';
 import notAttributesRequired from '../../helpers/notAttributesRequired';
@@ -14,6 +13,7 @@ import RequiredGermplasmsInputs from '../../components/Common/RequiredGermplasms
 import NoRequiredGermplasmsInputs
   from '../../components/Common/NoRequiredGermplasmsInputs';
 import Header from '../../components/Header/Header';
+import AddEditGermplasmButtons from '../../components/Common/AddEditGermplasmButtons';
 
 function AddGermplasmPage() {
   const global = useContext(GlobalContext);
@@ -59,7 +59,7 @@ function AddGermplasmPage() {
   // eslint-disable-next-line no-unused-vars
   const handleContinueClick = () => {
     if (!isGermplasmNameExist && isRequiredInputsCorrect) {
-      setNameIsCorrect(true);
+      // setNameIsCorrect(true);
       setNewGermplasm([{
         // deletado: false,
         nome: newGermplasmName,
@@ -116,11 +116,11 @@ function AddGermplasmPage() {
     }
   };
 
-  const handleCancelAddGermplasClick = () => {
+  const handleCancelAddGermplasmClick = () => {
     if (window.confirm('Deseja cancelar a inclusão do germoplasma no banco de dados?')) {
       setInputsState(newGermplasmInputs);
       setNewGermplasm(newGermplasmInitialState);
-      setNameIsCorrect(false);
+      // setNameIsCorrect(false);
     }
   };
 
@@ -133,22 +133,6 @@ function AddGermplasmPage() {
             inputsState={ inputsState }
             handleChange={ handleChange }
           />
-          {/* <div className={ styles[ROW_CLASS] }>
-            <Button
-              id="button-continue-add-germplasm"
-              label="Continuar"
-              type="button"
-              componentStyles={ {
-                backgroundColor: '#684f92',
-                border: '1px solid #684f92',
-                height: '38px',
-                marginBottom: '12px',
-                marginTop: '8px',
-              } }
-              onClick={ handleContinueClick }
-              disabled={ !(!isGermplasmNameExist && isRequiredInputsCorrect) }
-            />
-          </div> */}
           <NoRequiredGermplasmsInputs
             columnsToAdd={ columnsToAdd }
             handleChange={ handleChange }
@@ -162,34 +146,10 @@ function AddGermplasmPage() {
           germplasms={ newGermplasm }
           tableContainerStyles={ { height: '200px' } }
         />
-        <div className={ styles['add-germplasm-button-row'] }>
-          <Button
-            id="button-cancel-add-germplasm"
-            label="Cancelar"
-            type="button"
-            componentStyles={ {
-              backgroundColor: '#dc3545',
-              border: '1px solid #dc3545',
-              height: '38px',
-              marginBottom: '12px',
-              marginTop: '8px',
-            } }
-            onClick={ handleCancelAddGermplasClick }
-          />
-          <Button
-            id="button-add-germplasm"
-            label="Adicionar germoplasma"
-            type="button"
-            componentStyles={ {
-              backgroundColor: '#006400',
-              border: '1px solid #006400',
-              height: '38px',
-              marginBottom: '12px',
-              marginTop: '8px',
-            } }
-            onClick={ handleAddGermplasmClick }
-          />
-        </div>
+        <AddEditGermplasmButtons
+          handleCancelAddGermplasmClick={ handleCancelAddGermplasmClick }
+          handleAddGermplasmClick={ handleAddGermplasmClick }
+        />
       </form>
     </>
   );
