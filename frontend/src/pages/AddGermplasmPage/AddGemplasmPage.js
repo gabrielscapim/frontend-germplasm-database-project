@@ -17,16 +17,14 @@ import { apiRequest } from '../../services/apiRequest';
 
 function AddGermplasmPage() {
   const global = useContext(GlobalContext);
-  const { attributes, germplasmsNames } = global;
+  const { attributes } = global;
   const navigate = useNavigate();
 
   const columnsToAdd = notAttributesRequired(attributes);
-  // const ROW_CLASS = 'add-germplasm-row';
 
   const [inputsState, setInputsState] = useState(newGermplasmInputs);
   const [newGermplasm, setNewGermplasm] = useState(newGermplasmInitialState);
   const [isFieldsCorrect, setIsFieldsCorrect] = useState(false);
-  // const [nameIsCorrect, setNameIsCorrect] = useState(false);
 
   const {
     newGermplasmName,
@@ -42,38 +40,12 @@ function AddGermplasmPage() {
     newGermplasmColumnValue,
   } = inputsState;
 
-  const namesWithoutSpace = germplasmsNames.map((name) => name.replace(/\s/g, ''));
-  const newGermplasmNameWithoutSpace = newGermplasmName.replace(/\s/g, '');
-  const isGermplasmNameExist = namesWithoutSpace.includes(newGermplasmNameWithoutSpace);
-  const isRequiredInputsCorrect = newGermplasmColdChamberLocal !== ''
-    && newGermplasmEntryDate !== '' && newGermplasmLastHarvertDate !== ''
-    && newGermplasmName !== '';
-
   const handleChange = ({ target }) => {
     const { name, value } = target;
     return setInputsState((prevState) => ({
       ...prevState,
       [name]: value,
     }));
-  };
-
-  // eslint-disable-next-line no-unused-vars
-  const handleContinueClick = () => {
-    if (!isGermplasmNameExist && isRequiredInputsCorrect) {
-      // setNameIsCorrect(true);
-      setNewGermplasm([{
-        // deletado: false,
-        nome: newGermplasmName,
-        tipoDeMaterialGenetico: newGermplasmGeneticMaterial,
-        texturaDoGrao: newGermplasmGeneticGrainTexture,
-        origem: newGermplasmGeneticGeneticOrigin,
-        transgenico: newGermplasmGeneticTransgenicSelect === 'Sim',
-        eventosTransgenicos: newGermplasmGeneticEventsDetails,
-        localNaCamaraFria: newGermplasmColdChamberLocal,
-        dataDeEntrada: newGermplasmEntryDate,
-        dataDaUltimaColheita: newGermplasmLastHarvertDate,
-      }]);
-    }
   };
 
   const handleAddAttributeClick = () => {
@@ -122,7 +94,6 @@ function AddGermplasmPage() {
     if (window.confirm('Deseja cancelar a inclusão do germoplasma no banco de dados?')) {
       setInputsState(newGermplasmInputs);
       setNewGermplasm(newGermplasmInitialState);
-      // setNameIsCorrect(false);
     }
   };
 
