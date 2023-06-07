@@ -48,10 +48,6 @@ function Header() {
           </button>
         </nav>
       </div>
-      {/* <div className={ styles['user-container'] }>
-        <i className="bi bi-person-circle"> </i>
-        Carlos Scapim
-      </div> */}
     </header>
   );
 }
