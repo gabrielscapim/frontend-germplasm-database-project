@@ -1,0 +1,75 @@
+Novos atributos
+
+Doenças:
+
+Colletotrichum graminicola: colletotrichum_graminicola
+Puccinia sorghi: puccinia_sorghi
+Exserohilum tursicum: exserohilum_tursicum
+Phaeosphaeria maydis: phaeosphaeria_maydis
+Puccinia polysora: puccinia_polysora
+Physopella zeae: physopella_zeae
+Corn stunt: corn_stunt
+Diplodia maydis: diplodia_maydis
+Fusarium moniliforme: fusarium_moniliforme
+Gibberella zeae: gibberella_zeae
+
+Tese:
+
+Altura de planta: altura_de_planta
+Altura de espiga: altura_de_espiga
+Diâmetro da espiga: diametro_da_espiga
+Número de grãos por fileira: numero_de_graos_por_fileira
+Número de fileiras de grãos por espiga: numero_de_fileiras_de_graos_por_espiga
+Comprimento de espigas: comprimento_de_espigas
+Rendimento de grãos: rendimento_de_graos
+Capacidade de expansão: capacidade_de_expansao
+Massa de 100 grãos: massa_de_cem_graos
+Número de espigas: numero_de_espigas
+Diâmetro do colmo: diametro_do_colmo
+Comprimento de grão: comprimento_de_grao
+Largura de grão: largura_de_grao
+Espessura de grão: espessura_de_grao
+Espessura do pericarpo: espessura_do_pericarpo
+Difusividade térmica do pericarpo: difusividade_termica_do_pericarpo
+Teor de proteína: teor_de_proteina
+Teor de óleo: teor_de_oleo
+Amido total: amido_total
+
+altura_de_planta
+altura_de_espiga
+diametro_da_espiga
+numero_de_graos_por_fileira
+numero_de_fileiras_de_graos_por_espiga
+comprimento_de_espigas
+rendimento_de_graos
+capacidade_de_expansao
+massa_de_cem_graos
+numero_de_espigas
+diametro_do_colmo
+comprimento_de_grao
+largura_de_grao
+espessura_de_grao
+espessura_do_pericarpo
+difusividade_termica_do_pericarpo
+teor_de_proteina
+teor_de_oleo
+amido_total
+
+Altura de espiga
+Diâmetro da espiga
+Número de grãos por fileira
+Número de fileiras de grãos por espiga
+Comprimento de espigas
+Rendimento de grãos
+Capacidade de expansão
+Massa de 100 grãos
+Número de espigas
+Diâmetro do colmo
+Comprimento de grão
+Largura de grão
+Espessura de grão
+Espessura do pericarpo
+Difusividade térmica do pericarpo
+Teor de proteína
+Teor de óleo
+Amido total

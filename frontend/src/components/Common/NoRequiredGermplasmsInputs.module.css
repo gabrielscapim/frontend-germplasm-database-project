@@ -1,3 +1,7 @@
+.inputs-container {
+    margin-bottom: 24px;
+}
+
 .germplasm-row {
     display: flex;
     gap: 10px;

@@ -1,32 +1,33 @@
+/* eslint-disable no-alert */
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import Filters from '../../components/ConsultGermplasms/Filters';
 import GermplasmTable from '../../components/Common/GermplasmTable';
 import styles from './ConsultGermplasmsPage.module.css';
 import { GlobalContext } from '../../context/GlobalContext';
 import Header from '../../components/Header/Header';
+import { apiRequest } from '../../services/apiRequest';
 
 function ConsultGermplasmsPage() {
   const global = useContext(GlobalContext);
   const { apiResults, attributes } = global;
   const [filters, setFilters] = useState({
     germplasmNameFilter: '',
-    numericFilterColumn: '',
-    numericFilterOperator: 'menor que',
-    numericFilterValue: '',
+    columnFilterColumn: '',
+    columnFilterOperator: 'igual a',
+    columnFilterValue: '',
     sortFilterColumn: '',
     sortFilterOperator: 'Ascendente',
   });
-  const [numericFiltersSelected, setNumericFiltersSelected] = useState([]);
+  const [columnFiltersSelected, setcolumnFiltersSelected] = useState([]);
 
   const navigate = useNavigate();
-  let numericFiltersAvaible = attributes.filter((attribute) => attribute !== 'nome');
+  let columnFiltersAvaible = attributes.filter((attribute) => attribute !== 'nome');
 
-  numericFiltersAvaible = numericFiltersAvaible.filter((numericFilterAvaible) => (
-    !numericFiltersSelected
-      .map((numericFilterSelected) => numericFilterSelected.numericFilterColumn)
-      .includes(numericFilterAvaible)
+  columnFiltersAvaible = columnFiltersAvaible.filter((columnFilterAvaible) => (
+    !columnFiltersSelected
+      .map((columnFilterSelected) => columnFilterSelected.columnFilterColumn)
+      .includes(columnFilterAvaible)
   ));
 
   let filteredGermplasms = apiResults.filter(({ nome }) => (
@@ -34,22 +35,25 @@ function ConsultGermplasmsPage() {
   ));
 
   // Generic function (loop) to apply multiples filters
-  if (numericFiltersSelected.length !== 0) {
-    numericFiltersSelected.forEach((numericFilterSelected) => {
+  if (columnFiltersSelected.length !== 0) {
+    columnFiltersSelected.forEach((columnFilterSelected) => {
       const {
-        numericFilterColumn,
-        numericFilterOperator,
-        numericFilterValue,
-      } = numericFilterSelected;
+        columnFilterColumn,
+        columnFilterOperator,
+        columnFilterValue,
+      } = columnFilterSelected;
 
       filteredGermplasms = filteredGermplasms.filter((germplasm) => {
-        switch (numericFilterOperator) {
+        switch (columnFilterOperator) {
         case 'maior que':
-          return Number(germplasm[numericFilterColumn]) > Number(numericFilterValue);
+          return Number(germplasm[columnFilterColumn]) > Number(columnFilterValue);
         case 'menor que':
-          return Number(germplasm[numericFilterColumn]) < Number(numericFilterValue);
+          return Number(germplasm[columnFilterColumn]) < Number(columnFilterValue);
         case 'igual a':
-          return Number(germplasm[numericFilterColumn]) === Number(numericFilterValue);
+          if (!/^\d+$/.test(columnFilterValue)) {
+            return germplasm[columnFilterColumn] === columnFilterValue;
+          }
+          return Number(germplasm[columnFilterColumn]) === Number(columnFilterValue);
         default:
           break;
         }
@@ -91,41 +95,41 @@ function ConsultGermplasmsPage() {
     }));
   };
 
-  const numericFilterSubmit = () => {
-    const { numericFilterColumn, numericFilterOperator, numericFilterValue } = filters;
+  const columnFilterSubmit = () => {
+    const { columnFilterColumn, columnFilterOperator, columnFilterValue } = filters;
 
-    if (numericFilterColumn !== '' && numericFilterValue !== '') {
-      setNumericFiltersSelected((prevState) => [...prevState, {
-        numericFilterColumn,
-        numericFilterOperator,
-        numericFilterValue,
+    if (columnFilterColumn !== '' && columnFilterValue !== '') {
+      setcolumnFiltersSelected((prevState) => [...prevState, {
+        columnFilterColumn,
+        columnFilterOperator,
+        columnFilterValue,
       }]);
 
       setFilters((prevState) => ({
         ...prevState,
-        numericFilterColumn: '',
-        numericFilterOperator: 'maior que',
-        numericFilterValue: '',
+        columnFilterColumn: '',
+        columnFilterOperator: 'igual a',
+        columnFilterValue: '',
       }));
     }
   };
 
-  const numericFilterDelete = (filterToDelete) => {
-    const newNumericFiltersSelected = numericFiltersSelected.filter((filter) => (
-      filter.numericFilterColumn !== filterToDelete
+  const columnFilterDelete = (filterToDelete) => {
+    const newcolumnFiltersSelected = columnFiltersSelected.filter((filter) => (
+      filter.columnFilterColumn !== filterToDelete
     ));
-    setNumericFiltersSelected(newNumericFiltersSelected);
+    setcolumnFiltersSelected(newcolumnFiltersSelected);
   };
 
-  const numericFilterDeleteAll = () => {
-    setNumericFiltersSelected([]);
+  const columnFilterDeleteAll = () => {
+    setcolumnFiltersSelected([]);
   };
 
   const deleteGermplasm = async (id) => {
     if (window.confirm(`Deseja excluir o germoplasma de id igual a ${id}?`)) {
       const germplasmSelected = apiResults.find((result) => result.id === id);
       try {
-        await axios.put('http://localhost:8080/api/germplasm', { ...germplasmSelected, deletado: true });
+        await apiRequest('PUT', '/germplasm', { ...germplasmSelected, deletado: true });
         window.alert('Germoplasma excluído com sucesso!');
         window.location.reload();
       } catch (error) {
@@ -147,13 +151,13 @@ function ConsultGermplasmsPage() {
       <section className={ styles['page-container'] }>
         <Filters
           attributes={ attributes }
-          numericFiltersAvaible={ numericFiltersAvaible }
+          columnFiltersAvaible={ columnFiltersAvaible }
           filters={ filters }
           handleChangeFilters={ handleChangeFilters }
-          numericFilterSubmit={ numericFilterSubmit }
-          numericFiltersSelected={ numericFiltersSelected }
-          numericFilterDelete={ numericFilterDelete }
-          numericFilterDeleteAll={ numericFilterDeleteAll }
+          columnFilterSubmit={ columnFilterSubmit }
+          columnFiltersSelected={ columnFiltersSelected }
+          columnFilterDelete={ columnFilterDelete }
+          columnFilterDeleteAll={ columnFilterDeleteAll }
         />
         <GermplasmTable
           germplasms={ filteredGermplasms }

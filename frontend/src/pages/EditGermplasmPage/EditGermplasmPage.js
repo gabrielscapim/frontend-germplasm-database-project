@@ -1,7 +1,6 @@
-import { useContext, useState } from 'react';
-import axios from 'axios';
+/* eslint-disable no-alert */
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Button from '../../components/Common/Button';
 import styles from './EditGermplasmPage.module.css';
 import GermplasmTable from '../../components/Common/GermplasmTable';
 import { GlobalContext } from '../../context/GlobalContext';
@@ -10,6 +9,11 @@ import RequiredGermplasmsInputs from '../../components/Common/RequiredGermplasms
 import NoRequiredGermplasmsInputs
   from '../../components/Common/NoRequiredGermplasmsInputs';
 import Header from '../../components/Header/Header';
+import AddEditGermplasmButtons from '../../components/Common/AddEditGermplasmButtons';
+import {
+  newGermplasmInitialState,
+  newGermplasmInputs } from '../../helpers/newGermplasmState';
+import { apiRequest } from '../../services/apiRequest';
 
 function EditGermplasmPage() {
   const global = useContext(GlobalContext);
@@ -49,6 +53,7 @@ function EditGermplasmPage() {
   const [newGermplasm, setNewGermplasm] = useState({
     ...germplasmToEdit,
   });
+  const [isFieldsCorrect, setIsFieldsCorrect] = useState(true);
 
   const {
     newGermplasmName,
@@ -72,19 +77,10 @@ function EditGermplasmPage() {
     }));
   };
 
-  const handleEditGermplasmClick = async () => {
+  const handleEditGermplasmColumnClick = () => {
     setNewGermplasm((prevState) => ({
       ...prevState,
       [newGermplasmColumnSelect]: newGermplasmColumnValue,
-      nome: newGermplasmName,
-      tipoDeMaterialGenetico: newGermplasmGeneticMaterial,
-      texturaDoGrao: newGermplasmGeneticGrainTexture,
-      origem: newGermplasmGeneticGeneticOrigin,
-      transgenico: newGermplasmGeneticTransgenicSelect === 'Sim',
-      eventosTransgenicos: newGermplasmGeneticEventsDetails,
-      localNaCamaraFria: newGermplasmColdChamberLocal,
-      dataDeEntrada: newGermplasmEntryDate,
-      dataDaUltimaColheita: newGermplasmLastHarvertDate,
     }));
     setInputsState((prevState) => ({
       ...prevState,
@@ -92,12 +88,29 @@ function EditGermplasmPage() {
     }));
   };
 
-  const handleConfirmClick = async () => {
+  useEffect(() => {
+    setNewGermplasm((prevState) => ({
+      ...prevState,
+      nome: newGermplasmName,
+      tipoDeMaterialGenetico: newGermplasmGeneticMaterial,
+      texturaDoGrao: newGermplasmGeneticGrainTexture,
+      origem: newGermplasmGeneticGeneticOrigin,
+      transgenico: newGermplasmGeneticTransgenicSelect === 'Sim',
+      eventosTransgenicos: newGermplasmGeneticTransgenicSelect === 'Não'
+        ? '' : newGermplasmGeneticEventsDetails,
+      localNaCamaraFria: newGermplasmColdChamberLocal,
+      dataDeEntrada: newGermplasmEntryDate,
+      dataDaUltimaColheita: newGermplasmLastHarvertDate,
+    }));
+  }, [inputsState]);
+
+  const handleConfirmEditGermplasmClick = async () => {
     if (window.confirm('Deseja editar o germoplasma no banco de dados?')) {
       try {
-        await axios.put('http://localhost:8080/api/germplasm', { ...newGermplasm, deletado: false });
-        navigate('/consult-germplasms');
+        const germplasmEdited = { deletado: false, ...newGermplasm };
+        await apiRequest('PUT', '/germplasm', germplasmEdited);
         window.alert('Germoplasma editado com sucesso!');
+        navigate('/consult-germplasms');
         window.location.reload();
       } catch (error) {
         window.alert('Erro: não foi possível editar o germoplasmama,'
@@ -105,6 +118,13 @@ function EditGermplasmPage() {
         navigate('/consult-germplasms');
         window.location.reload();
       }
+    }
+  };
+
+  const handleCancelEditGermplasmClick = () => {
+    if (window.confirm('Deseja cancelar as alterações realizadas no germoplasma?')) {
+      setInputsState(newGermplasmInputs);
+      setNewGermplasm(newGermplasmInitialState);
     }
   };
 
@@ -117,11 +137,12 @@ function EditGermplasmPage() {
             inputsState={ inputsState }
             handleChange={ handleChange }
             actualName={ nome }
+            setIsFieldsCorrect={ setIsFieldsCorrect }
           />
           <NoRequiredGermplasmsInputs
             columnsToAdd={ columns }
             handleChange={ handleChange }
-            handleAddAttributeClick={ handleEditGermplasmClick }
+            handleAddAttributeClick={ handleEditGermplasmColumnClick }
             newGermplasmColumnSelect={ newGermplasmColumnSelect }
             newGermplasmColumnValue={ newGermplasmColumnValue }
           />
@@ -129,35 +150,12 @@ function EditGermplasmPage() {
         <GermplasmTable
           attributes={ Object.keys(germplasmToEdit) || [] }
           germplasms={ [{ ...newGermplasm }] }
-          tableContainerStyles={ { height: '200px' } }
         />
-        <div className={ styles['button-container'] }>
-          { newGermplasm.nome === ''
-          && (
-            <p
-              style={ {
-                fontSize: '14px',
-                color: '#dc3545',
-                marginBottom: '8px' } }
-            >
-              Preencha o nome do germoplasma
-            </p>
-          )}
-          <Button
-            id="button-add-germplasm"
-            label="Finalizar"
-            type="button"
-            componentStyles={ {
-              backgroundColor: '#006400',
-              border: '1px solid #006400',
-              height: '38px',
-              marginBottom: '12px',
-              marginTop: '8px',
-            } }
-            onClick={ handleConfirmClick }
-            disabled={ newGermplasm.nome === '' }
-          />
-        </div>
+        <AddEditGermplasmButtons
+          handleCancelAddGermplasmClick={ handleCancelEditGermplasmClick }
+          handleAddGermplasmClick={ handleConfirmEditGermplasmClick }
+          isFieldsCorrect={ isFieldsCorrect }
+        />
       </form>
     </>
   );

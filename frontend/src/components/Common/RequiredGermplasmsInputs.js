@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import PropTypes from 'prop-types';
 import { useContext } from 'react';
 import Input from './Input';
@@ -13,6 +14,7 @@ function RequiredGermplasmsInputs({
   handleChange,
   inputsState,
   actualName,
+  setIsFieldsCorrect,
 }) {
   const {
     newGermplasmName,
@@ -28,7 +30,9 @@ function RequiredGermplasmsInputs({
 
   const global = useContext(GlobalContext);
   const { germplasmsNames } = global;
+
   const ROW_CLASS = 'add-germplasm-row';
+  const wrongInputStyle = { border: '1px solid red' };
 
   const namesWithoutSpace = germplasmsNames.map((name) => name.replace(/\s/g, ''));
 
@@ -38,27 +42,43 @@ function RequiredGermplasmsInputs({
     : namesWithoutSpace.filter((nameWithoutSpace) => nameWithoutSpace !== actualName.replace(/\s/g, ''))
       .includes(newGermplasmNameWithoutSpace);
 
-  const isRequiredInputsCorrect = newGermplasmColdChamberLocal !== ''
+  const isRequiredInputsCorrect = newGermplasmColdChamberLocal.trim() !== ''
     && newGermplasmEntryDate !== '' && newGermplasmLastHarvertDate !== ''
-    && newGermplasmName !== '';
+    && newGermplasmName.trim() !== '';
+
+  if (isGermplasmNameExist || !isRequiredInputsCorrect) {
+    setIsFieldsCorrect(false);
+  } else {
+    setIsFieldsCorrect(true);
+  }
 
   return (
     <section>
       <div className={ styles[ROW_CLASS] }>
         <Input
           id="new-germplasm-name"
-          label="*Nome do germoplasma"
+          label="Nome do germoplasma"
           name="newGermplasmName"
           placeholder="Digite o nome germoplasma"
           handleChange={ handleChange }
           inputValue={ newGermplasmName }
           maxInputLength={ 64 }
+          inputStyle={
+            (isGermplasmNameExist || newGermplasmName.trim() === '')
+            && wrongInputStyle
+          }
         />
       </div>
+      { isGermplasmNameExist
+        && (
+          <p className={ styles['warning-text'] }>
+            Digite o nome de um germoplasma não existente
+          </p>
+        )}
       <div className={ styles[ROW_CLASS] }>
         <Select
           id="new-germplasm-genetic-material"
-          label="*Tipo de material génetico"
+          label="Tipo de material génetico"
           options={ tiposDeMaterialGenetico }
           name="newGermplasmGeneticMaterial"
           handleChange={ handleChange }
@@ -66,7 +86,7 @@ function RequiredGermplasmsInputs({
         />
         <Select
           id="new-germplasm-genetic-grain-texture"
-          label="*Textura do grão"
+          label="Textura do grão"
           options={ texturaDoGrao }
           name="newGermplasmGeneticGrainTexture"
           handleChange={ handleChange }
@@ -76,7 +96,7 @@ function RequiredGermplasmsInputs({
       <div className={ styles[ROW_CLASS] }>
         <Select
           id="new-germplasm-genetic-genetic-origin"
-          label="*Origem"
+          label="Origem"
           options={ origemMaterialGenetico }
           name="newGermplasmGeneticGeneticOrigin"
           handleChange={ handleChange }
@@ -84,31 +104,20 @@ function RequiredGermplasmsInputs({
         />
         <Select
           id="new-germplasm-genetic-transgenic-select"
-          label="*Transgênico"
+          label="Transgênico"
           options={ ['Sim', 'Não'] }
           name="newGermplasmGeneticTransgenicSelect"
           handleChange={ handleChange }
           inputValue={ newGermplasmGeneticTransgenicSelect }
         />
       </div>
-      { isGermplasmNameExist
-        && (
-          <p
-            style={ {
-              fontSize: '14px',
-              color: '#dc3545',
-              marginBottom: '8px' } }
-          >
-            Digite o nome de um germoplasma não existente
-          </p>
-        )}
       { (newGermplasmGeneticTransgenicSelect === 'Sim'
       || newGermplasmGeneticTransgenicSelect === true)
       && (
         <div className={ styles[ROW_CLASS] }>
           <Input
             id="new-germplasm-genetic-events-details"
-            label="*Descreva os eventos transgênicos"
+            label="Descreva os eventos transgênicos"
             name="newGermplasmGeneticEventsDetails"
             placeholder="Digite os eventos transgênicos"
             handleChange={ handleChange }
@@ -119,39 +128,46 @@ function RequiredGermplasmsInputs({
       <div className={ styles[ROW_CLASS] }>
         <Input
           id="new-germplasm-cold-chamber-local"
-          label="*Local na câmara fria"
+          label="Local na câmara fria"
           name="newGermplasmColdChamberLocal"
           placeholder="Digite o local do germoplasma na câmara fria"
           handleChange={ handleChange }
           inputValue={ newGermplasmColdChamberLocal }
           maxInputLength={ 64 }
+          inputStyle={
+            (newGermplasmColdChamberLocal.trim() === '')
+            && wrongInputStyle
+          }
         />
         <Input
           type="date"
           id="new-germplasm-entry-date"
-          label="*Data de entrada na câmara fria"
+          label="Data de entrada na câmara fria"
           name="newGermplasmEntryDate"
           handleChange={ handleChange }
           inputValue={ newGermplasmEntryDate }
+          inputStyle={
+            (newGermplasmEntryDate.trim() === '')
+            && wrongInputStyle
+          }
         />
         <Input
           type="date"
           id="new-germplasm-last-harvert-date"
-          label="*Data da última colheita"
+          label="Data da última colheita"
           name="newGermplasmLastHarvertDate"
           handleChange={ handleChange }
           inputValue={ newGermplasmLastHarvertDate }
+          inputStyle={
+            (newGermplasmLastHarvertDate.trim() === '')
+            && wrongInputStyle
+          }
         />
       </div>
       { !isRequiredInputsCorrect
         && (
-          <p
-            style={ {
-              fontSize: '14px',
-              color: '#dc3545',
-              marginBottom: '8px' } }
-          >
-            * Preencha os campos obrigatórios
+          <p className={ styles['warning-text'] }>
+            Preencha os campos obrigatórios
           </p>
         )}
     </section>

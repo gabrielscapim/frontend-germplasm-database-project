@@ -1,8 +1,7 @@
-import { useContext, useState } from 'react';
+/* eslint-disable no-alert */
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import styles from './AddGermplasmPage.module.css';
-import Button from '../../components/Common/Button';
 import { GlobalContext } from '../../context/GlobalContext';
 import GermplasmTable from '../../components/Common/GermplasmTable';
 import notAttributesRequired from '../../helpers/notAttributesRequired';
@@ -13,18 +12,19 @@ import RequiredGermplasmsInputs from '../../components/Common/RequiredGermplasms
 import NoRequiredGermplasmsInputs
   from '../../components/Common/NoRequiredGermplasmsInputs';
 import Header from '../../components/Header/Header';
+import AddEditGermplasmButtons from '../../components/Common/AddEditGermplasmButtons';
+import { apiRequest } from '../../services/apiRequest';
 
 function AddGermplasmPage() {
   const global = useContext(GlobalContext);
-  const { attributes, germplasmsNames } = global;
+  const { attributes } = global;
   const navigate = useNavigate();
 
   const columnsToAdd = notAttributesRequired(attributes);
-  const ROW_CLASS = 'add-germplasm-row';
 
   const [inputsState, setInputsState] = useState(newGermplasmInputs);
   const [newGermplasm, setNewGermplasm] = useState(newGermplasmInitialState);
-  const [nameIsCorrect, setNameIsCorrect] = useState(false);
+  const [isFieldsCorrect, setIsFieldsCorrect] = useState(false);
 
   const {
     newGermplasmName,
@@ -40,37 +40,12 @@ function AddGermplasmPage() {
     newGermplasmColumnValue,
   } = inputsState;
 
-  const namesWithoutSpace = germplasmsNames.map((name) => name.replace(/\s/g, ''));
-  const newGermplasmNameWithoutSpace = newGermplasmName.replace(/\s/g, '');
-  const isGermplasmNameExist = namesWithoutSpace.includes(newGermplasmNameWithoutSpace);
-  const isRequiredInputsCorrect = newGermplasmColdChamberLocal !== ''
-    && newGermplasmEntryDate !== '' && newGermplasmLastHarvertDate !== ''
-    && newGermplasmName !== '';
-
   const handleChange = ({ target }) => {
     const { name, value } = target;
     return setInputsState((prevState) => ({
       ...prevState,
       [name]: value,
     }));
-  };
-
-  const handleContinueClick = () => {
-    if (!isGermplasmNameExist && isRequiredInputsCorrect) {
-      setNameIsCorrect(true);
-      setNewGermplasm([{
-        deletado: false,
-        nome: newGermplasmName,
-        tipoDeMaterialGenetico: newGermplasmGeneticMaterial,
-        texturaDoGrao: newGermplasmGeneticGrainTexture,
-        origem: newGermplasmGeneticGeneticOrigin,
-        transgenico: newGermplasmGeneticTransgenicSelect === 'Sim',
-        eventosTransgenicos: newGermplasmGeneticEventsDetails,
-        localNaCamaraFria: newGermplasmColdChamberLocal,
-        dataDeEntrada: newGermplasmEntryDate,
-        dataDaUltimaColheita: newGermplasmLastHarvertDate,
-      }]);
-    }
   };
 
   const handleAddAttributeClick = () => {
@@ -84,26 +59,41 @@ function AddGermplasmPage() {
     }));
   };
 
-  const handleAddGermplasmClick = async () => {
+  useEffect(() => {
+    setNewGermplasm((prevState) => ([{
+      ...prevState[0],
+      nome: newGermplasmName,
+      tipoDeMaterialGenetico: newGermplasmGeneticMaterial,
+      texturaDoGrao: newGermplasmGeneticGrainTexture,
+      origem: newGermplasmGeneticGeneticOrigin,
+      transgenico: newGermplasmGeneticTransgenicSelect === 'Sim',
+      eventosTransgenicos: newGermplasmGeneticTransgenicSelect === 'Não'
+        ? '' : newGermplasmGeneticEventsDetails,
+      localNaCamaraFria: newGermplasmColdChamberLocal,
+      dataDeEntrada: newGermplasmEntryDate,
+      dataDaUltimaColheita: newGermplasmLastHarvertDate,
+    }]));
+  }, [inputsState]);
+
+  const handleConfirmAddGermplasmClick = async () => {
     if (window.confirm('Deseja adicionar o germoplasma no banco de dados?')) {
       try {
-        await axios.post('http://localhost:8080/api/germplasm', newGermplasm[0]);
+        const germplasmToAdd = { deletado: false, ...newGermplasm[0] };
+        await apiRequest('POST', '/germplasm', germplasmToAdd);
         window.alert('Germoplasma adicionado com sucesso!');
         navigate('/consult-germplasms');
         window.location.reload();
       } catch (error) {
-        window.alert('Erro: não foi possível adicionar o germoplasmama,'
-        + ' tente novamente mais tarde.');
+        window.alert('Erro: não foi possível adicionar o germoplasma');
         window.location.reload();
       }
     }
   };
 
-  const handleCancelAddGermplasClick = () => {
+  const handleCancelAddGermplasmClick = () => {
     if (window.confirm('Deseja cancelar a inclusão do germoplasma no banco de dados?')) {
       setInputsState(newGermplasmInputs);
       setNewGermplasm(newGermplasmInitialState);
-      setNameIsCorrect(false);
     }
   };
 
@@ -112,80 +102,30 @@ function AddGermplasmPage() {
       <Header />
       <form className={ styles['page-container'] }>
         <div className={ styles['add-germplasm-container'] }>
-          { !nameIsCorrect
-          && (
-            <>
-              <RequiredGermplasmsInputs
-                inputsState={ inputsState }
-                handleChange={ handleChange }
-              />
-              <div className={ styles[ROW_CLASS] }>
-                <Button
-                  id="button-continue-add-germplasm"
-                  label="Continuar"
-                  type="button"
-                  componentStyles={ {
-                    backgroundColor: '#684f92',
-                    border: '1px solid #684f92',
-                    height: '38px',
-                    marginBottom: '12px',
-                    marginTop: '8px',
-                  } }
-                  onClick={ handleContinueClick }
-                  disabled={ !(!isGermplasmNameExist && isRequiredInputsCorrect) }
-                />
-              </div>
-            </>
-
-          )}
-          { nameIsCorrect
-          && (
-            <NoRequiredGermplasmsInputs
-              columnsToAdd={ columnsToAdd }
-              handleChange={ handleChange }
-              newGermplasmColumnSelect={ newGermplasmColumnSelect }
-              newGermplasmColumnValue={ newGermplasmColumnValue }
-              handleAddAttributeClick={ handleAddAttributeClick }
-            />
-          ) }
+          <RequiredGermplasmsInputs
+            inputsState={ inputsState }
+            handleChange={ handleChange }
+            setIsFieldsCorrect={ setIsFieldsCorrect }
+          />
+          <NoRequiredGermplasmsInputs
+            columnsToAdd={ columnsToAdd }
+            handleChange={ handleChange }
+            newGermplasmColumnSelect={ newGermplasmColumnSelect }
+            newGermplasmColumnValue={ newGermplasmColumnValue }
+            handleAddAttributeClick={ handleAddAttributeClick }
+          />
         </div>
-        { nameIsCorrect && (
-          <>
-            <GermplasmTable
-              attributes={ Object.keys(newGermplasm[0]) || [] }
-              germplasms={ newGermplasm }
-              tableContainerStyles={ { height: '200px' } }
-            />
-            <div className={ styles['add-germplasm-button-row'] }>
-              <Button
-                id="button-cancel-add-germplasm"
-                label="Cancelar"
-                type="button"
-                componentStyles={ {
-                  backgroundColor: '#dc3545',
-                  border: '1px solid #dc3545',
-                  height: '38px',
-                  marginBottom: '12px',
-                  marginTop: '8px',
-                } }
-                onClick={ handleCancelAddGermplasClick }
-              />
-              <Button
-                id="button-add-germplasm"
-                label="Adicionar germoplasma"
-                type="button"
-                componentStyles={ {
-                  backgroundColor: '#006400',
-                  border: '1px solid #006400',
-                  height: '38px',
-                  marginBottom: '12px',
-                  marginTop: '8px',
-                } }
-                onClick={ handleAddGermplasmClick }
-              />
-            </div>
-          </>
-        )}
+        <GermplasmTable
+          attributes={
+            Object.keys(newGermplasm[0] || [])
+          }
+          germplasms={ newGermplasm }
+        />
+        <AddEditGermplasmButtons
+          handleCancelAddGermplasmClick={ handleCancelAddGermplasmClick }
+          handleAddGermplasmClick={ handleConfirmAddGermplasmClick }
+          isFieldsCorrect={ isFieldsCorrect }
+        />
       </form>
     </>
   );

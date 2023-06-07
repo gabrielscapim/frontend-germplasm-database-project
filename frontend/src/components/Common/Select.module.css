@@ -17,7 +17,8 @@
 }
 
 .new-germplasm-column-select {
-    width: 50%;
+    width: 58%;
+    margin-right: 2%;
 }
 
 .new-germplasm-genetic-genetic-origin {
@@ -60,7 +61,7 @@
 
     .new-germplasm-column-select {
         width: 100%;
-        margin-bottom: 12px;
+        margin-right: 0%;
     }
     .new-germplasm-genetic-genetic-origin {
         margin-left: 0%;

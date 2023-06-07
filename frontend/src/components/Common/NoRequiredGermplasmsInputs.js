@@ -14,7 +14,7 @@ function NoRequiredGermplasmsInputs({
   const ROW_CLASS = 'germplasm-row';
 
   return (
-    <section>
+    <section className={ styles['inputs-container'] }>
       <div className={ styles[ROW_CLASS] }>
         <Select
           id="new-germplasm-column-select"
@@ -25,29 +25,22 @@ function NoRequiredGermplasmsInputs({
           inputValue={ newGermplasmColumnSelect }
         />
         <Input
-          type="number"
           inputValue={ newGermplasmColumnValue }
           id="new-germplasm-column-value-input"
-          label="Valor da coluna (atributo) a ser adicionada ou editada"
+          label="Valor"
           name="newGermplasmColumnValue"
-          placeholder="Digite o valor da coluna a ser adicionada ou editada"
-          minInput={ 1 }
+          placeholder="Digite o valor da coluna"
           handleChange={ handleChange }
-          maxInput={ 100 }
-          maxInputLength={ 3 }
         />
-      </div>
-      <div className={ styles[ROW_CLASS] }>
         <Button
-          id="butto-add-attribute"
-          label="Adicionar atributo"
+          id="button-add-attribute"
+          label="Adicionar"
           type="button"
           componentStyles={ {
             backgroundColor: '#684f92',
             border: '1px solid #684f92',
             height: '38px',
-            marginBottom: '12px',
-            marginTop: '8px',
+            marginLeft: '2%',
           } }
           onClick={ handleAddAttributeClick }
         />
