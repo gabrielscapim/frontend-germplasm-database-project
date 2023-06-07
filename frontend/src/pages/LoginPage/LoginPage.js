@@ -72,7 +72,6 @@ function LoginPage() {
           } }
           disabled={ false }
           onClick={ () => handleLoginClick(userInput, passwordInput, setLoginFailed) }
-          // disabled={ newGermplasm.nome === '' }
         />
       </form>
     </section>

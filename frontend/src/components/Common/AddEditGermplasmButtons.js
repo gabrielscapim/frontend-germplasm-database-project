@@ -40,20 +40,6 @@ function AddEditGermplasmButtons(
         onClick={ handleAddGermplasmClick }
         disabled={ !isFieldsCorrect }
       />
-      {/* <Button
-        id="button-add-germplasm"
-        label="Finalizar"
-        type="button"
-        componentStyles={ {
-          backgroundColor: '#006400',
-          border: '1px solid #006400',
-          height: '38px',
-          marginBottom: '12px',
-          marginTop: '8px',
-        } }
-        onClick={ handleConfirmClick }
-        disabled={ newGermplasm.nome === '' }
-      /> */}
     </div>
   );
 }
