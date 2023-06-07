@@ -1,11 +1,12 @@
+/* eslint-disable no-alert */
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import Filters from '../../components/ConsultGermplasms/Filters';
 import GermplasmTable from '../../components/Common/GermplasmTable';
 import styles from './ConsultGermplasmsPage.module.css';
 import { GlobalContext } from '../../context/GlobalContext';
 import Header from '../../components/Header/Header';
+import { apiRequest } from '../../services/apiRequest';
 
 function ConsultGermplasmsPage() {
   const global = useContext(GlobalContext);
@@ -128,7 +129,7 @@ function ConsultGermplasmsPage() {
     if (window.confirm(`Deseja excluir o germoplasma de id igual a ${id}?`)) {
       const germplasmSelected = apiResults.find((result) => result.id === id);
       try {
-        await axios.put('http://localhost:8080/api/germplasm', { ...germplasmSelected, deletado: true });
+        await apiRequest('PUT', '/germplasm', { ...germplasmSelected, deletado: true });
         window.alert('Germoplasma excluído com sucesso!');
         window.location.reload();
       } catch (error) {
