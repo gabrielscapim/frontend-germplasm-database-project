@@ -1,7 +1,6 @@
 /* eslint-disable no-alert */
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import styles from './AddGermplasmPage.module.css';
 import { GlobalContext } from '../../context/GlobalContext';
 import GermplasmTable from '../../components/Common/GermplasmTable';
@@ -14,6 +13,7 @@ import NoRequiredGermplasmsInputs
   from '../../components/Common/NoRequiredGermplasmsInputs';
 import Header from '../../components/Header/Header';
 import AddEditGermplasmButtons from '../../components/Common/AddEditGermplasmButtons';
+import { apiRequest } from '../../services/apiRequest';
 
 function AddGermplasmPage() {
   const global = useContext(GlobalContext);
@@ -106,7 +106,8 @@ function AddGermplasmPage() {
   const handleConfirmAddGermplasmClick = async () => {
     if (window.confirm('Deseja adicionar o germoplasma no banco de dados?')) {
       try {
-        await axios.post('http://localhost:8080/api/germplasm', newGermplasm[0].deletado = false);
+        const germplasmToAdd = { deletado: false, ...newGermplasm[0] };
+        await apiRequest('POST', '/germplasm', germplasmToAdd);
         window.alert('Germoplasma adicionado com sucesso!');
         navigate('/consult-germplasms');
         window.location.reload();
@@ -144,7 +145,9 @@ function AddGermplasmPage() {
           />
         </div>
         <GermplasmTable
-          attributes={ Object.keys(newGermplasm[0]) || [] }
+          attributes={
+            Object.keys(newGermplasm[0] || [])
+          }
           germplasms={ newGermplasm }
         />
         <AddEditGermplasmButtons
