@@ -1,4 +1,5 @@
-import { useContext, useState } from 'react';
+/* eslint-disable no-alert */
+import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Common/Button';
@@ -76,21 +77,29 @@ function EditGermplasmPage() {
     setNewGermplasm((prevState) => ({
       ...prevState,
       [newGermplasmColumnSelect]: newGermplasmColumnValue,
-      nome: newGermplasmName,
-      tipoDeMaterialGenetico: newGermplasmGeneticMaterial,
-      texturaDoGrao: newGermplasmGeneticGrainTexture,
-      origem: newGermplasmGeneticGeneticOrigin,
-      transgenico: newGermplasmGeneticTransgenicSelect === 'Sim',
-      eventosTransgenicos: newGermplasmGeneticEventsDetails,
-      localNaCamaraFria: newGermplasmColdChamberLocal,
-      dataDeEntrada: newGermplasmEntryDate,
-      dataDaUltimaColheita: newGermplasmLastHarvertDate,
     }));
     setInputsState((prevState) => ({
       ...prevState,
       newGermplasmColumnValue: '',
     }));
   };
+
+  useEffect(() => {
+    setNewGermplasm((prevState) => ({
+      ...prevState,
+      nome: newGermplasmName,
+      tipoDeMaterialGenetico: newGermplasmGeneticMaterial,
+      texturaDoGrao: newGermplasmGeneticGrainTexture,
+      origem: newGermplasmGeneticGeneticOrigin,
+      transgenico: newGermplasmGeneticTransgenicSelect === 'Sim',
+      eventosTransgenicos: newGermplasmGeneticTransgenicSelect === 'Não'
+        ? '' : newGermplasmGeneticEventsDetails,
+      localNaCamaraFria: newGermplasmColdChamberLocal,
+      dataDeEntrada: newGermplasmEntryDate,
+      dataDaUltimaColheita: newGermplasmLastHarvertDate,
+    }));
+    console.log('escreveu');
+  }, [inputsState]);
 
   const handleConfirmClick = async () => {
     if (window.confirm('Deseja editar o germoplasma no banco de dados?')) {

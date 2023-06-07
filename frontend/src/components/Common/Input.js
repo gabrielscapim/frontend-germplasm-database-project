@@ -13,6 +13,7 @@ function Input({
   minInput,
   maxInput,
   maxInputLength,
+  inputStyle,
 }) {
   return (
     <div
@@ -46,6 +47,7 @@ function Input({
         max={ maxInput }
         maxLength={ maxInputLength }
         autoComplete="off"
+        style={ { ...inputStyle } }
       />
 
     </div>

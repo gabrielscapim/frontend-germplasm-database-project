@@ -1,5 +1,4 @@
 export const newGermplasmInitialState = [{
-  deletado: false,
   nome: '',
   tipoDeMaterialGenetico: '',
   texturaDoGrao: '',

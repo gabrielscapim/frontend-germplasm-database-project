@@ -33,7 +33,7 @@ export function GlobalStorage({ children }) {
     // setAttributes(Object.keys(mockApi[0]));
     // setGermplasmsNames(mockApi.map(({ nome }) => nome));
     // apiRequest('GET', '/germplasm').then((response) => console.log(response));
-  }, []);
+  }, [isLoggedIn]);
 
   const handleLoginClick = (userInput, passwordInput, setLoginFailed) => {
     loginRequest(userInput, passwordInput, setLoginFailed, setIsLoggedIn);
