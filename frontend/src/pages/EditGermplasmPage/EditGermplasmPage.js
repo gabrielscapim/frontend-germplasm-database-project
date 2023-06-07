@@ -11,6 +11,9 @@ import NoRequiredGermplasmsInputs
   from '../../components/Common/NoRequiredGermplasmsInputs';
 import Header from '../../components/Header/Header';
 import AddEditGermplasmButtons from '../../components/Common/AddEditGermplasmButtons';
+import {
+  newGermplasmInitialState,
+  newGermplasmInputs } from '../../helpers/newGermplasmState';
 
 function EditGermplasmPage() {
   const global = useContext(GlobalContext);
@@ -50,6 +53,7 @@ function EditGermplasmPage() {
   const [newGermplasm, setNewGermplasm] = useState({
     ...germplasmToEdit,
   });
+  const [isFieldsCorrect, setIsFieldsCorrect] = useState(true);
 
   const {
     newGermplasmName,
@@ -73,7 +77,7 @@ function EditGermplasmPage() {
     }));
   };
 
-  const handleEditGermplasmClick = async () => {
+  const handleEditGermplasmColumnClick = () => {
     setNewGermplasm((prevState) => ({
       ...prevState,
       [newGermplasmColumnSelect]: newGermplasmColumnValue,
@@ -98,10 +102,9 @@ function EditGermplasmPage() {
       dataDeEntrada: newGermplasmEntryDate,
       dataDaUltimaColheita: newGermplasmLastHarvertDate,
     }));
-    console.log('escreveu');
   }, [inputsState]);
 
-  const handleConfirmClick = async () => {
+  const handleConfirmEditGermplasmClick = async () => {
     if (window.confirm('Deseja editar o germoplasma no banco de dados?')) {
       try {
         await axios.put('http://localhost:8080/api/germplasm', { ...newGermplasm, deletado: false });
@@ -134,11 +137,12 @@ function EditGermplasmPage() {
             inputsState={ inputsState }
             handleChange={ handleChange }
             actualName={ nome }
+            setIsFieldsCorrect={ setIsFieldsCorrect }
           />
           <NoRequiredGermplasmsInputs
             columnsToAdd={ columns }
             handleChange={ handleChange }
-            handleAddAttributeClick={ handleEditGermplasmClick }
+            handleAddAttributeClick={ handleEditGermplasmColumnClick }
             newGermplasmColumnSelect={ newGermplasmColumnSelect }
             newGermplasmColumnValue={ newGermplasmColumnValue }
           />
@@ -146,11 +150,11 @@ function EditGermplasmPage() {
         <GermplasmTable
           attributes={ Object.keys(germplasmToEdit) || [] }
           germplasms={ [{ ...newGermplasm }] }
-          tableContainerStyles={ { height: '200px' } }
         />
         <AddEditGermplasmButtons
           handleCancelAddGermplasmClick={ handleCancelEditGermplasmClick }
-          handleAddGermplasmClick={ handleConfirmClick }
+          handleAddGermplasmClick={ handleConfirmEditGermplasmClick }
+          isFieldsCorrect={ isFieldsCorrect }
         />
       </form>
     </>

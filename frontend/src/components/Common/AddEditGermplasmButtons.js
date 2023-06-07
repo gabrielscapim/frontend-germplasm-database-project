@@ -6,6 +6,7 @@ function AddEditGermplasmButtons(
   {
     handleCancelAddGermplasmClick,
     handleAddGermplasmClick,
+    isFieldsCorrect,
   },
 ) {
   return (
@@ -35,6 +36,7 @@ function AddEditGermplasmButtons(
           marginTop: '8px',
         } }
         onClick={ handleAddGermplasmClick }
+        disabled={ !isFieldsCorrect }
       />
       {/* <Button
         id="button-add-germplasm"
@@ -57,6 +59,7 @@ function AddEditGermplasmButtons(
 AddEditGermplasmButtons.propTypes = {
   handleCancelAddGermplasmClick: PropTypes.func.isRequired,
   handleAddGermplasmClick: PropTypes.func.isRequired,
+  isFieldsCorrect: PropTypes.bool.isRequired,
 };
 
 export default AddEditGermplasmButtons;

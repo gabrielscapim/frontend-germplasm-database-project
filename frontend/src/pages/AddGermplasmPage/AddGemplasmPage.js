@@ -25,6 +25,7 @@ function AddGermplasmPage() {
 
   const [inputsState, setInputsState] = useState(newGermplasmInputs);
   const [newGermplasm, setNewGermplasm] = useState(newGermplasmInitialState);
+  const [isFieldsCorrect, setIsFieldsCorrect] = useState(false);
   // const [nameIsCorrect, setNameIsCorrect] = useState(false);
 
   const {
@@ -102,7 +103,7 @@ function AddGermplasmPage() {
     }]));
   }, [inputsState]);
 
-  const handleAddGermplasmClick = async () => {
+  const handleConfirmAddGermplasmClick = async () => {
     if (window.confirm('Deseja adicionar o germoplasma no banco de dados?')) {
       try {
         await axios.post('http://localhost:8080/api/germplasm', newGermplasm[0].deletado = false);
@@ -132,6 +133,7 @@ function AddGermplasmPage() {
           <RequiredGermplasmsInputs
             inputsState={ inputsState }
             handleChange={ handleChange }
+            setIsFieldsCorrect={ setIsFieldsCorrect }
           />
           <NoRequiredGermplasmsInputs
             columnsToAdd={ columnsToAdd }
@@ -144,11 +146,11 @@ function AddGermplasmPage() {
         <GermplasmTable
           attributes={ Object.keys(newGermplasm[0]) || [] }
           germplasms={ newGermplasm }
-          tableContainerStyles={ { height: '200px' } }
         />
         <AddEditGermplasmButtons
           handleCancelAddGermplasmClick={ handleCancelAddGermplasmClick }
-          handleAddGermplasmClick={ handleAddGermplasmClick }
+          handleAddGermplasmClick={ handleConfirmAddGermplasmClick }
+          isFieldsCorrect={ isFieldsCorrect }
         />
       </form>
     </>

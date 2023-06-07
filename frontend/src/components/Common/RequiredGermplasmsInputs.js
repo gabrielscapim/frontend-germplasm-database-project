@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import PropTypes from 'prop-types';
 import { useContext } from 'react';
 import Input from './Input';
@@ -13,6 +14,7 @@ function RequiredGermplasmsInputs({
   handleChange,
   inputsState,
   actualName,
+  setIsFieldsCorrect,
 }) {
   const {
     newGermplasmName,
@@ -43,6 +45,12 @@ function RequiredGermplasmsInputs({
   const isRequiredInputsCorrect = newGermplasmColdChamberLocal.trim() !== ''
     && newGermplasmEntryDate !== '' && newGermplasmLastHarvertDate !== ''
     && newGermplasmName.trim() !== '';
+
+  if (isGermplasmNameExist || !isRequiredInputsCorrect) {
+    setIsFieldsCorrect(false);
+  } else {
+    setIsFieldsCorrect(true);
+  }
 
   return (
     <section>

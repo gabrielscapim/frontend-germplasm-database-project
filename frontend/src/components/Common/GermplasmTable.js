@@ -5,7 +5,6 @@ import styles from './GermplasmTable.module.css';
 function GermplasmTable({
   germplasms,
   attributes,
-  tableContainerStyles,
   deleteGermplasm,
   editGermplasm,
 }) {
@@ -14,7 +13,6 @@ function GermplasmTable({
   return (
     <div
       className={ `text-nowrap ${styles['table-wrapper']}` }
-      style={ tableContainerStyles }
     >
       <table className="table table-striped">
         <thead>
@@ -103,7 +101,6 @@ function GermplasmTable({
 GermplasmTable.propTypes = {
   germplasms: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
   attributes: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
-  tableContainerStyles: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
   deleteGermplasm: PropTypes.func,
   editGermplasm: PropTypes.func,
 }.isRequired;
