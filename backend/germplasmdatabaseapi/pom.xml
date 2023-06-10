@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.cod3r</groupId>
-	<artifactId>exercicios-sb</artifactId>
+	<artifactId>germplamsdatabaseapi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>exercicios-sb</name>
+	<name>germplamsdatabaseapi</name>
 	<description>Exercicio spring boot</description>
 	<properties>
 		<java.version>17</java.version>
