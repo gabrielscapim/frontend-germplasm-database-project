@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const URL = 'https://germaplasm-database-project.rj.r.appspot.com';
+const URL = 'https://api-germplasm-data-base-project-production.up.railway.app';
 const HTTP_STATUS_OK = 200;
 
 const loginRequest = async (login, password, setLoginFailed, setIsLoggedIn) => {
