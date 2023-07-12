@@ -19,6 +19,7 @@ function AddGermplasmPage() {
   const global = useContext(GlobalContext);
   const { attributes } = global;
   const navigate = useNavigate();
+  const CONSULT_GERMPLASM_URL = '/consult-germplasms';
 
   const columnsToAdd = notAttributesRequired(attributes);
 
@@ -78,13 +79,17 @@ function AddGermplasmPage() {
   const handleConfirmAddGermplasmClick = async () => {
     if (window.confirm('Deseja adicionar o germoplasma no banco de dados?')) {
       try {
-        const germplasmToAdd = { deletado: false, ...newGermplasm[0] };
-        await apiRequest('POST', '/germplasm', germplasmToAdd);
+        await apiRequest('POST', '/germplasm', newGermplasm[0]);
         window.alert('Germoplasma adicionado com sucesso!');
-        navigate('/consult-germplasms');
+        navigate(CONSULT_GERMPLASM_URL);
         window.location.reload();
       } catch (error) {
-        window.alert('Erro: não foi possível adicionar o germoplasma');
+        window.alert(
+          `Erro: não foi possível adicionar 
+           o germoplasma. Status: ${error.response.status}`,
+        );
+        console.log(error);
+        navigate(CONSULT_GERMPLASM_URL);
         window.location.reload();
       }
     }
@@ -92,8 +97,7 @@ function AddGermplasmPage() {
 
   const handleCancelAddGermplasmClick = () => {
     if (window.confirm('Deseja cancelar a inclusão do germoplasma no banco de dados?')) {
-      setInputsState(newGermplasmInputs);
-      setNewGermplasm(newGermplasmInitialState);
+      navigate(CONSULT_GERMPLASM_URL);
     }
   };
 

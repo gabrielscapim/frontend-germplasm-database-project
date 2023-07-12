@@ -17,7 +17,6 @@ export function GlobalStorage({ children }) {
   });
 
   const navigate = useNavigate();
-  const location = window.location.href;
 
   const handleLoginChange = ({ target }) => {
     const { name, value } = target;
@@ -48,6 +47,7 @@ export function GlobalStorage({ children }) {
     try {
       const fetchApi = await apiRequest('GET', '/germplasm');
       setApiResults(fetchApi);
+      console.log(fetchApi);
       setAttributes(Object.keys(fetchApi[0]));
       setGermplasmsNames(fetchApi.map(({ nome }) => nome));
     } catch (error) {
@@ -56,7 +56,7 @@ export function GlobalStorage({ children }) {
   };
 
   useEffect(() => {
-    if (localStorage.getItem('token') && location.includes('consult-germplasm')) {
+    if (localStorage.getItem('token')) {
       getGermplasmsFromApi();
     }
   }, [isLoggedIn]);
