@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
 import { createContext, useEffect, useMemo, useState } from 'react';
-// import apiGET from '../services/apiGET';
 import { useNavigate } from 'react-router-dom';
-// import mockApi from '../helpers/mockApi';
 import { apiRequest, loginRequest } from '../services/apiRequest';
 
 export const GlobalContext = createContext();
@@ -12,49 +10,65 @@ export function GlobalStorage({ children }) {
   const [attributes, setAttributes] = useState([]);
   const [germplasmsNames, setGermplasmsNames] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isloginFailed, setIsLoginFailed] = useState(false);
+  const [loginState, setLoginState] = useState({
+    loginInput: '',
+    passwordInput: '',
+  });
 
-  const TOKEN_EXPIRATION_TIME = 10000000;
   const navigate = useNavigate();
+  const location = window.location.href;
 
-  useEffect(() => {
-    apiRequest('GET', '/germplasm')
-      .then((results) => {
-        const noDeletedResults = results.filter(({ deletado }) => deletado === false);
-        const deletedDeletadoColumn = noDeletedResults
-          .map(({ deletado, ...result }) => result);
-        setApiResults(deletedDeletadoColumn);
-        setAttributes(Object.keys(deletedDeletadoColumn[0]));
-        setGermplasmsNames(deletedDeletadoColumn.map(({ nome }) => nome));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    // setApiResults(mockApi);
-    // setAttributes(Object.keys(mockApi[0]));
-    // setGermplasmsNames(mockApi.map(({ nome }) => nome));
-    // apiRequest('GET', '/germplasm').then((response) => console.log(response));
-  }, [isLoggedIn]);
+  const handleLoginChange = ({ target }) => {
+    const { name, value } = target;
+    return setLoginState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
-  const handleLoginClick = (userInput, passwordInput, setLoginFailed) => {
-    loginRequest(userInput, passwordInput, setLoginFailed, setIsLoggedIn);
-    setTimeout(() => {
-      localStorage.removeItem('token');
-      localStorage.removeItem('tokenGenerationTime');
-      setIsLoggedIn(false);
-      navigate('/login');
-    }, TOKEN_EXPIRATION_TIME);
+  const handleLoginClick = async () => {
+    const { loginInput, passwordInput } = loginState;
+
+    const isLoggedinTrue = await loginRequest(loginInput, passwordInput);
+
+    if (isLoggedinTrue) {
+      navigate('/consult-germplasms');
+      setIsLoginFailed(false);
+      setIsLoggedIn(true);
+
+      return null;
+    }
+
+    setIsLoginFailed(true);
+    setIsLoggedIn(false);
   };
 
   useEffect(() => {
-    if (isLoggedIn) navigate('/consult-germplasms');
+    if (localStorage.getItem('token') && location.includes('consult-germplasm')) {
+      console.log('requisitou');
+      apiRequest('GET', '/germplasm')
+        .then((results) => {
+          setApiResults(results);
+          setAttributes(Object.keys(results[0]));
+          setGermplasmsNames(results.map(({ nome }) => nome));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }, [isLoggedIn]);
 
   const setValue = useMemo(() => (
     { apiResults,
       attributes,
       germplasmsNames,
+      handleLoginChange,
       handleLoginClick,
       isLoggedIn,
+      isloginFailed,
+      loginState,
+      setLoginState,
     }));
 
   return (

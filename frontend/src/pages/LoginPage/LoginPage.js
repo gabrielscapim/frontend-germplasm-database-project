@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import Button from '../../components/Common/Button';
 import Input from '../../components/Common/Input';
 import styles from './LoginPage.module.css';
@@ -6,23 +6,9 @@ import { GlobalContext } from '../../context/GlobalContext';
 
 function LoginPage() {
   const global = useContext(GlobalContext);
-  const { handleLoginClick } = global;
+  const { handleLoginClick, isloginFailed, loginState, handleLoginChange } = global;
 
-  const [state, setState] = useState({
-    userInput: '',
-    passwordInput: '',
-  });
-  const [loginFailed, setLoginFailed] = useState(false);
-
-  const { userInput, passwordInput } = state;
-
-  const handleChange = ({ target }) => {
-    const { name, value } = target;
-    return setState((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
+  const { loginInput, passwordInput } = loginState;
 
   return (
     <section className={ styles['page-container'] }>
@@ -31,10 +17,10 @@ function LoginPage() {
           type="text"
           id="user-input"
           label="Nome de usuário"
-          name="userInput"
+          name="loginInput"
           placeholder="Digite seu nome de usuário"
-          handleChange={ handleChange }
-          inputValue={ userInput }
+          handleChange={ handleLoginChange }
+          inputValue={ loginInput }
           maxInputLength={ 30 }
         />
         <Input
@@ -43,11 +29,11 @@ function LoginPage() {
           label="Senha"
           name="passwordInput"
           placeholder="Digite sua senha"
-          handleChange={ handleChange }
+          handleChange={ handleLoginChange }
           inputValue={ passwordInput }
           maxInputLength={ 30 }
         />
-        { loginFailed
+        { isloginFailed
           && (
             <p
               style={ {
@@ -71,7 +57,7 @@ function LoginPage() {
             width: '100%',
           } }
           disabled={ false }
-          onClick={ () => handleLoginClick(userInput, passwordInput, setLoginFailed) }
+          onClick={ handleLoginClick }
         />
       </form>
     </section>

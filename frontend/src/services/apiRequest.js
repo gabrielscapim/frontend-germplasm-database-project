@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const URL = 'https://germaplasm-database-project.rj.r.appspot.com';
+const URL = 'http://localhost:8080';
 const HTTP_STATUS_OK = 200;
 
-const loginRequest = async (login, password, setLoginFailed, setIsLoggedIn) => {
+const loginRequest = async (login, password) => {
   try {
     const response = await axios.post(`${URL}/login`, {
       login,
@@ -13,14 +13,15 @@ const loginRequest = async (login, password, setLoginFailed, setIsLoggedIn) => {
     const { status, data } = response;
 
     if (status === HTTP_STATUS_OK) {
-      localStorage.setItem('token', data);
+      localStorage.setItem('token', data.token);
       localStorage.setItem('tokenGenerationTime', Date.now());
-      setLoginFailed(false);
-      setIsLoggedIn(true);
+
+      return true;
     }
+
+    return false;
   } catch (error) {
-    console.error(error);
-    setLoginFailed(true);
+    return false;
   }
 };
 
