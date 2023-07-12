@@ -127,9 +127,8 @@ function ConsultGermplasmsPage() {
 
   const deleteGermplasm = async (id) => {
     if (window.confirm(`Deseja excluir o germoplasma de id igual a ${id}?`)) {
-      const germplasmSelected = apiResults.find((result) => result.id === id);
       try {
-        await apiRequest('PUT', '/germplasm', { ...germplasmSelected, deletado: true });
+        await apiRequest('DELETE', `/germplasm/${id}`);
         window.alert('Germoplasma excluído com sucesso!');
         window.location.reload();
       } catch (error) {
