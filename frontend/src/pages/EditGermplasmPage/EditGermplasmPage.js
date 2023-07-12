@@ -10,15 +10,13 @@ import NoRequiredGermplasmsInputs
   from '../../components/Common/NoRequiredGermplasmsInputs';
 import Header from '../../components/Header/Header';
 import AddEditGermplasmButtons from '../../components/Common/AddEditGermplasmButtons';
-import {
-  newGermplasmInitialState,
-  newGermplasmInputs } from '../../helpers/newGermplasmState';
 import { apiRequest } from '../../services/apiRequest';
 
 function EditGermplasmPage() {
   const global = useContext(GlobalContext);
   const { attributes, apiResults } = global;
   const navigate = useNavigate();
+  const CONSULT_GERMPLASM_URL = '/consult-germplasms';
 
   const columns = notAttributesRequired(attributes);
   const germplasmIdToEdit = window.location.href.split('id/')[1];
@@ -107,15 +105,17 @@ function EditGermplasmPage() {
   const handleConfirmEditGermplasmClick = async () => {
     if (window.confirm('Deseja editar o germoplasma no banco de dados?')) {
       try {
-        const germplasmEdited = { deletado: false, ...newGermplasm };
-        await apiRequest('PUT', '/germplasm', germplasmEdited);
+        await apiRequest('PUT', `/germplasm/${germplasmIdToEdit}`, newGermplasm);
         window.alert('Germoplasma editado com sucesso!');
-        navigate('/consult-germplasms');
+
+        navigate(CONSULT_GERMPLASM_URL);
         window.location.reload();
       } catch (error) {
-        window.alert('Erro: não foi possível editar o germoplasmama,'
-        + ' tente novamente mais tarde.');
-        navigate('/consult-germplasms');
+        window.alert(
+          `Erro: não foi possível editar o germoplasma. Status: ${error.response.status}`,
+        );
+        console.log(error);
+        navigate(CONSULT_GERMPLASM_URL);
         window.location.reload();
       }
     }
@@ -123,8 +123,7 @@ function EditGermplasmPage() {
 
   const handleCancelEditGermplasmClick = () => {
     if (window.confirm('Deseja cancelar as alterações realizadas no germoplasma?')) {
-      setInputsState(newGermplasmInputs);
-      setNewGermplasm(newGermplasmInitialState);
+      navigate(CONSULT_GERMPLASM_URL);
     }
   };
 

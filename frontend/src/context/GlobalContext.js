@@ -44,18 +44,20 @@ export function GlobalStorage({ children }) {
     setIsLoggedIn(false);
   };
 
+  const getGermplasmsFromApi = async () => {
+    try {
+      const fetchApi = await apiRequest('GET', '/germplasm');
+      setApiResults(fetchApi);
+      setAttributes(Object.keys(fetchApi[0]));
+      setGermplasmsNames(fetchApi.map(({ nome }) => nome));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     if (localStorage.getItem('token') && location.includes('consult-germplasm')) {
-      console.log('requisitou');
-      apiRequest('GET', '/germplasm')
-        .then((results) => {
-          setApiResults(results);
-          setAttributes(Object.keys(results[0]));
-          setGermplasmsNames(results.map(({ nome }) => nome));
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      getGermplasmsFromApi();
     }
   }, [isLoggedIn]);
 
