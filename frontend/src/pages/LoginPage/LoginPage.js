@@ -3,10 +3,15 @@ import Button from '../../components/Common/Button';
 import Input from '../../components/Common/Input';
 import styles from './LoginPage.module.css';
 import { GlobalContext } from '../../context/GlobalContext';
+import Loading from '../../components/Common/Loading';
 
 function LoginPage() {
   const global = useContext(GlobalContext);
-  const { handleLoginClick, isloginFailed, loginState, handleLoginChange } = global;
+  const {
+    handleLoginClick,
+    isloginFailed,
+    loginState, handleLoginChange,
+    isLoading } = global;
 
   const { loginInput, passwordInput } = loginState;
 
@@ -44,6 +49,9 @@ function LoginPage() {
               Usuário ou senha incorretos
             </p>
           )}
+        {
+          isLoading && <Loading />
+        }
         <Button
           id="login-button"
           label="Entrar"

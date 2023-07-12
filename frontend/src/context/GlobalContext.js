@@ -11,6 +11,7 @@ export function GlobalStorage({ children }) {
   const [germplasmsNames, setGermplasmsNames] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isloginFailed, setIsLoginFailed] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [loginState, setLoginState] = useState({
     loginInput: '',
     passwordInput: '',
@@ -27,20 +28,27 @@ export function GlobalStorage({ children }) {
   };
 
   const handleLoginClick = async () => {
+    setIsLoading(true);
     const { loginInput, passwordInput } = loginState;
 
     const isLoggedinTrue = await loginRequest(loginInput, passwordInput);
 
     if (isLoggedinTrue) {
+      setIsLoading(false);
       navigate('/consult-germplasms');
       setIsLoginFailed(false);
       setIsLoggedIn(true);
+      setLoginState({
+        loginInput: '',
+        passwordInput: '',
+      });
 
       return null;
     }
 
     setIsLoginFailed(true);
     setIsLoggedIn(false);
+    setIsLoading(false);
   };
 
   const getGermplasmsFromApi = async () => {
@@ -71,6 +79,7 @@ export function GlobalStorage({ children }) {
       isloginFailed,
       loginState,
       setLoginState,
+      isLoading,
     }));
 
   return (
