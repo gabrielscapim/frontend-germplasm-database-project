@@ -17,7 +17,7 @@ O back-end da aplicação pode ser acessado clicando <a href="https://github.com
 
 <p align="center">
   <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=git,node,js,react,bootstrap,html,css" />
+    <img src="https://skillicons.dev/icons?i=git,nodejs,js,react,bootstrap,html,css" />
   </a>
 </p>
 
